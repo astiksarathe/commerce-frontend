@@ -3,7 +3,7 @@ import { Button, Drawer, Space } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { cartDrawerHandler } from "../../features/cart";
+import { cartDrawerHandler } from "../../../features/cart";
 import { useNavigate } from "react-router-dom";
 
 import "./cartDrawer.scss";

@@ -1,6 +1,6 @@
-import CartDrawer from "./CartDrawer";
-import CartProductList from "./CartProductList";
-import CartSummary from "./CartSummary";
-import EmptyCart from "./EmptyCart";
+import CartDrawer from "./cartDrawer/CartDrawer";
+import CartProductList from "./cartProductList/CartProductList";
+import CartSummary from "./cartSummary/CartSummary";
+import EmptyCart from "./emptyCart/EmptyCart";
 
 export { CartDrawer, CartProductList, CartSummary, EmptyCart };
