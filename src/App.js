@@ -1,7 +1,13 @@
 import Footer from "./pages/footer";
+import Header from "./components/header";
 
 function App() {
-  return <Footer />;
+  return (
+    <>
+      <Header />
+      <Footer />
+    </>
+  );
 }
 
 export default App;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Input, Drawer, Space, Menu } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { closeSideMenuBar } from "../../features/sideMenuBar";
-import "./SideMenuBar.scss";
+import { closeSideMenuBar } from "../../features/sideMenuBar/sideMenuBarSlice";
+import "./sideMenuBar.scss";
 
 const { Search } = Input;
 
