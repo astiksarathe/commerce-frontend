@@ -15,6 +15,7 @@ import { login } from "../../features/auth/authSlice";
 
 const EmailForm = () => {
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
   const onFinish = (values) => {
     dispatch(login(values));
   };
@@ -60,7 +61,12 @@ const EmailForm = () => {
           <Input.Password size="large" />
         </Form.Item>
         <Form.Item>
-          <Button style={{ width: "100%", margin: "auto" }} htmlType="submit">
+          <Button
+            loading={isLoading}
+            iconPosition={"end"}
+            style={{ width: "100%", margin: "auto" }}
+            htmlType="submit"
+          >
             Submit
           </Button>
         </Form.Item>
