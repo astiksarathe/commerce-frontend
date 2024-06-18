@@ -10,10 +10,11 @@ import store from "./app/store";
 // React Router Dom
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-// COMPONENT IMPORT 
+// COMPONENT IMPORT
 
 import App from "./App";
-import Cart from "./pages/cart"
+import Cart from "./pages/cart";
+import WishList from "./pages/wishlist";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "wishlist",
+        element: <WishList />,
       },
     ],
   },
