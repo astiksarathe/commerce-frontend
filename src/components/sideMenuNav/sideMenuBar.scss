@@ -1,0 +1,98 @@
+.auth_segment > .ant-segmented-group > label {
+  width: 50%;
+}
+.auth_segment_container {
+  margin: auto;
+  padding: 3px 0;
+}
+
+.auth_segment_label {
+  margin-left: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.side_menu_bar .ant-drawer-close {
+  display: none;
+}
+.side_menu_bar > .ant-drawer-header,
+.side_menu_bar > .ant-drawer-body {
+  background-color: black;
+}
+.side_menu_bar .ant-drawer-title {
+  font-size: 25px;
+  color: white;
+}
+.side_menu_bar .ant-btn > span {
+  font-size: 12px;
+}
+
+@media (max-width: 48rem) {
+  .side_menu_bar > .ant-drawer-header {
+    background-color: black;
+  }
+  .side_menu_bar .ant-drawer-title {
+    font-size: 16px;
+    color: white;
+  }
+}
+
+.side_menu_bar .ant-input,
+.side_menu_bar .ant-input-affix-wrapper {
+  border-radius: 0;
+}
+
+.side_menu_bar .ant-btn {
+  padding: 10px 15px;
+  height: auto;
+  letter-spacing: 0.4px;
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.create_account_link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid rgba(135, 135, 135, 0.15);
+  border-bottom: 1px solid rgba(135, 135, 135, 0.15);
+  padding: 1.3rem 0;
+}
+
+/* Drawer changes */
+
+.side_menu_bar .ant-drawer-body {
+  border-top: 2px solid rgba(92, 92, 92, 0.43);
+}
+
+.side_menu_bar .ant-menu-item-group-title {
+  background-color: black;
+}
+
+.side_menu_bar .ant-menu,
+.side_menu_bar .ant-menu-submenu-title,
+.side_menu_bar .ant-menu-item {
+  background-color: black;
+  padding: 0;
+  padding-left: 0 !important;
+  color: rgba(255, 255, 255, 0.8);
+}
+.side_menu_bar .ant-input-affix-wrapper,
+.side_menu_bar .ant-input-search,
+.side_menu_bar .ant-btn {
+  border: none;
+}
+.side_menu_bar .ant-space-compact {
+  width: 100%;
+}
+.side_menu_bar .ant-drawer-header-title {
+  display: none;
+}
+.side_menu_bar .ant-input-search-button {
+  height: 38px;
+}
+.side_menu_bar .ant-drawer-extra {
+  width: 100%;
+}
