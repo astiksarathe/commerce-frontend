@@ -1,0 +1,61 @@
+.auth_segment > .ant-segmented-group > label {
+  width: 50%;
+}
+.auth_segment_container {
+  margin: auto;
+  padding: 3px 0;
+}
+
+.auth_segment_label {
+  margin-left: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.login_drawer .ant-drawer-close {
+  display: none;
+}
+.login_drawer > .ant-drawer-header {
+  background-color: black;
+}
+.login_drawer .ant-drawer-title {
+  font-size: 25px;
+  color: white;
+}
+.login_drawer .ant-btn > span {
+  font-size: 12px;
+}
+
+@media (max-width: 48rem) {
+  .login_drawer > .ant-drawer-header {
+    background-color: black;
+  }
+  .login_drawer .ant-drawer-title {
+    font-size: 16px;
+    color: white;
+  }
+}
+
+.login_drawer .ant-input,
+.login_drawer .ant-input-affix-wrapper {
+  border-radius: 0;
+}
+
+.login_drawer .ant-btn {
+  padding: 10px 15px;
+  height: auto;
+  letter-spacing: 0.4px;
+  border-radius: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.create_account_link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid rgba(135, 135, 135, 0.15);
+  border-bottom: 1px solid rgba(135, 135, 135, 0.15);
+  padding: 1.3rem 0;
+}
