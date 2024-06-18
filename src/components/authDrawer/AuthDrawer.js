@@ -9,14 +9,14 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-// import { login } from "../services/userService";
 import { Link } from "react-router-dom";
 import { closedAuthDrawer } from "../../features/authDrawer";
+import { login } from "../../features/auth/authSlice";
 
 const EmailForm = () => {
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    // dispatch(login(values));
+    dispatch(login(values));
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
