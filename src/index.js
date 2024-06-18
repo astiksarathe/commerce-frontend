@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 // React Redux
@@ -11,12 +10,23 @@ import store from "./app/store";
 // React Router Dom
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+// COMPONENT IMPORT 
+
+import App from "./App";
+import Cart from "./pages/cart"
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
   {
     path: "",
     element: <App />,
+    children: [
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+    ],
   },
 ]);
 
