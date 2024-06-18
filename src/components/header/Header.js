@@ -10,10 +10,11 @@ import { Badge, Menu } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dropdown, Space } from "antd";
-import "./header.scss";
 import { openSideMenuBar } from "../../features/sideMenuBar/sideMenuBarSlice";
+import { openAuthDrawer } from "../../features/authDrawer/authDrawerSlice";
 import SideMenuBar from "../sideMenuBar";
-
+import AuthDrawer from "../authDrawer";
+import "./header.scss";
 const Header = () => {
   const [current, setCurrent] = useState("mail");
   const dispatch = useDispatch();
@@ -74,7 +75,15 @@ const Header = () => {
       key: "Orders",
     },
     {
-      label: <div onClick={() => {}}>Log In</div>,
+      label: (
+        <div
+          onClick={() => {
+            dispatch(openAuthDrawer());
+          }}
+        >
+          Log In
+        </div>
+      ),
       key: "Log_In",
     },
     {
@@ -146,6 +155,7 @@ const Header = () => {
         </div>
       </header>
       <SideMenuBar />
+      <AuthDrawer />
     </>
   );
 };

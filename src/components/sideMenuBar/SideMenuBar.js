@@ -3,6 +3,7 @@ import { Input, Drawer, Space, Menu } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSideMenuBar } from "../../features/sideMenuBar/sideMenuBarSlice";
 import "./sideMenuBar.scss";
+import { openAuthDrawer } from "../../features/authDrawer";
 
 const { Search } = Input;
 
@@ -52,7 +53,15 @@ const SideMenuBar = () => {
     },
     {
       key: "BRAND",
-      label: <div onClick={() => {}}>LOGIN / REGISTER</div>,
+      label: (
+        <div
+          onClick={() => {
+            dispatch(openAuthDrawer());
+          }}
+        >
+          LOGIN / REGISTER
+        </div>
+      ),
     },
   ];
 
