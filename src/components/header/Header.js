@@ -15,6 +15,7 @@ import { openAuthDrawer } from "../../features/authDrawer/authDrawerSlice";
 import SideMenuBar from "../sideMenuBar";
 import AuthDrawer from "../authDrawer";
 import "./header.scss";
+import { cartDrawerHandler } from "../../features/cart";
 const Header = () => {
   const [current, setCurrent] = useState("mail");
   const dispatch = useDispatch();
@@ -121,7 +122,7 @@ const Header = () => {
                 </Link>
               </div>
               <div className="header_icon_container">
-                <Link to={"cart"}>
+                <Link to={"cart"} onClick={()=>dispatch(cartDrawerHandler(true))}>
                   <Badge count={5} color="black">
                     <ShoppingOutlined style={{ fontSize: "22px" }} />
                   </Badge>
