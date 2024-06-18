@@ -122,7 +122,7 @@ const Header = () => {
                 </Link>
               </div>
               <div className="header_icon_container">
-                <Link to={"cart"} onClick={()=>dispatch(cartDrawerHandler(true))}>
+                <Link to={"#"} onClick={() => dispatch(cartDrawerHandler(true))}>
                   <Badge count={5} color="black">
                     <ShoppingOutlined style={{ fontSize: "22px" }} />
                   </Badge>

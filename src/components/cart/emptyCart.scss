@@ -1,0 +1,30 @@
+/* Empty Cart */
+.cart-empty {
+  min-height: 32rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  align-items: center;
+  justify-content: center;
+
+  &-icon {
+    font-size: 188px;
+    color: rgba(142, 142, 142, 0.2);
+    font-weight: 400;
+  }
+
+  &-message {
+    text-align: center;
+    color: #8e8e8e;
+    line-height: 1.4rem;
+
+    @media (max-width: 48rem) {
+      font-size: 15px;
+    }
+  }
+}
+
+.btn-black {
+  background-color: #000000;
+  color: white;
+}

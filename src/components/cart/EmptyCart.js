@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import "./cartDrawer.scss";
+import "./emptyCart.scss";
 const { ShoppingCartOutlined } = require("@ant-design/icons");
 
 const EmptyCart = () => (
