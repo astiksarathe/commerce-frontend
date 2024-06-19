@@ -3,16 +3,18 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { cartDrawerHandler } from "../../features/cart";
 import { CartProductList, CartSummary } from "../../components/cart";
-
+import "./cart.scss";
 const Cart = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(cartDrawerHandler(false));
   }, []);
   return (
-    <div>
-      <CartProductList />
-      <CartSummary />
+    <div className="container">
+      <div className="cart-main-container">
+        <CartProductList />
+        <CartSummary />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,16 @@
+.cart-main-container {
+    margin-top: 3rem;
+
+    @media (min-width: 1024px) {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-items: flex-start;
+        -moz-column-gap: 3rem;
+        column-gap: 3rem;
+    }
+
+    @media (min-width: 1280px) {
+        -moz-column-gap: 4rem;
+        column-gap: 4rem;
+    }
+}
