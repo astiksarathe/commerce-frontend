@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
-import FooterCollapse from './FooterCollapse';
-import './footer.scss';
+import FooterCollapse from "./FooterCollapse";
+import "./footer.scss";
 
 const Footer = () => {
   const footerList = [
@@ -10,19 +10,19 @@ const Footer = () => {
       label: "EXPLORE",
       items: [
         { id: 1, label: "Our Story", link: "/" },
-        { id: 2, label: "Contact Us", link: "/" },
-        { id: 3, label: "Exchange Request", link: "/" },
-        { id: 4, label: "Return Request", link: "/" },
+        { id: 2, label: "Contact Us", link: "/contact-us" },
+        { id: 3, label: "Exchange Request", link: "/exchange-request" },
+        { id: 4, label: "Return Request", link: "/return-request" },
       ],
     },
     {
       id: 2,
       label: "TERM POLICY",
       items: [
-        { id: 1, label: "Privacy Policy", link: "/" },
-        { id: 2, label: "Return & Refund Policy", link: "/" },
-        { id: 3, label: "Shipping & Delivery Terms", link: "/" },
-        { id: 4, label: "Terms and Conditions", link: "/" },
+        { id: 1, label: "Privacy Policy", link: "/privacy-policy" },
+        { id: 2, label: "Return & Refund Policy", link: "/return-refund-policy" },
+        { id: 3, label: "Shipping & Delivery Terms", link: "/shipping-delivery-terms" },
+        { id: 4, label: "Terms and Conditions", link: "/terms-and-conditions" },
       ],
     },
     {
@@ -57,9 +57,7 @@ const Footer = () => {
   );
 
   const getFooterMenuList = (section) => (
-    <ul className="footer__menu-list">
-      {section.items.map((item) => getListItem(item))}
-    </ul>
+    <ul className="footer__menu-list">{section.items.map((item) => getListItem(item))}</ul>
   );
 
   const getFooterMenu = () => (

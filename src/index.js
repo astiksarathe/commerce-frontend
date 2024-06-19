@@ -16,6 +16,14 @@ import App from "./App";
 import Cart from "./pages/cart";
 import WishList from "./pages/wishlist";
 
+import PrivacyPolicy from "./pages/privacyPolicy";
+import ContactUs from "./pages/contactUs";
+import ExchangeRequest from "./pages/exchangeRequest";
+import ReturnRefundPolicy from "./pages/returnRefundPolicy";
+import ShippingDeliveryTerms from "./pages/shippingDeliveryTerms";
+import ReturnRequest from "./pages/returnRequest";
+import TermsAndConditions from "./pages/termsAndConditions";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
@@ -26,6 +34,34 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "contact-us",
+        element: <ContactUs />,
+      },
+      {
+        path: "exchange-request",
+        element: <ExchangeRequest />,
+      },
+      {
+        path: "return-refund-policy",
+        element: <ReturnRefundPolicy />,
+      },
+      {
+        path: "shipping-delivery-terms",
+        element: <ShippingDeliveryTerms />,
+      },
+      {
+        path: "return-request",
+        element: <ReturnRequest />,
+      },
+      {
+        path: "terms-and-conditions",
+        element: <TermsAndConditions />,
       },
       {
         path: "wishlist",
