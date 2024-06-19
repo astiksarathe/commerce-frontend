@@ -2,6 +2,7 @@ import React from "react";
 import "./cartProductList.scss";
 import { Link } from "react-router-dom";
 import QtyInput from "../../qtyInput";
+import { CloseOutlined } from "@ant-design/icons";
 const CartProductList = () => {
   return (
     <section className="cart__productlist-container">
@@ -26,6 +27,9 @@ const CartProductList = () => {
               </div>
               <div className="cart__product-quantity">
                 <QtyInput value={10} />
+                <div className="cart-close-icon">
+                  <CloseOutlined />
+                </div>
               </div>
             </div>
             <p className="cart__product-stock">In stock</p>

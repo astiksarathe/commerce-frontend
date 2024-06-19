@@ -23,6 +23,7 @@ import ReturnRefundPolicy from "./pages/returnRefundPolicy";
 import ShippingDeliveryTerms from "./pages/shippingDeliveryTerms";
 import ReturnRequest from "./pages/returnRequest";
 import TermsAndConditions from "./pages/termsAndConditions";
+import Search from "./pages/search/Search";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "terms-and-conditions",
         element: <TermsAndConditions />,
+      },
+      {
+        path: "search",
+        element: <Search />,
       },
       {
         path: "wishlist",

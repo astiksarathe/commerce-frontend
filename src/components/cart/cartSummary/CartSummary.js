@@ -1,6 +1,7 @@
 import React from "react";
 import "./cartSummary.scss";
 import { Button } from "antd";
+import { QuestionCircleFilled } from "@ant-design/icons";
 const CartSummary = () => {
   return (
     <section className="cart-summary">
@@ -13,11 +14,15 @@ const CartSummary = () => {
           <dd className="cart-price-desc">Rs 400</dd>
         </div>
         <div className="cart-price-detail">
-          <dt className="cart-price-term">subtotal</dt>
+          <dt className="cart-price-term">
+            subtotal <QuestionCircleFilled />
+          </dt>
           <dd className="cart-price-desc">Rs 400</dd>
         </div>
         <div className="cart-price-detail">
-          <dt className="cart-price-term">subtotal</dt>
+          <dt className="cart-price-term">
+            subtotal <QuestionCircleFilled />
+          </dt>
           <dd className="cart-price-desc">Rs 400</dd>
         </div>
         <div className="cart-price-detail">
