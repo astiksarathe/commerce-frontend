@@ -33,8 +33,8 @@ const QuickView = () => {
               </h3>
 
               <p className="text-2xl text-gray-900">
-                {quickViewProduct.price.currencyCode === "INC" && "RS "}
-                {quickViewProduct.price.sellingPrice}
+                {quickViewProduct.price?.currencyCode === "INC" && "RS "}
+                {quickViewProduct.price?.sellingPrice}
               </p>
 
               <div className="mt-6">
