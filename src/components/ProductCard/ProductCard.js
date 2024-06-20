@@ -1,16 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeOutlined, HeartOutlined, ShoppingOutlined } from "@ant-design/icons";
 
 import "./productCard.scss";
 import "./productCardCustom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { productQuickView, quickViewModelHandler } from "../../features/product";
+import { getProductByURL, selectedProductForDetail } from "../../features/product/productSlice";
 
 const ProductCard = () => {
   const dispatch = useDispatch();
-  const { productList, isLoading } = useSelector((state) => state.product);
+  const navigate = useNavigate();
 
+  const { productList, isLoading } = useSelector((state) => state.product);
   const addToCart = () => {
     console.log("I am inside console");
   };
@@ -21,7 +23,11 @@ const ProductCard = () => {
     dispatch(productQuickView(product));
     dispatch(quickViewModelHandler(true));
   };
-  const productDetail = (product) => {};
+  const productDetail = (product) => {
+    dispatch(selectedProductForDetail(product.url)); //selectedProductURL
+    dispatch(getProductByURL(product.url));
+    navigate(`/product/${product.url}`);
+  };
 
   const productRender = () => {
     return productList.map((product) => (

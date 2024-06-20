@@ -12,3 +12,12 @@ export const getProductsAPI = async (data) => {
     throw error;
   }
 };
+
+export const getProductByUrlAPI = async (data) => {
+  try {
+    const response = await axiosInstance.get(`${baseURL}/${data}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

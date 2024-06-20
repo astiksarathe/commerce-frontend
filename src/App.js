@@ -7,10 +7,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getProduct } from "./features/product/productSlice";
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProduct());
-  }, []);
+  
   return (
     <>
       <Header />

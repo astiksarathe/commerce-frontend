@@ -2,7 +2,8 @@ import productReducer, {
   getProduct,
   productQuickView,
   quickViewModelHandler,
+  selectedProductForDetail,
 } from "./productSlice";
 
-export { getProduct, productQuickView, quickViewModelHandler };
+export { getProduct, selectedProductForDetail, productQuickView, quickViewModelHandler };
 export default productReducer;
