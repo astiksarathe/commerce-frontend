@@ -7,8 +7,6 @@ const QuickView = () => {
   const { isQuickViewModelOpen, quickViewProduct } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
-  console.log({ quickViewProduct });
-
   const handleCancel = () => {
     dispatch(quickViewModelHandler(false));
   };
