@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./QtyInput.scss";
 
 const QtyInput = (props) => {
-  const [quantity, setQuantity] = useState(props.value);
   const qtyMin = 0;
   const qtyMax = 10;
 
@@ -13,17 +12,17 @@ const QtyInput = (props) => {
     } else if (value > qtyMax) {
       value = qtyMax;
     }
-    setQuantity(value);
+    props.quantityHandler(value);
   };
 
   const handleButtonClick = (action) => {
-    let value = quantity;
+    let value = props.value;
     if (action === "add" && value < qtyMax) {
       value += 1;
     } else if (action === "minus" && value > qtyMin) {
       value -= 1;
     }
-    setQuantity(value);
+    props.quantityHandler(value);
   };
 
   return (
@@ -33,7 +32,7 @@ const QtyInput = (props) => {
         data-action="minus"
         type="button"
         onClick={() => handleButtonClick("minus")}
-        disabled={quantity <= qtyMin}
+        disabled={props.value <= qtyMin}
       >
         -
       </button>
@@ -43,7 +42,7 @@ const QtyInput = (props) => {
         name="product-qty"
         min={qtyMin}
         max={qtyMax}
-        value={quantity}
+        value={props.value}
         onChange={handleInputChange}
       />
       <button
@@ -51,7 +50,7 @@ const QtyInput = (props) => {
         data-action="add"
         type="button"
         onClick={() => handleButtonClick("add")}
-        disabled={quantity >= qtyMax}
+        disabled={props.value >= qtyMax}
       >
         +
       </button>
