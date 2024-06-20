@@ -24,6 +24,7 @@ import ShippingDeliveryTerms from "./pages/shippingDeliveryTerms";
 import ReturnRequest from "./pages/returnRequest";
 import TermsAndConditions from "./pages/termsAndConditions";
 import Search from "./pages/search/Search";
+import Home from "./pages/home";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     path: "",
     element: <App />,
     children: [
+      {
+        path: "",
+        element: <Home />,
+      },
       {
         path: "cart",
         element: <Cart />,
