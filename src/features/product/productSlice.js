@@ -6,6 +6,8 @@ const initialState = {
   selectedProduct: {},
   isLoading: false,
   error: null,
+  quickViewProduct: {},
+  isQuickViewModelOpen: false,
 };
 
 export const getProduct = createAsyncThunk("product", async (data, { rejectWithValue }) => {
@@ -20,7 +22,14 @@ export const getProduct = createAsyncThunk("product", async (data, { rejectWithV
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    productQuickView: (state, action) => {
+      state.quickViewProduct = action.payload;
+    },
+    quickViewModelHandler: (state, action) => {
+      state.isQuickViewModelOpen = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProduct.pending, (state) => {
@@ -28,11 +37,9 @@ export const productSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getProduct.fulfilled, (state, action) => {
-        console.log(action);
         state.status = "succeeded";
-        state.user = action.payload;
         state.isLoading = false;
-        state.productList = [];
+        state.productList = action.payload || [];
       })
       .addCase(getProduct.rejected, (state, action) => {
         state.status = "failed";
@@ -41,5 +48,7 @@ export const productSlice = createSlice({
       });
   },
 });
+
+export const { productQuickView, quickViewModelHandler } = productSlice.actions;
 
 export default productSlice.reducer;

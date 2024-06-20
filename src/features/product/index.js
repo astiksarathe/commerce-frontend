@@ -1,4 +1,8 @@
-import productReducer, { getProduct } from "./productSlice";
+import productReducer, {
+  getProduct,
+  productQuickView,
+  quickViewModelHandler,
+} from "./productSlice";
 
-export { getProduct };
+export { getProduct, productQuickView, quickViewModelHandler };
 export default productReducer;
