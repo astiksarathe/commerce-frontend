@@ -19,26 +19,27 @@ const cartSlice = createSlice({
       state.cartList = cartList;
     },
     addToCart: (state, action) => {
-      const { productId, quantity, title } = action.payload.productId;
+      const { productId, quantity, title, url } = action.payload;
       let alreadyExistInCart = false;
-
-      const updatedCartList = state.map((product) => {
+      const updatedCartList = state.cartList.map((product) => {
         if (product.productId === productId) {
           alreadyExistInCart = true;
-          return { productId, quantity, title };
+          return { productId, quantity, title, url };
         }
         return product;
       });
 
-      if (!alreadyExistInCart) updatedCartList.push({ productId, quantity, title });
+      console.log({ productId, quantity, title, url, updatedCartList });
+
+      if (!alreadyExistInCart) updatedCartList.push({ productId, quantity, title, url });
 
       localStorage.setItem("cart", JSON.stringify(updatedCartList));
 
       state.cartList = updatedCartList;
     },
     removeFromCart: (state, action) => {
-      const { productId } = action.payload.productId;
-      const updatedCartList = state.filter((product) => product.productId !== productId);
+      const { productId } = action.payload;
+      const updatedCartList = state.cartList.filter((product) => product.productId !== productId);
       state.cartList = updatedCartList;
       localStorage.setItem("cart", JSON.stringify(updatedCartList));
     },
@@ -46,6 +47,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { cartDrawerHandler } = cartSlice.actions;
+export const { cartDrawerHandler, addToCart, removeFromCart, setCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

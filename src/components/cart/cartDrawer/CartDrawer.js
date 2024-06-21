@@ -3,7 +3,7 @@ import { Button, Drawer, Space } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { cartDrawerHandler } from "../../../features/cart";
+import { cartDrawerHandler, removeFromCart } from "../../../features/cart";
 import { useNavigate } from "react-router-dom";
 
 import "./cartDrawer.scss";
@@ -11,8 +11,10 @@ import "./cartDrawer.scss";
 const CartDrawer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isCartDrawerOpen } = useSelector((state) => state.cart);
-
+  const { isCartDrawerOpen, cartList } = useSelector((state) => state.cart);
+  const removeCart = (product) => {
+    dispatch(removeFromCart({ ...product }));
+  };
   return (
     <Drawer
       className="login_drawer"
@@ -50,38 +52,40 @@ const CartDrawer = () => {
       }
     >
       <ul className="cart">
-        <li className="cart-item">
-          <div className="cart-item__image-container">
-            <img
-              src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
-              alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
-              className="cart-item__image"
-            />
-          </div>
-          <div className="cart-item__details">
-            <div className="cart-item__title-container">
-              <h3>
-                <Link to="/" className="cart-item__title">
-                  Throwback Hip Bag
-                </Link>
-              </h3>
-              <p className="cart-item__price">$90.00</p>
+        {cartList.map((product) => (
+          <li className="cart-item">
+            <div className="cart-item__image-container">
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
+                alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
+                className="cart-item__image"
+              />
             </div>
-            <p className="cart-item__color">Salmon</p>
-            <div className="cart-item__actions">
-              <p className="cart-item__quantity">Qty 1</p>
-              <div>
-                <button
-                  type="button"
-                  className="cart-item__remove-button"
-                  onClick={() => console.log("Remove item")}
-                >
-                  Remove
-                </button>
+            <div className="cart-item__details">
+              <div className="cart-item__title-container">
+                <h3>
+                  <Link to="/" className="cart-item__title">
+                    Throwback Hip Bag
+                  </Link>
+                </h3>
+                <p className="cart-item__price">{}</p>
+              </div>
+              <p className="cart-item__color">Salmon</p>
+              <div className="cart-item__actions">
+                <p className="cart-item__quantity">Qty {}</p>
+                <div>
+                  <button
+                    type="button"
+                    className="cart-item__remove-button"
+                    onClick={() => removeCart(product)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
+        ))}
       </ul>
     </Drawer>
   );

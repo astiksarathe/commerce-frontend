@@ -1,4 +1,4 @@
-import cartReducer, { cartDrawerHandler } from "./cartSlice";
+import cartReducer, { cartDrawerHandler, addToCart, removeFromCart, setCart } from "./cartSlice";
 
-export { cartDrawerHandler };
+export { cartDrawerHandler, addToCart, removeFromCart, setCart };
 export default cartReducer;

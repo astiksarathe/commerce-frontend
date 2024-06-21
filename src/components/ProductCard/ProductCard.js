@@ -7,18 +7,22 @@ import "./productCardCustom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { productQuickView, quickViewModelHandler } from "../../features/product";
 import { getProductByURL, selectedProductForDetail } from "../../features/product/productSlice";
+import { addToCart } from "../../features/cart/";
 
 const ProductCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { productList, isLoading } = useSelector((state) => state.product);
-  const addToCart = () => {
-    console.log("I am inside console");
+
+  const addToCartHandler = (product) => {
+    dispatch(addToCart({ ...product, quantity: 1 }));
   };
+
   const addToWishList = () => {
     console.log("I am inside wishlist");
   };
+
   const quickView = (product) => {
     dispatch(productQuickView(product));
     dispatch(quickViewModelHandler(true));
@@ -40,7 +44,10 @@ const ProductCard = () => {
           />
           <div className="product_actions">
             <div>
-              <button className="product_action-icon group-hover:opacity-75 " onClick={addToCart}>
+              <button
+                className="product_action-icon group-hover:opacity-75 "
+                onClick={() => addToCartHandler(product)}
+              >
                 <ShoppingOutlined style={{ fontSize: "15px" }} />
               </button>
               <button

@@ -4,12 +4,25 @@ import { Rate } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import QtyInput from "../../components/qtyInput";
 import "./ProductOverviewCustom.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../features/cart";
 const ProductDetails = () => {
-  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState(0);
+  const { selectedProduct } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+
+  const quantityHandler = (value) => {
+    setQuantity(value);
+  };
+
+  const addToCartHandler = (product) => {
+    dispatch(addToCart(product));
+  };
+
   const renderPrice = (product) => {
     const { MRP, sellingPrice, currencyCode } = product.price || {};
-    console.log(product);
+
     const currency = currencyCode === "INC" ? "&#8377;" : "&#x24;";
     if (MRP === sellingPrice) {
       return (
@@ -197,7 +210,7 @@ const ProductDetails = () => {
             <h1 className="avs awd awx axv">Zip Tote Basket</h1>
             <div className="lf">
               <h2 className="t">Product information</h2>
-              {renderPrice(product)}
+              {renderPrice(selectedProduct)}
             </div>
             <div className="lf">
               <h3 className="t">Reviews</h3>
@@ -272,14 +285,17 @@ const ProductDetails = () => {
                 </fieldset>
               </div>
               <div className="lf">
-                <QtyInput />
+                <QtyInput value={quantity} quantityHandler={quantityHandler} />
               </div>
               <div className="kw lx">
                 <button
-                  type="submit"
+                  type="button"
                   className="lx um un za zf adv afa agz ajq arm arz avy awe bah bir bmv bna bnm boc bog bze"
+                  onClick={() => {
+                    addToCartHandler({ ...selectedProduct, quantity });
+                  }}
                 >
-                  Add to bag
+                  Add to Cart
                 </button>
                 <button type="button" className="jx lx za zf adv arf arz axp bhy bkt">
                   <HeartOutlined style={{ fontSize: "22px" }} />
@@ -311,6 +327,7 @@ const ProductDetails = () => {
             SHIPPING & DELIVERY
           </button>
         </div>
+        <div></div>
       </div>
     </div>
   );
