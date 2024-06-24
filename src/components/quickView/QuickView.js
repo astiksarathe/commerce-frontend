@@ -1,8 +1,11 @@
 import React from "react";
 import { Modal, Rate } from "antd";
-import "./quickView.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { quickViewModelHandler } from "../../features/product";
+import { useDispatch, useSelector } from "react-redux";
+import Variant from "../variant/Variant";
+import { options, variant } from "./data";
+import { Link } from "react-router-dom";
+import "./quickView.scss";
 const QuickView = () => {
   const { isQuickViewModelOpen, quickViewProduct } = useSelector((state) => state.product);
   const dispatch = useDispatch();
@@ -23,7 +26,9 @@ const QuickView = () => {
             />
           </div>
           <div className="sm:col-span-8 lg:col-span-7">
-            <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{quickViewProduct.title}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 sm:pr-12 text-transform: capitalize;">
+              {quickViewProduct.title}
+            </h2>
 
             <section aria-labelledby="information-heading" className="mt-2">
               <h3 id="information-heading" className="sr-only">
@@ -39,15 +44,15 @@ const QuickView = () => {
                 <h4 className="sr-only">Reviews</h4>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    <Rate value={4} />
+                    <Rate value={quickViewProduct.aggregateRating} />
                   </div>
                   <p className="sr-only">3.9 out of 5 stars</p>
-                  <a
+                  <Link
                     href="#"
                     className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    117 reviews
-                  </a>
+                    {quickViewProduct.totalReviews} reviews
+                  </Link>
                 </div>
               </div>
             </section>
@@ -58,91 +63,12 @@ const QuickView = () => {
               </h3>
 
               <form>
-                <fieldset aria-label="Choose a color">
-                  <legend className="text-sm font-medium text-gray-900">Color</legend>
-
-                  <div className="mt-4 flex items-center space-x-3">
-                    <label
-                      aria-label="White"
-                      className="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-gray-400 focus:outline-none"
-                    >
-                      <input type="radio" name="color-choice" value="White" className="sr-only" />
-                      <span
-                        aria-hidden="true"
-                        className="h-8 w-8 rounded-full border border-black border-opacity-10 bg-white"
-                      ></span>
-                    </label>
-
-                    <label
-                      aria-label="Gray"
-                      className="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-gray-400 focus:outline-none"
-                    >
-                      <input type="radio" name="color-choice" value="Gray" className="sr-only" />
-                      <span
-                        aria-hidden="true"
-                        className="h-8 w-8 rounded-full border border-black border-opacity-10 bg-gray-200"
-                      ></span>
-                    </label>
-
-                    <label
-                      aria-label="Black"
-                      className="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 ring-gray-900 focus:outline-none"
-                    >
-                      <input type="radio" name="color-choice" value="Black" className="sr-only" />
-                      <span
-                        aria-hidden="true"
-                        className="h-8 w-8 rounded-full border border-black border-opacity-10 bg-gray-900"
-                      ></span>
-                    </label>
-                  </div>
-                </fieldset>
-
-                <fieldset className="mt-10" aria-label="Choose a size">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium text-gray-900">Size</div>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Size guide
-                    </a>
-                  </div>
-
-                  <div className="mt-4 grid grid-cols-4 gap-4">
-                    <label className="group relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 shadow-sm hover:bg-gray-50 focus:outline-none sm:flex-1">
-                      <input type="radio" name="size-choice" value="XXL" className="sr-only" />
-                      <span>XXL</span>
-                      <span
-                        className="pointer-events-none absolute -inset-px rounded-md"
-                        aria-hidden="true"
-                      ></span>
-                    </label>
-                    <label className="group relative flex cursor-not-allowed items-center justify-center rounded-md border bg-gray-50 px-4 py-3 text-sm font-medium uppercase text-gray-200 hover:bg-gray-50 focus:outline-none sm:flex-1">
-                      <input
-                        type="radio"
-                        name="size-choice"
-                        value="XXXL"
-                        disabled
-                        className="sr-only"
-                      />
-                      <span>XXXL</span>
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                      >
-                        <svg
-                          className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                          viewBox="0 0 100 100"
-                          preserveAspectRatio="none"
-                          stroke="currentColor"
-                        >
-                          <line x1="0" y1="100" x2="100" y2="0" vectorEffect="non-scaling-stroke" />
-                        </svg>
-                      </span>
-                    </label>
-                  </div>
-                </fieldset>
-
+                <Variant
+                  options={options}
+                  variants={variant}
+                  // selectedVariant={selectedVariant}
+                  // variantHandler={variantHandler}
+                />
                 <button
                   type="submit"
                   className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
