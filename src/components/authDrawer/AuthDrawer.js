@@ -103,8 +103,6 @@ const AuthDrawer = () => {
   const [loginBy, setLoginBy] = useState("email");
   const dispatch = useDispatch();
   const { isAuthDrawerOpen } = useSelector((state) => state.authDrawer);
-  console.log(isAuthDrawerOpen);
-
   return (
     <Drawer
       className="login_drawer"
