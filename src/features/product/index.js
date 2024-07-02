@@ -3,18 +3,16 @@ import productReducer, {
   productQuickView,
   quickViewModelHandler,
   selectedProductForDetail,
-  setVariantData,
-  selectVariantByOneOption,
   creaetVariantTree,
+  selectVariantHandler,
 } from "./productSlice";
 
 export {
   getProduct,
   selectedProductForDetail,
-  setVariantData,
   productQuickView,
   quickViewModelHandler,
-  selectVariantByOneOption,
   creaetVariantTree,
+  selectVariantHandler,
 };
 export default productReducer;

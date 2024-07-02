@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./variant.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { selectVariantByOneOption } from "../../features/product";
+import { selectVariantHandler } from "../../features/product";
 
 const Variant = () => {
   const { variantTree, selectedProductVariant } = useSelector((state) => state.product);
   const dispatch = useDispatch();
-  const op = ["Size", "Color", "Design"];
-  console.log(selectedProductVariant);
-  const variantButton = (variantName) => {
+  const options = ["Size", "Color", "Design"];
+
+  const variantButton = (variantName, ind, available = true) => {
+    const cssClass = `
+      variant-label 
+      ${!available ? "variant-OFS" : ""} 
+      ${available && selectedProductVariant[ind].name === variantName ? "variant-selected" : ""}
+    `;
+
+    const handleClick = () => {
+      if (!available) return null;
+      dispatch(selectVariantHandler({ variantName, ind }));
+    };
+
     return (
-      <label className={`variant-label`}>
+      <label className={cssClass}>
         <input
           type="radio"
           name={`${variantName}-choice`}
           value={variantName}
           className="sr-only"
-          onChange={() => {}}
+          onClick={handleClick}
         />
         <span>{variantName}</span>
         <span
@@ -27,32 +38,40 @@ const Variant = () => {
     );
   };
 
-  const renderVariantsRecursively = (tree, index = 0) => {
-    if (!tree.list) return null;
-    const optionValues = tree.list;
+  const render = (variantTree, ind) => {
+    // Check if there are no more options to render
+    if (ind >= selectedProductVariant.length) return null;
+
+    // Ensure that the variant tree has a list property
+    if (!variantTree?.list) return null;
+
+    const currentVariantKey = selectedProductVariant[ind].name;
+    const nextVariantTree = variantTree[currentVariantKey];
+    const nextSelectedVariant = selectedProductVariant[ind + 1];
+    const nextIndex = nextSelectedVariant?.ind;
+
     return (
-      <React.Fragment key={index}>
-        {tree.list.map((variant) => (
-          <>{variantButton(variant)}</>
-        ))}
-        {optionValues.map((value, idx) => (
-          <div key={idx} className="ml-4">
-            {renderVariantsRecursively(tree[value], index + 1)}
+      <>
+        <fieldset className="mt-10" aria-label={`Choose a ${""}`}>
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-medium text-gray-900">{options[ind]}</div>
           </div>
-        ))}
-      </React.Fragment>
+          <div className="variant-label-container">
+            {variantTree.list.map((variant, i) => (
+              <React.Fragment key={i}>
+                {" "}
+                {variantButton(variant.name, ind, variant.available)}
+              </React.Fragment>
+            ))}
+          </div>
+        </fieldset>
+        {ind + 1 >= selectedProductVariant.length || nextIndex === undefined
+          ? ""
+          : render(nextVariantTree, nextIndex)}
+      </>
     );
   };
-  return (
-    <>
-      <fieldset className="mt-10" aria-label={`Choose a }`}>
-        <div className="flex items-center justify-between">
-          <div className="text-sm font-medium text-gray-900">Size</div>
-        </div>
-        <div className="variant-label-container">{renderVariantsRecursively(variantTree)}</div>
-      </fieldset>
-    </>
-  );
+  return <>{render(variantTree, selectedProductVariant[0].ind)}</>;
 };
 
 export default Variant;

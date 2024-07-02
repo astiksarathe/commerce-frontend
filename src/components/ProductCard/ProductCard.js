@@ -9,8 +9,8 @@ import { productQuickView, quickViewModelHandler } from "../../features/product"
 import {
   creaetVariantTree,
   getProductByURL,
+  selectVariantHandler,
   selectedProductForDetail,
-  setVariantData,
 } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
 import { options, variant } from "../quickView/data";
@@ -32,7 +32,7 @@ const ProductCard = () => {
   const quickView = (product) => {
     dispatch(productQuickView(product));
     dispatch(creaetVariantTree());
-    dispatch(setVariantData({ options, variants: variant }));
+    dispatch(selectVariantHandler());
     dispatch(quickViewModelHandler(true));
   };
   const productDetail = (product) => {
