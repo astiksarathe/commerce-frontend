@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { cartDrawerHandler, removeFromCart } from "../../../features/cart";
 import { useNavigate } from "react-router-dom";
-
+import QtyInput from "../../qtyInput";
 import "./cartDrawer.scss";
 
 const CartDrawer = () => {
@@ -37,11 +37,11 @@ const CartDrawer = () => {
       }
       footer={
         <div className="cart__drawer-footer">
-          <div class="cart__drawer-subtotal">
+          <div className="cart__drawer-subtotal">
             <p>Subtotal</p>
             <p>$262.00</p>
           </div>
-          <p class="cart__drawer-shipping">Shipping and taxes calculated at checkout.</p>
+          <p className="cart__drawer-shipping">Shipping and taxes calculated at checkout.</p>
           <Button className="btn-black" type="primary" block>
             Check out
           </Button>
@@ -53,7 +53,7 @@ const CartDrawer = () => {
     >
       <ul className="cart">
         {cartList.map((product) => (
-          <li className="cart-item">
+          <li className="cart-item" key={product.productId}>
             <div className="cart-item__image-container">
               <img
                 src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
@@ -64,15 +64,16 @@ const CartDrawer = () => {
             <div className="cart-item__details">
               <div className="cart-item__title-container">
                 <h3>
-                  <Link to="/" className="cart-item__title">
-                    Throwback Hip Bag
+                  <Link to={`/${product.url}`} className="cart-item__title">
+                    {product.title}
                   </Link>
                 </h3>
-                <p className="cart-item__price">{}</p>
               </div>
-              <p className="cart-item__color">Salmon</p>
+              <p className="cart-item__price">RS {product.sellingPrice}</p>
               <div className="cart-item__actions">
-                <p className="cart-item__quantity">Qty {}</p>
+                <p className="cart-item__quantity">
+                  <QtyInput value={product.quantity} />
+                </p>
                 <div>
                   <button
                     type="button"

@@ -19,23 +19,31 @@ const cartSlice = createSlice({
       state.cartList = cartList;
     },
     addToCart: (state, action) => {
-      const { productId, quantity, title, url } = action.payload;
-      let alreadyExistInCart = false;
-      const updatedCartList = state.cartList.map((product) => {
-        if (product.productId === productId) {
-          alreadyExistInCart = true;
-          return { productId, quantity, title, url };
-        }
-        return product;
-      });
+      const { productId, quantity, title, url, price } = action.payload;
 
-      console.log({ productId, quantity, title, url, updatedCartList });
+      // Find the existing product index
+      const productIndex = state.cartList.findIndex((product) => product.productId === productId);
 
-      if (!alreadyExistInCart) updatedCartList.push({ productId, quantity, title, url });
+      // Create the updated product object
+      const updatedProduct = {
+        productId,
+        quantity,
+        title,
+        url,
+        sellingPrice: price.sellingPrice,
+        MRP: price.MRP,
+      };
 
-      localStorage.setItem("cart", JSON.stringify(updatedCartList));
+      if (productIndex >= 0) {
+        // Update the existing product
+        state.cartList[productIndex] = updatedProduct;
+      } else {
+        // Add the new product to the cart
+        state.cartList.push(updatedProduct);
+      }
 
-      state.cartList = updatedCartList;
+      // Update local storage
+      localStorage.setItem("cart", JSON.stringify(state.cartList));
     },
     removeFromCart: (state, action) => {
       const { productId } = action.payload;

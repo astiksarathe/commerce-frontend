@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getProductsAPI, getProductByUrlAPI } from "./productAPI";
 import { variant as variants, options } from "../../components/quickView/data";
 const initialState = {
+  productDetails: {},
   productList: [],
   selectedProduct: {},
   selectedProductURL: "",
@@ -99,6 +100,19 @@ export const productSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Extra reducers for getProductByURL
+    builder.addCase(getProductByURL.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getProductByURL.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.productDetails = action.payload[0] || {};
+    });
+    builder.addCase(getProductByURL.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+
     builder.addMatcher(
       (action) => action.type.endsWith("/fulfilled"),
       (state, action) => {

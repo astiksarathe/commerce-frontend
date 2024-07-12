@@ -13,7 +13,6 @@ import {
   selectedProductForDetail,
 } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
-import { options, variant } from "../quickView/data";
 
 const ProductCard = () => {
   const dispatch = useDispatch();

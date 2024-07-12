@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Rate } from "antd";
 import { quickViewModelHandler } from "../../features/product";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,12 +6,18 @@ import Variant from "../variant/Variant";
 import { options, variant } from "./data";
 import { Link } from "react-router-dom";
 import "./quickView.scss";
+import QtyInput from "../qtyInput/QtyInput";
+import { addToCart } from "../../features/cart";
 const QuickView = () => {
   const { isQuickViewModelOpen, quickViewProduct } = useSelector((state) => state.product);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-
   const handleCancel = () => {
     dispatch(quickViewModelHandler(false));
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...quickViewProduct, quantity: quantity }));
   };
 
   return (
@@ -55,6 +61,8 @@ const QuickView = () => {
                   </Link>
                 </div>
               </div>
+              <div className="description"></div>
+              <Link href="#">View details</Link>
             </section>
 
             <section aria-labelledby="options-heading" className="mt-10">
@@ -63,17 +71,16 @@ const QuickView = () => {
               </h3>
 
               <form>
-                <Variant
-                  options={options}
-                  variants={variant}
-                  // selectedVariant={selectedVariant}
-                  // variantHandler={variantHandler}
-                />
+                {quickViewProduct.options?.length > 0 && (
+                  <Variant options={options} variants={variant} />
+                )}
+                <QtyInput value={quantity} quantityHandler={(value) => setQuantity(value)} />
                 <button
-                  type="submit"
+                  type="button"
                   className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={addToCartHandler}
                 >
-                  Add to bag
+                  Add to Cart
                 </button>
               </form>
             </section>

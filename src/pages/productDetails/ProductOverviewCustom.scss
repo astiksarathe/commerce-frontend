@@ -2,10 +2,12 @@
   background-color: #f9f9f9;
   padding: 1rem;
   overflow: hidden;
-  & > div {
+
+  &>div {
     width: fit-content;
     margin: auto;
   }
+
   &__description,
   &__specification,
   &__shipping-and-delivery {
@@ -25,5 +27,69 @@
       width: 100%;
       margin: 0.5rem 0;
     }
+  }
+}
+
+del {
+  font-size: 16px;
+  margin-left: 1rem;
+}
+
+.product-sku {
+  font-size: 14px;
+  color: #717171;
+  font-weight: 500;
+}
+
+.add-to-cart-btn {
+  &>span:not(:first-child) {
+    margin-left: 1rem
+  }
+}
+
+.shipping-and-delivery_tab {
+  width: min(90%, 1000px);
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media (max-width:48rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shipping_section,
+.return-and-exchange_section {
+  padding: 2rem;
+
+  .text {
+    margin-left: 0.5rem;
+  }
+
+  &>h4 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  ul {
+    margin-top: 1rem;
+    list-style: disc;
+    padding-left: 2rem;
+
+    li {
+      line-height: 1.6rem;
+    }
+  }
+
+  @media (max-width:48rem) {
+    padding: 0.5rem;
+  }
+}
+
+.quantity-container {
+  margin-block: 1rem;
+
+  h4 {
+    margin-bottom: 0.5rem;
   }
 }
