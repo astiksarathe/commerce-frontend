@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
+import $ from "jquery";
+
 import reportWebVitals from "./reportWebVitals";
 
 // React Redux
@@ -26,7 +28,7 @@ import TermsAndConditions from "./pages/termsAndConditions";
 import Search from "./pages/search/Search";
 import Home from "./pages/home";
 import ProductDetails from "./pages/productDetails/";
-
+import ProductList from "./pages/productList/ProductList";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
@@ -43,7 +45,11 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "product/:url",
+        path: "shop/",
+        element: <ProductList />,
+      },
+      {
+        path: "shop/:url",
         element: <ProductDetails />,
       },
       {

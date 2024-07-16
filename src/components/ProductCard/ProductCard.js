@@ -37,7 +37,7 @@ const ProductCard = () => {
   const productDetail = (product) => {
     dispatch(selectedProductForDetail(product.url)); //selectedProductURL
     dispatch(getProductByURL(product.url));
-    navigate(`/product/${product.url}`);
+    navigate(`/shop/${product.url}`);
   };
 
   const productRender = () => {
@@ -72,7 +72,7 @@ const ProductCard = () => {
             </div>
           </div>
         </div>
-        <h3 className="mt-4 text-sm text-gray-700" onClick={() => productDetail(product)}>
+        <h3 className="mt-4 text-sm text-gray-700 product-card-title" onClick={() => productDetail(product)}>
           {product.title}
         </h3>
         <p className="mt-1 text-lg font-medium text-gray-900">

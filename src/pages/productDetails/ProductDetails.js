@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./productDetails.scss";
-import { Rate } from "antd";
+import { Button, Rate } from "antd";
 import {
   HeartOutlined,
+  RightOutlined,
   RollbackOutlined,
+  ShareAltOutlined,
   ShoppingCartOutlined,
+  SmileOutlined,
   TruckOutlined,
 } from "@ant-design/icons";
 import QtyInput from "../../components/qtyInput";
@@ -14,7 +17,10 @@ import { addToCart } from "../../features/cart";
 import { getProductByURL } from "../../features/product/productSlice";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
-
+import { capitalizeFirstLetters, generateRandomNumber } from "../../utils/common.js";
+import ShareButtons from "../../components/shareButtons";
+import DraftEditor from "../../components/draftEditor/DraftEditor.js";
+import ProductImageCarousel from "./ProductImageCarousel.js";
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState(0);
@@ -41,22 +47,20 @@ const ProductDetails = () => {
       <p className="avs awx axv">
         {`Rs. ${sellingPrice}  `}
         {MRP !== sellingPrice && <del>{` Rs. ${MRP}`}</del>}
+        <span> incl. GST</span>
       </p>
     );
   };
+  const currentUrl = window.location.href; // or any specific URL you want to share
+  const title = "Check out this amazing product!";
 
-  const titleCase = (str) => {
-    if (!str || str.length === 0) return str;
-    str = str.toLowerCase();
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
   return (
     <>
-      <Breadcrumb />
-      <div className="aln">
-        <div className="gx tw ari aru cex cff cxe ddc">
+      <Breadcrumb title={productDetails.title} />
+      <div className="aln product-details-container">
+        <div className="gx tw ari cex cxe ddc">
           <div className="cuv cym cyz czu">
-            <div className="lx yt">
+            {/* <div className="lx yt">
               <div className="gx lk md to tw bxi cxh">
                 <div className="mb yl zs" role="tablist" aria-orientation="horizontal">
                   <button
@@ -218,14 +222,13 @@ const ProductDetails = () => {
                   }}
                 ></span>
               </div>
-            </div>
-            <div className="kw ari bwu cen cud">
-              <h1 className="avs awd awx axv product-title">{titleCase(productDetails.title)}</h1>
+            </div> */}
+            <ProductImageCarousel />
+            <div className="kw bwu cen cud">
+              <h1 className="avs awd awx axv product-title">
+                {capitalizeFirstLetters(productDetails.title)}
+              </h1>
               <p className="product-sku">SKU: {productDetails.SKU}</p>
-              <div className="lf">
-                <h2 className="t">Product information</h2>
-                {renderPrice(productDetails)}
-              </div>
               <div className="lf">
                 <h3 className="t">Reviews</h3>
                 <div className="lx za">
@@ -233,89 +236,99 @@ const ProductDetails = () => {
                     3.9<span className="t"> out of 5 stars</span>
                   </p>
                   <div className="jp lx za">
-                    <Rate allowHalf defaultValue={2.5} />
+                    <Rate disabled allowHalf defaultValue={2.5} />
                   </div>
                   <div aria-hidden="true" className="jx awa axo"></div>
                   <div className="jx lx">
                     <a href="#" className="awa awe ayh blb">
-                      See all 512 reviews
+                      (5 customer reviews)
                     </a>
                   </div>
                 </div>
               </div>
+              <div className="lf">
+                <h2 className="t">Product information</h2>
+                {renderPrice(productDetails)}
+              </div>
+              <div className="announcement">
+                <p>
+                  <img className="flashit" src="/assets/flames-icon.svg" alt="flames" />
+                  Hurry! Over 14 people have this in their carts
+                </p>
+                <p>
+                  <img className="flashit" src="/assets/flames-icon.svg" alt="flames" />2 sold in
+                  last 12 hours
+                </p>
+              </div>
               <div className="lk">
-                <h3 className="t">Description</h3>
+                <h3 className="t">Options</h3>
                 <div className="abz avy axt">
-                  <p>
-                    The Zip Tote Basket is the perfect midpoint between shopping tote and comfy
-                    backpack. With convertible straps, you can hand carry, should sling, or backpack
-                    this convenient and spacious bag. The zip top and durable canvas construction
-                    keeps your goods protected for all-day use.
-                  </p>
+                  <p>Size Free</p>
+                </div>
+              </div>
+
+              <div className="lk">
+                <h3 className="t">availablility</h3>
+                <div className="abz avy axt">
+                  <p>In Stock</p>
                 </div>
               </div>
               <form className="lk">
-                <div>
-                  <h3 className="awa awe axs">Color</h3>
-                  <fieldset aria-label="Choose a color" className="lb">
-                    <div className="lx za abj" id="headlessui-radiogroup-:r8:" role="radiogroup">
-                      <span
-                        aria-label="Washed Black"
-                        className="bcl bbu ab fp lx xr za zf adt aql bmv"
-                        id="headlessui-radio-:r9:"
-                        role="radio"
-                        aria-checked="true"
-                        tabIndex="0"
-                        data-headlessui-state="checked"
-                        data-checked=""
-                      >
-                        <span aria-hidden="true" className="ais og sk adt afa afs ahl"></span>
-                      </span>
-                      <span
-                        aria-label="White"
-                        className="bcg ab fp lx xr za zf adt aql bmv"
-                        id="headlessui-radio-:ra:"
-                        role="radio"
-                        aria-checked="false"
-                        tabIndex="-1"
-                        data-headlessui-state=""
-                      >
-                        <span aria-hidden="true" className="aln og sk adt afa afs ahl"></span>
-                      </span>
-                      <span
-                        aria-label="Washed Gray"
-                        className="bcj ab fp lx xr za zf adt aql bmv"
-                        id="headlessui-radio-:rb:"
-                        role="radio"
-                        aria-checked="false"
-                        tabIndex="-1"
-                        data-headlessui-state=""
-                      >
-                        <span aria-hidden="true" className="aiq og sk adt afa afs ahl"></span>
-                      </span>
-                    </div>
-                  </fieldset>
-                </div>
                 <div className="quantity-container">
                   <h4>Quantity</h4>
                   <QtyInput value={quantity} quantityHandler={quantityHandler} />
                 </div>
-                <div className="kw lx">
-                  <button
-                    type="button"
-                    className="lx um un za zf adv afa agz ajq arm arz avy awe bah bir bmv bna bnm boc bog bze add-to-cart-btn"
-                    onClick={() => {
-                      addToCartHandler({ ...productDetails, quantity });
-                    }}
-                  >
-                    <ShoppingCartOutlined /> <span>Add to Cart</span>
-                  </button>
-                  <button type="button" className="jx lx za zf adv arf arz axp bhy bkt">
-                    <HeartOutlined style={{ fontSize: "22px" }} />
-                    <span className="t">Add to favorites</span>
+                <div className="checkout-rel-btns">
+                  <div>
+                    <button
+                      type="button"
+                      className="lx um un za zf adv afa agz ajq arm arz avy awe bah bir bmv bna bnm boc bog bze add-to-cart-btn"
+                      onClick={() => {
+                        addToCartHandler({ ...productDetails, quantity });
+                      }}
+                    >
+                      <ShoppingCartOutlined /> <span>Add to Cart</span>
+                    </button>
+                    <button type="button" className="jx lx za zf adv arf arz axp bhy bkt">
+                      <HeartOutlined style={{ fontSize: "22px" }} />
+                      <span className="t">Add to favorites</span>
+                    </button>
+                  </div>
+
+                  <button className="buy-now-btn">
+                    <div>
+                      BUY NOW with UPI / COD{" "}
+                      <img src="/assets/upi_options.svg" alt="payment options" />
+                      <RightOutlined />
+                    </div>
                   </button>
                 </div>
+                <div className="product-delivery-view-status">
+                  <p>
+                    <strong>
+                      <TruckOutlined />
+                      Estimated Delivery
+                    </strong>
+                    <span>: Wednesday, Jul 17 – Friday, Jul 19</span>
+                  </p>
+                  <p>
+                    <SmileOutlined /> <strong>{generateRandomNumber(100)} people</strong>{" "}
+                    <span> are viewing this right now</span>
+                  </p>
+                </div>
               </form>
+              <p className="share-container">
+                <span>
+                  <ShareAltOutlined /> <strong>Share</strong>
+                </span>
+                <ShareButtons url={currentUrl} title={title} />
+              </p>
+              <div className="razorpay-secured safe-checkout">
+                <fieldset>
+                  <legend>Guaranteed Safe Checkout</legend>
+                  <img src="/assets/razorpay_secure.jpg" alt="Razorpay Secure Payment Option" />
+                </fieldset>
+              </div>
             </div>
           </div>
         </div>
@@ -340,41 +353,52 @@ const ProductDetails = () => {
               SHIPPING & DELIVERY
             </button>
           </div>
-          <div>
-            {tab === 0 && <div> </div>}
-            {tab === 1 && <div> </div>}
-            {tab === 2 && (
-              <div className="shipping-and-delivery_tab">
-                <div className="shipping_section">
-                  <h4>
-                    <TruckOutlined />
-                    <span className="text"> Free Shipping on Orders Over INR 1000</span>
-                  </h4>
-                  <ul>
-                    <li>
-                      For orders below INR 1000, shipping charges will be calculated at checkout.
-                    </li>
-                    <li>Delivery within 5-7 business days.</li>
-                    <li>Express delivery services are also available.</li>
-                  </ul>
-                </div>
-                <div className="return-and-exchange_section">
-                  <h4>
-                    <RollbackOutlined />
-                    <span className="text">Return and Exchange</span>
-                  </h4>
-                  <ul>
-                    <li>
-                      We offer a return or exchange in case of damage or if an incorrect product is
-                      delivered.
-                    </li>
-                    <li>Easy and complimentary, within 3 days.</li>
-                    <li>See our return and exchange policy for conditions and procedures.</li>
-                  </ul>
-                </div>
+        </div>
+        <div>
+          {tab === 0 && <DraftEditor value={productDetails.description} />}
+          {tab === 1 && (
+            <div className="specification">
+              {productDetails.specification.map(({ key, value }, index) => (
+                <React.Fragment key={index}>
+                  <div className="specification-key">{key}</div>
+                  <div className="specification-value" style={{ justifySelf: "end" }}>
+                    {value}
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+          )}
+          {tab === 2 && (
+            <div className="shipping-and-delivery_tab">
+              <div className="shipping_section">
+                <h4>
+                  <TruckOutlined />
+                  <span className="text"> Free Shipping on Orders Over INR 1000</span>
+                </h4>
+                <ul>
+                  <li>
+                    For orders below INR 1000, shipping charges will be calculated at checkout.
+                  </li>
+                  <li>Delivery within 5-7 business days.</li>
+                  <li>Express delivery services are also available.</li>
+                </ul>
               </div>
-            )}
-          </div>
+              <div className="return-and-exchange_section">
+                <h4>
+                  <RollbackOutlined />
+                  <span className="text">Return and Exchange</span>
+                </h4>
+                <ul>
+                  <li>
+                    We offer a return or exchange in case of damage or if an incorrect product is
+                    delivered.
+                  </li>
+                  <li>Easy and complimentary, within 3 days.</li>
+                  <li>See our return and exchange policy for conditions and procedures.</li>
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

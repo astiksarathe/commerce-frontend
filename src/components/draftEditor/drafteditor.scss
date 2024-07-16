@@ -1,0 +1,12 @@
+.display-description {
+    * {
+        width: fit-content;
+    }
+
+    width: min(90%, 1000px);
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    justify-items: center;
+}

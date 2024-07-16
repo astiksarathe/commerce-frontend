@@ -1,0 +1,31 @@
+.breadcrumb {
+    &-container {
+        height: 130px;
+        width: 100%;
+        padding: 1rem;
+        background-size: cover;
+        background-color: #f7f7f7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width:48rem) {
+            display: none;
+        }
+    }
+
+    &-page-title {
+        width: fit-content;
+        margin: auto;
+        font-size: 135%;
+        line-height: 1.6rem;
+        text-align: center;
+
+    }
+
+    &-links {
+        width: fit-content;
+        margin: auto;
+        font-size: 14px;
+    }
+}
