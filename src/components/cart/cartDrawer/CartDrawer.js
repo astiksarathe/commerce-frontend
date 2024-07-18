@@ -72,7 +72,7 @@ const CartDrawer = () => {
               <p className="cart-item__price">RS {product.sellingPrice}</p>
               <div className="cart-item__actions">
                 <p className="cart-item__quantity">
-                  <QtyInput value={product.quantity} />
+                  <QtyInput value={product.quantity} quantityHandler={() => {}} />
                 </p>
                 <div>
                   <button
