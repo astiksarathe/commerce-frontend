@@ -82,3 +82,6 @@
     </script>
   </variant-selects>
 {%- endunless -%}
+
+
+After clicking “Pay now”, you will be redirected to Razorpay Secure (UPI, Cards, Wallets, NetBanking) to complete your purchase securely.
