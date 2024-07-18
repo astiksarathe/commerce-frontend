@@ -2,9 +2,8 @@ import { MinusOutlined } from "@ant-design/icons";
 import { Button, Drawer, Space } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { cartDrawerHandler, removeFromCart } from "../../../features/cart";
-import { useNavigate } from "react-router-dom";
+import { addToCart, cartDrawerHandler, removeFromCart } from "../../../features/cart";
+import { useNavigate, Link } from "react-router-dom";
 import QtyInput from "../../qtyInput";
 import "./cartDrawer.scss";
 
@@ -14,6 +13,9 @@ const CartDrawer = () => {
   const { isCartDrawerOpen, cartList } = useSelector((state) => state.cart);
   const removeCart = (product) => {
     dispatch(removeFromCart({ ...product }));
+  };
+  const productQuantityHandler = (product, quantity) => {
+    dispatch(addToCart({ ...product, quantity }));
   };
   return (
     <Drawer
@@ -72,7 +74,12 @@ const CartDrawer = () => {
               <p className="cart-item__price">RS {product.sellingPrice}</p>
               <div className="cart-item__actions">
                 <p className="cart-item__quantity">
-                  <QtyInput value={product.quantity} quantityHandler={() => {}} />
+                  <QtyInput
+                    value={product.quantity}
+                    quantityHandler={(quantity) => {
+                      productQuantityHandler(product, quantity);
+                    }}
+                  />
                 </p>
                 <div>
                   <button

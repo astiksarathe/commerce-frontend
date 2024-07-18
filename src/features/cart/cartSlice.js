@@ -19,8 +19,7 @@ const cartSlice = createSlice({
       state.cartList = cartList;
     },
     addToCart: (state, action) => {
-      const { productId, quantity, title, url, price } = action.payload;
-
+      const { productId, quantity, title, url, price, MRP, sellingPrice } = action.payload;
       // Find the existing product index
       const productIndex = state.cartList.findIndex((product) => product.productId === productId);
 
@@ -30,8 +29,8 @@ const cartSlice = createSlice({
         quantity,
         title,
         url,
-        sellingPrice: price.sellingPrice,
-        MRP: price.MRP,
+        sellingPrice: price?.sellingPrice || sellingPrice,
+        MRP: price?.MRP || MRP,
       };
 
       if (productIndex >= 0) {
