@@ -2,7 +2,14 @@ import React from "react";
 import "./cartSummary.scss";
 import { Button } from "antd";
 import { QuestionCircleFilled } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { checkoutModelHandler } from "../../../features/checkout";
 const CartSummary = () => {
+  const dispatch = useDispatch();
+
+  const checkoutHandler = () => {
+    dispatch(checkoutModelHandler(true));
+  };
   return (
     <section className="cart-summary">
       <h2 id="summary-heading" className="">
@@ -31,9 +38,8 @@ const CartSummary = () => {
         </div>
       </dl>
       <div className="cart-checkout-btn">
-        <Button className="btn-black" type="primary" block>
-          {" "}
-          Checkout{" "}
+        <Button className="btn-black" type="primary" block onClick={checkoutHandler}>
+          Checkout
         </Button>
       </div>
     </section>

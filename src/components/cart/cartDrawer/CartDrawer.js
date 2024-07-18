@@ -42,7 +42,7 @@ const CartDrawer = () => {
             <p>$262.00</p>
           </div>
           <p className="cart__drawer-shipping">Shipping and taxes calculated at checkout.</p>
-          <Button className="btn-black" type="primary" block>
+          <Button className="btn-black" size="large" type="primary" block>
             Check out
           </Button>
           <Button type="link" block onClick={() => navigate("/cart")}>

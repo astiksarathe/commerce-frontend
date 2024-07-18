@@ -1,51 +1,45 @@
-import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import React from "react";
+import { Modal } from "antd";
 import "./checkout.scss";
 import CheckoutForm from "./CheckoutForm";
 import OrderSummary from "./OrderSummary";
 import Payment from "./Payment";
+import { useDispatch, useSelector } from "react-redux";
+import { checkoutModelHandler } from "../../features/checkout";
 
 const Checkout = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [checked, setChecked] = useState(true);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const { isCheckoutModelOpen } = useSelector((state) => state.checkout);
+  const dispatch = useDispatch();
 
   const handleOk = () => {
-    setIsModalOpen(false);
+    dispatch(checkoutModelHandler(false));
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    dispatch(checkoutModelHandler(false));
   };
 
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
-      <Modal
-        style={{ top: 0 }}
-        maskClosable={false}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[]}
-        width={800}
-        className="checkout_modal"
-      >
-        <main className="checkout_wrapper">
-          <div className="checkout_left-section">
-            <CheckoutForm />
-            <Payment />
-          </div>
-          <div className="checkout_right-section">
-            <OrderSummary />
-          </div>
-        </main>
-      </Modal>
-    </>
+    <Modal
+      style={{ top: 0 }}
+      maskClosable={false}
+      open={isCheckoutModelOpen}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      footer={[]}
+      width={800}
+      className="checkout_modal"
+    >
+      <main className="checkout_wrapper">
+        <div className="checkout_left-section">
+          <CheckoutForm />
+          <Payment />
+        </div>
+        <div className="checkout_right-section">
+          <OrderSummary />
+        </div>
+      </main>
+    </Modal>
   );
 };
 

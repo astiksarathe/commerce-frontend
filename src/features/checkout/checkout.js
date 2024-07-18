@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  initiateCheckout: {
+  checkoutForm: {
     shippingAddress: {},
     billingAddress: {},
     billingSameAsShipping: true,
   },
-  isCheckoutModelOpen: false,
+  isCheckoutModelOpen: true,
   isLoading: false,
   error: null,
 };
@@ -25,15 +25,15 @@ export const { checkoutModelHandler } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
 
-// fullName ,
-// phoneNumber,
-// email,
-// address1
-// landmark,
-// city,
-// state,
-// pincode
-// country
+// fullName , -
+// phoneNumber, -
+// email, -
+// address1 -
+// landmark, -
+// city, -
+// state, -
+// pincode -
+// country -
 
 // productId
 // productTitle
