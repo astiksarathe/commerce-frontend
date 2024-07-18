@@ -5,6 +5,7 @@ import authDrawerReducer from "../features/authDrawer";
 import authReducer from "../features/auth";
 import cartReducer from "../features/cart";
 import productReducer from "../features/product";
+import pincodeReducer from "../features/pincode";
 
 const rootReducer = combineReducers({
   authDrawer: authDrawerReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   product: productReducer,
+  pincode: pincodeReducer,
 });
 
 export default rootReducer;
