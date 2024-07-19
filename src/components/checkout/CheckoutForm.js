@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input, Form, Checkbox, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getPinCodeDetails } from "../../features/pincode/pincoodeSlice";
-
-const Address = ({ onFinish, pincodeHandler }) => {
+import { checkoutFormHandler } from "../../features/checkout/checkout";
+import PropTypes from "prop-types";
+const Address = ({ pincodeHandler, formName }) => {
+  const dispatch = useDispatch();
   return (
     <Form
-      name="shippingDetails"
+      name={formName}
       style={{ maxWidth: 700 }}
       layout="vertical"
       variant="filled"
       initialValues={{ remember: true }}
       autoComplete="off"
-      onFinish={onFinish}
+      onFieldsChange={(event) => {
+        const { name, value } = event[0];
+        dispatch(checkoutFormHandler({ name: name[0], value, key: formName }));
+      }}
     >
       <Form.Item
         label="Pincode"
@@ -116,21 +121,19 @@ const Address = ({ onFinish, pincodeHandler }) => {
   );
 };
 
+Address.propTypes = {
+  pincodeHandler: PropTypes.func.isRequired,
+  formName: PropTypes.string.isRequired,
+};
+
 const CheckoutForm = () => {
-  const [billingSameAsShipping, setIsBillingAddressSame] = useState(true);
-  const { pincodeDetails } = useSelector((state) => state.pincode);
   const { checkoutForm } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
 
   const pincodeHandler = (e) => {
     e.preventDefault();
     const { value } = e.target;
-    console.log(value, value.length);
     if (value.length === 6) dispatch(getPinCodeDetails(value));
-  };
-  console.log(checkoutForm);
-  const onFinish = (values) => {
-    console.log(values);
   };
   return (
     <div className="checkout_form">
@@ -142,6 +145,10 @@ const CheckoutForm = () => {
           style={{ maxWidth: 700 }}
           layout="vertical"
           autoComplete="off"
+          onFieldsChange={(event) => {
+            const { name, value } = event[0];
+            dispatch(checkoutFormHandler({ name: name[0], value, key: "shippingAddress" }));
+          }}
         >
           <Form.Item
             label="Your Name"
@@ -188,15 +195,22 @@ const CheckoutForm = () => {
       </div>
       <div>
         <h1 className="checkout_heading">Shipping Details</h1>
-        <Address pincodeHandler={pincodeHandler} onFinish={onFinish} />
-        <Checkbox checked={checkoutForm.billingSameAsShipping} onChange={() => {}}>
+        <Address pincodeHandler={pincodeHandler} formName="shippingAddress" />
+        <Checkbox
+          name="billingSameAsShipping"
+          checked={checkoutForm.billingSameAsShipping}
+          onChange={(event) => {
+            const { checked, name } = event.target;
+            dispatch(checkoutFormHandler({ name, value: checked }));
+          }}
+        >
           Billing address is same as the shipping address
         </Checkbox>
       </div>
       {!checkoutForm.billingSameAsShipping && (
         <div>
           <h1 className="checkout_heading">Billing Details</h1>
-          <Address pincodeHandler={pincodeHandler} onFinish={onFinish} />
+          <Address pincodeHandler={pincodeHandler} formName="billingAddress" />
         </div>
       )}
     </div>

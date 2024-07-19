@@ -22,15 +22,15 @@ const CartSummary = () => {
         </div>
         <div className="cart-price-detail">
           <dt className="cart-price-term">
-            subtotal <QuestionCircleFilled />
+            Coupon Discount <QuestionCircleFilled />
           </dt>
-          <dd className="cart-price-desc">Rs 400</dd>
+          <dd className="cart-price-desc">-£0.00</dd>
         </div>
         <div className="cart-price-detail">
           <dt className="cart-price-term">
-            subtotal <QuestionCircleFilled />
+            Shipping <QuestionCircleFilled />
           </dt>
-          <dd className="cart-price-desc">Rs 400</dd>
+          <dd className="cart-price-desc">Yet to be added</dd>
         </div>
         <div className="cart-price-detail">
           <dt className="cart-order-total">subtotal</dt>

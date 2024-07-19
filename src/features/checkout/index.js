@@ -1,4 +1,4 @@
-import checkoutReducer, { checkoutModelHandler } from "./checkout";
+import checkoutReducer, { checkoutFormHandler, checkoutModelHandler } from "./checkout";
 
-export { checkoutModelHandler };
+export { checkoutModelHandler, checkoutFormHandler };
 export default checkoutReducer;

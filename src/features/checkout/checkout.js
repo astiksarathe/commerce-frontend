@@ -18,10 +18,20 @@ const checkoutSlice = createSlice({
     checkoutModelHandler: (state, action) => {
       state.isCheckoutModelOpen = action.payload;
     },
+    checkoutFormHandler: (state, action) => {
+      const { name, value, key } = action.payload;
+      if (!name || value === undefined) return;
+
+      if (!key) {
+        state.checkoutForm[name] = value;
+      } else {
+        state.checkoutForm[key] = { ...state.checkoutForm[key], [name]: value };
+      }
+    },
   },
 });
 
-export const { checkoutModelHandler } = checkoutSlice.actions;
+export const { checkoutModelHandler, checkoutFormHandler } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
 
