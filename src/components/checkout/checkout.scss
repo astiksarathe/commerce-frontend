@@ -27,10 +27,12 @@
 
 .checkout_wrapper {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: "checkout_left_section checkout_right_section";
     gap: 1rem;
 
     @media (max-width:48rem) {
+        grid-template-columns: 1fr;
         grid-template-areas: "checkout_right_section" "checkout_left_section";
     }
 }
@@ -313,6 +315,70 @@
 /*
     Payment Style End
 */
+
+/*
+    Shipping Method Style Start
+*/
+
+.shipping_method_container {
+    @extend .payment_container;
+}
+
+.shipping_method_heading {
+    @extend .payment_heading;
+}
+
+.shipping_method_options {
+    @extend .payment_options;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.shipping_type_wrapper {
+    display: flex;
+}
+
+.shipping_type {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    min-width: 145px;
+    min-height: 50px;
+    /* width: 100%; */
+    border-radius: 4px;
+    padding: 8px 6px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.shipping_type_name {
+    font-size: 12px;
+    margin-left: 6px;
+    font-weight: 600;
+    color: #292929;
+}
+
+.standard-shipping {
+    color: rgb(243, 182, 39)
+}
+
+.express-shipping {
+    color: rgb(0, 81, 191)
+}
+
+.selected-shipping {
+    border: 1px solid #6f57e9;
+}
+
+/*
+    Shipping Method Style End
+*/
+
+
 
 
 

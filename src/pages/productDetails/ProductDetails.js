@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./productDetails.scss";
-import { Button, Rate } from "antd";
+import { Rate } from "antd";
 import {
   HeartOutlined,
   RightOutlined,
@@ -15,12 +15,13 @@ import "./ProductOverviewCustom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../features/cart";
 import { getProductByURL } from "../../features/product/productSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import { capitalizeFirstLetters, generateRandomNumber } from "../../utils/common.js";
 import ShareButtons from "../../components/shareButtons";
 import DraftEditor from "../../components/draftEditor/DraftEditor.js";
 import ProductImageCarousel from "./ProductImageCarousel.js";
+import { buyNowButtonHandler, checkoutModelHandler } from "../../features/checkout/checkout.js";
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState(0);
@@ -31,7 +32,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     dispatch(getProductByURL(url));
-  }, []);
+  }, [dispatch, url]);
 
   const quantityHandler = (value) => {
     setQuantity(value);
@@ -240,9 +241,9 @@ const ProductDetails = () => {
                   </div>
                   <div aria-hidden="true" className="jx awa axo"></div>
                   <div className="jx lx">
-                    <a href="#" className="awa awe ayh blb">
+                    <Link to="#" className="awa awe ayh blb">
                       (5 customer reviews)
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -295,9 +296,16 @@ const ProductDetails = () => {
                     </button>
                   </div>
 
-                  <button className="buy-now-btn">
+                  <button
+                    className="buy-now-btn"
+                    type="button"
+                    onClick={() => {
+                      dispatch(buyNowButtonHandler({ quantity, productDetails }));
+                      dispatch(checkoutModelHandler(true));
+                    }}
+                  >
                     <div>
-                      BUY NOW with UPI / COD{" "}
+                      BUY NOW with UPI / COD
                       <img src="/assets/upi_options.svg" alt="payment options" />
                       <RightOutlined />
                     </div>

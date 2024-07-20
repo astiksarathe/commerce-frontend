@@ -6,6 +6,7 @@ import OrderSummary from "./OrderSummary";
 import Payment from "./Payment";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutModelHandler } from "../../features/checkout";
+import ShippingMethods from "./ShippingMethods";
 
 const Checkout = () => {
   const { isCheckoutModelOpen } = useSelector((state) => state.checkout);
@@ -33,6 +34,7 @@ const Checkout = () => {
       <main className="checkout_wrapper">
         <div className="checkout_left-section">
           <CheckoutForm />
+          <ShippingMethods />
           <Payment />
         </div>
         <div className="checkout_right-section">

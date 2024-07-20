@@ -5,6 +5,14 @@ const initialState = {
     shippingAddress: {},
     billingAddress: {},
     billingSameAsShipping: true,
+    paymentStatus: { paymentMode: 1 },
+    subscribeToUpdate: true,
+    products: [],
+    shipping: {
+      shippingType: 1,
+      shippingCharges: 0,
+    },
+    subtotal: 0,
   },
   isCheckoutModelOpen: true,
   isLoading: false,
@@ -28,10 +36,44 @@ const checkoutSlice = createSlice({
         state.checkoutForm[key] = { ...state.checkoutForm[key], [name]: value };
       }
     },
+
+    buyNowButtonHandler: (state, action) => {
+      const { quantity, productDetails } = action.payload;
+      if (!quantity || !productDetails) return;
+      const product = {
+        productId: productDetails.productId,
+        productTitle: productDetails.title,
+        productURL: productDetails.url,
+        SKU: productDetails.SKU,
+        MRP: productDetails.price.MRP,
+        quantity: quantity,
+        price: productDetails.price.sellingPrice,
+        thumbnilImg: productDetails.thumbnilImg,
+        trackingLink: "",
+        location: "",
+      };
+      state.checkoutForm.subtotal = parseInt(product.price) * parseInt(product.quantity);
+      state.checkoutForm.products = [product];
+    },
+
+    updateShippingMethod: (state, action) => {
+      const { id, charges } = action.payload;
+      if (!id || charges === undefined) return;
+
+      state.checkoutForm.shipping = {
+        shippingType: id,
+        shippingCharges: charges,
+      };
+    },
   },
 });
 
-export const { checkoutModelHandler, checkoutFormHandler } = checkoutSlice.actions;
+export const {
+  checkoutModelHandler,
+  updateShippingMethod,
+  checkoutFormHandler,
+  buyNowButtonHandler,
+} = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
 
