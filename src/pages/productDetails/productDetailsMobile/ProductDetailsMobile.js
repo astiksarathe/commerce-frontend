@@ -3,6 +3,7 @@ import "./productDetailsMobile.scss";
 import ProductImageCarousel from "../ProductImageCarousel";
 import { Rate } from "antd";
 import ShareButtons from "../../../components/shareButtons";
+import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 
 const ProductDetailsMobile = () => {
   const [wishlist, setWislisted] = useState(false);
@@ -144,7 +145,201 @@ const ProductDetailsMobile = () => {
           </fieldset>
         </div>
         <div className="mv_description_wrapper seperation">
-          <h1 className="mv_description_heading">Description</h1>
+          <ReadMoreToggle>
+            {" "}
+            <>
+              <h1 className="mv_description_heading">Description</h1>
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+              <p>
+                You are supposed to only post the code that is necessairy to ask a clear question.
+                Not the entire code of your component or your app. And adding random text like
+                wikipedia entries (as you have done in another question) or just duplicating you
+                question text is not going to raise the quality of your question, it lowers it
+                drastically. Please trim down the code. This would also be good advice for your
+                other questions and for future questions.
+              </p>
+              <br />
+            </>
+          </ReadMoreToggle>
         </div>
         <div className="mv_additional_info_wrapper seperation">
           <h1 className="mv_additional_info_heading">Additional information</h1>
