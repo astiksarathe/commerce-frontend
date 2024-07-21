@@ -7,6 +7,7 @@ import Checkout from "./components/checkout";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCart } from "./features/cart";
+import "./animation.scss";
 
 function App() {
   const dispatch = useDispatch();
