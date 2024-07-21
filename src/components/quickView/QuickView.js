@@ -50,7 +50,7 @@ const QuickView = () => {
                 <h4 className="sr-only">Reviews</h4>
                 <div className="flex items-center">
                   <div className="flex items-center">
-                    <Rate value={quickViewProduct.aggregateRating} />
+                    <Rate disabled value={quickViewProduct.aggregateRating} />
                   </div>
                   <p className="sr-only">3.9 out of 5 stars</p>
                   <Link
