@@ -1,3 +1,4 @@
 import ProductDetails from "./ProductDetails";
+import productDetailsMobile from "./productDetailsMobile/ProductDetailsMobile";
 
-export default ProductDetails;
+export default productDetailsMobile;

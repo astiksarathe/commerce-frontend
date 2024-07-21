@@ -16,7 +16,7 @@ const cartSlice = createSlice({
     },
     setCart: (state, action) => {
       const cartList = JSON.parse(localStorage.getItem("cart"));
-      state.cartList = cartList;
+      if (cartList && cartList.length) state.cartList = cartList;
     },
     addToCart: (state, action) => {
       const { productId, quantity, title, url, price, MRP, sellingPrice } = action.payload;
