@@ -97,7 +97,7 @@ const ProductDetailsMobile = () => {
             </p>
           )}
         </div>
-        <div className="mv_delivery_question_wrapper seperation">
+        <div className="seperation mv_delivery_question_wrapper">
           <button type="button" className="mv_delivery_wrapper">
             <span className="mv_delivery_icon">
               <img src="/assets/icons/share.svg" alt="Delivery and return details" />

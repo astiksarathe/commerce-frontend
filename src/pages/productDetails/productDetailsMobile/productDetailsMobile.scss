@@ -103,6 +103,10 @@
     &_delivery_question_wrapper {
         display: flex;
         flex-direction: column;
+        margin-left: -10px;
+        margin-right: -10px;
+        margin-top: 0 !important;
+        padding-bottom: 10px !important;
     }
 
     &_delivery_wrapper,
@@ -112,7 +116,8 @@
         align-items: center;
         gap: 10px;
         background: white;
-        padding: 10px 0;
+        padding: 10px;
+
 
         &::after {
             content: url('../../../../public/assets/icons/right-arrow.svg');
@@ -129,7 +134,7 @@
     }
 
     &_question_wrapper {
-        border-top: 1px solid #f2f2f2;
+        border-top: 2px solid #f2f2f2;
     }
 
 }
