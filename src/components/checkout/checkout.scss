@@ -1,6 +1,12 @@
 /*
    Checkout Style Start
 */
+.ant-modal.checkout_modal {
+    height: 100vh;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 .checkout_modal .ant-modal-close {
     position: absolute;
     right: 2px;
@@ -16,7 +22,7 @@
 }
 
 .ant-modal.checkout_modal .ant-modal-content {
-    border-radius: 25px;
+    // border-radius: 25px;
     background-color: #F5F5F5;
     padding: 0;
 
@@ -26,6 +32,9 @@
 }
 
 .checkout_wrapper {
+    height: 100vh;
+    overflow: scroll;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "checkout_left_section checkout_right_section";
@@ -388,6 +397,9 @@
     FULL SCREEN MODEL
 
 */
+.checkout-model-open {
+    overflow: hidden;
+}
 
 .ant-modal {
 

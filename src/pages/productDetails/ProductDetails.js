@@ -253,8 +253,8 @@ const ProductDetails = () => {
               </div>
               <div className="announcement">
                 <p>
-                  <img className="flashit" src="/assets/flames-icon.svg" alt="flames" />
-                  Hurry! Over 14 people have this in their carts
+                  <img className="flashit" src="/assets/flames-icon.svg" alt="flames" /> Hurry! Over
+                  14 people have this in their carts
                 </p>
                 <p>
                   <img className="flashit" src="/assets/flames-icon.svg" alt="flames" />2 sold in
@@ -305,7 +305,7 @@ const ProductDetails = () => {
                     }}
                   >
                     <div>
-                      BUY NOW with UPI / COD
+                      BUY NOW with UPI / COD{" "}
                       <img src="/assets/upi_options.svg" alt="payment options" />
                       <RightOutlined />
                     </div>

@@ -14,7 +14,7 @@ const initialState = {
     },
     subtotal: 0,
   },
-  isCheckoutModelOpen: true,
+  isCheckoutModelOpen: false,
   isLoading: false,
   error: null,
 };
