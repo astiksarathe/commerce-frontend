@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./readMoreToggle.scss";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const ReadMoreToggle = ({ children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -18,6 +18,9 @@ const ReadMoreToggle = ({ children }) => {
       </button>
     </div>
   );
+};
+ReadMoreToggle.propTypes = {
+  children: PropTypes.any,
 };
 
 export default ReadMoreToggle;
