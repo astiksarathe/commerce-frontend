@@ -3,10 +3,14 @@ import { Button, Drawer, Form, Input, Rate, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useEffect, useState } from "react";
 import "./review.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { postReviewModelHandler } from "../../features/review";
 
 const PostReview = () => {
   const [form] = Form.useForm();
   const [rating, setRating] = useState(1);
+  const { isPostReviewModelOpen } = useSelector((state) => state.review);
+  const dispatch = useDispatch();
 
   const onFinish = (e) => {
     console.log(e);
@@ -29,11 +33,19 @@ const PostReview = () => {
       title="Review"
       placement={"right"}
       width={340}
-      onClose={() => {}}
-      open={true}
+      onClose={() => {
+        dispatch(postReviewModelHandler(false));
+      }}
+      open={isPostReviewModelOpen}
       extra={
         <Space>
-          <Button type="text" style={{ color: "white", fontSize: 14 }} onClick={() => {}}>
+          <Button
+            type="text"
+            style={{ color: "white", fontSize: 14 }}
+            onClick={() => {
+              dispatch(postReviewModelHandler(false));
+            }}
+          >
             CLOSE
             <MinusOutlined style={{ color: "white", fontSize: 14 }} />
           </Button>

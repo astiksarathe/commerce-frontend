@@ -5,6 +5,8 @@ import { green } from "@ant-design/colors";
 import PropTypes from "prop-types";
 import "./review.scss";
 import PostReview from "./PostReview";
+import { useDispatch } from "react-redux";
+import { postReviewModelHandler } from "../../features/review";
 const ReviewItems = () => {
   return (
     <div className="review-item">
@@ -60,19 +62,21 @@ const ReviewDataItem = ({ rating, percentage }) => {
 };
 
 const Review = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className="review-component">
         <div className="review-header">
           <h2 className="review-title">Reviews (5)</h2>
           <div className="review-summary">
+            <p className="review-count">Based on 1624 reviews</p>
             <div>
               <div className="review-stars">
-                <Rate disabled value={5} />
+                <strong>5.00</strong>
+                <span>Overall</span>
               </div>
               <p className="review-rating hide">4 out of 5 stars</p>
             </div>
-            <p className="review-count">Based on 1624 reviews</p>
           </div>
         </div>
         <div className="review-data">
@@ -85,7 +89,14 @@ const Review = () => {
           </dl>
         </div>
         <div className="review-share">
-          <Button size="large" block className="share-link">
+          <Button
+            size="large"
+            block
+            className="share-link"
+            onClick={() => {
+              dispatch(postReviewModelHandler(true));
+            }}
+          >
             Write a review
           </Button>
         </div>
