@@ -4,6 +4,7 @@ import ProductImageCarousel from "../ProductImageCarousel";
 import { Rate } from "antd";
 import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
+import Review from "../../../components/review";
 
 const ProductDetailsMobile = () => {
   const [wishlist, setWislisted] = useState(false);
@@ -347,7 +348,9 @@ const ProductDetailsMobile = () => {
             <strong>Color</strong> <span>Beige, Purple</span>
           </p>
         </div>
-        <div className="mv_review_wrapper seperation"></div>
+        <div className="mv_review_wrapper seperation">
+          <Review />
+        </div>
         <div className="mv_product_meta_wrapper seperation">
           <p>
             <strong>SKU</strong> <span>000324</span>
