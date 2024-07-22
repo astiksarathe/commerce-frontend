@@ -15,3 +15,14 @@ export function generateRandomNumber(limit) {
   let randomNumber = Math.floor(Math.random() * (limit - 5)) + 6;
   return randomNumber;
 }
+// "June 21, 2024"
+export function formatDate1(dateStr) {
+  const date = new Date(dateStr);
+
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+export function calculatePercentage(total, value) {
+  return ((value / total) * 100).toFixed(0);
+}

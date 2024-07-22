@@ -79,7 +79,7 @@ const PostReview = () => {
         >
           <Form.Item
             label="Your Review"
-            name="review"
+            name="content"
             rules={[
               {
                 required: true,
@@ -95,7 +95,7 @@ const PostReview = () => {
           </Form.Item>
           <Form.Item
             label="Name"
-            name="name"
+            name="fullName"
             rules={[
               {
                 required: true,

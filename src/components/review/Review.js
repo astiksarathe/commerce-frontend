@@ -1,13 +1,15 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Progress, Rate } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { green } from "@ant-design/colors";
 import PropTypes from "prop-types";
 import "./review.scss";
 import PostReview from "./PostReview";
-import { useDispatch } from "react-redux";
-import { postReviewModelHandler } from "../../features/review";
-const ReviewItems = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { getReviewsByProductId, postReviewModelHandler } from "../../features/review";
+import { calculatePercentage, formatDate1 } from "../../utils/common";
+
+const ReviewItems = ({ review }) => {
   return (
     <div className="review-item">
       <div className="review-author">
@@ -17,22 +19,22 @@ const ReviewItems = () => {
           </div>
           <div className="author-details">
             <div className="author-stars">
-              <Rate disabled value={5} style={{ fontSize: "16px" }} />
+              <Rate disabled value={review.rating} style={{ fontSize: "16px" }} />
             </div>
-            <p className="author-rating hide">5 out of 5 stars</p>
+            <p className="author-rating hide">{review.rating} out of 5 stars</p>
             <div className="author-meta">
-              <strong>Emily Selman</strong> <em className="author-verified">(verified owner)</em>
+              <strong>{review.fullName}</strong>
+              <em className="author-verified">
+                {review.isVerified ? <span> ( verified owner ) </span> : ""}
+              </em>
               <span>-</span>
-              <time dateTime="">June 21, 2024</time>
+              <time dateTime={review.createdAt}>{formatDate1(review.createdAt)}</time>
             </div>
           </div>
         </div>
 
         <div className="review-text">
-          <p>
-            This is the bag of my dreams. I took it on my last vacation and was able to fit an
-            absurd amount of snacks for the many long and hungry flights.
-          </p>
+          <p>{review.content}</p>
         </div>
       </div>
     </div>
@@ -63,30 +65,53 @@ const ReviewDataItem = ({ rating, percentage }) => {
 
 const Review = () => {
   const dispatch = useDispatch();
+  const { reviewList, metaData } = useSelector((state) => state.review);
+  useEffect(() => {
+    dispatch(getReviewsByProductId("667580fb5bcae87af0f8da36"));
+  }, [dispatch]);
+
+  const ratings = [5, 4, 3, 2, 1];
+
+  const ReviewDataItems = ratings.map((rating) => (
+    <ReviewDataItem
+      key={rating} // Use rating as a unique key
+      rating={rating}
+      percentage={calculatePercentage(
+        metaData.total_reviews,
+        metaData[`total_${rating}_star_reviews`]
+      )}
+    />
+  ));
+
+  const getAggregateRating = () => {
+    return (
+      (5 * metaData.total_5_star_reviews +
+        4 * metaData.total_4_star_reviews +
+        3 * metaData.total_3_star_reviews +
+        2 * metaData.total_2_star_reviews +
+        1 * metaData.total_1_star_reviews) /
+      metaData.total_reviews
+    ).toFixed(2);
+  };
+
   return (
     <>
       <div className="review-component">
         <div className="review-header">
-          <h2 className="review-title">Reviews (5)</h2>
+          <h2 className="review-title">Reviews ({metaData.total_reviews})</h2>
           <div className="review-summary">
-            <p className="review-count">Based on 1624 reviews</p>
+            <p className="review-count">Based on {metaData.total_reviews} reviews</p>
             <div>
               <div className="review-stars">
-                <strong>5.00</strong>
+                <strong>{getAggregateRating()}</strong>
                 <span>Overall</span>
               </div>
-              <p className="review-rating hide">4 out of 5 stars</p>
+              <p className="review-rating hide">{getAggregateRating()} out of 5 stars</p>
             </div>
           </div>
         </div>
         <div className="review-data">
-          <dl className="review-data-list">
-            <ReviewDataItem rating={5} percentage={40} />
-            <ReviewDataItem rating={5} percentage={40} />
-            <ReviewDataItem rating={5} percentage={40} />
-            <ReviewDataItem rating={5} percentage={40} />
-            <ReviewDataItem rating={5} percentage={40} />
-          </dl>
+          <dl className="review-data-list">{ReviewDataItems}</dl>
         </div>
         <div className="review-share">
           <Button
@@ -106,10 +131,11 @@ const Review = () => {
             <span> Breathing Otter Baby Soothing Sound and Light Plush Doll Toy </span>
           </h3>
           <div className="recent-reviews-list">
-            <ReviewItems />
-            <ReviewItems />
-            <ReviewItems />
-            <ReviewItems />
+            {reviewList.map((review) => (
+              <React.Fragment key={review._id}>
+                <ReviewItems review={review} />
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
@@ -117,7 +143,9 @@ const Review = () => {
     </>
   );
 };
-
+ReviewItems.propTypes = {
+  review: PropTypes.array,
+};
 ReviewDataItem.propTypes = {
   rating: PropTypes.number.isRequired,
   percentage: PropTypes.number.isRequired,

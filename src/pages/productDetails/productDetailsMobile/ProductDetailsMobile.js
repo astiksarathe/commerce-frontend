@@ -167,7 +167,7 @@ const ProductDetailsMobile = () => {
             <strong>Color</strong> <span>Beige, Purple</span>
           </p>
         </div>
-        <div className="mv_review_wrapper seperation">
+        <div className="seperation mv_review_wrapper">
           <ReadMoreToggle>
             <Review />
           </ReadMoreToggle>
