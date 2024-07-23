@@ -243,3 +243,26 @@ del {
     font-weight: 500;
   }
 }
+
+
+
+///////
+/// 
+///     MOBILE AND DESKTOP
+/// 
+
+.mobile {
+  display: none;
+
+  @media (max-width:48rem) {
+    display: block;
+  }
+}
+
+.desktop {
+  display: block;
+
+  @media (max-width:48rem) {
+    display: none;
+  }
+}

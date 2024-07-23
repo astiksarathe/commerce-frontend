@@ -13,8 +13,10 @@ import {
   selectedProductForDetail,
 } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
+import { addToWishlist } from "../../features/wishlist";
 
 const ProductCard = () => {
+  const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,8 +26,8 @@ const ProductCard = () => {
     dispatch(addToCart({ ...product, quantity: 1 }));
   };
 
-  const addToWishList = () => {
-    console.log("I am inside wishlist");
+  const addToWishListHandler = (productId) => {
+    dispatch(addToWishlist(productId));
   };
 
   const quickView = (product) => {
@@ -38,6 +40,14 @@ const ProductCard = () => {
     dispatch(selectedProductForDetail(product.url)); //selectedProductURL
     dispatch(getProductByURL(product.url));
     navigate(`/shop/${product.url}`);
+  };
+
+  const isCurrentProductAddedWL = (product) => {
+    if (product && wishlist) {
+      const isPresent = wishlist.find((productId) => productId === product);
+      if (isPresent) return true;
+    }
+    return false;
   };
 
   const productRender = () => {
@@ -59,7 +69,7 @@ const ProductCard = () => {
               </button>
               <button
                 className="product_action-icon group-hover:opacity-75"
-                onClick={addToWishList}
+                onClick={() => addToWishListHandler(product._id)}
               >
                 <HeartOutlined style={{ fontSize: "15px" }} />
               </button>
@@ -72,7 +82,10 @@ const ProductCard = () => {
             </div>
           </div>
         </div>
-        <h3 className="mt-4 text-sm text-gray-700 product-card-title" onClick={() => productDetail(product)}>
+        <h3
+          className="mt-4 text-sm text-gray-700 product-card-title"
+          onClick={() => productDetail(product)}
+        >
           {product.title}
         </h3>
         <p className="mt-1 text-lg font-medium text-gray-900">

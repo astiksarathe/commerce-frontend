@@ -10,7 +10,6 @@ const initialState = {
 export const getPinCodeDetails = createAsyncThunk(
   "pincode",
   async (pincode, { rejectWithValue }) => {
-    console.log({ pincode });
     try {
       const response = await axiosInstance.get(`/pincode/${pincode}`);
       return response.data;

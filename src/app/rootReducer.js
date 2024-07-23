@@ -8,6 +8,7 @@ import productReducer from "../features/product";
 import pincodeReducer from "../features/pincode";
 import checkoutReducer from "../features/checkout";
 import reviewReducer from "../features/review";
+import wishlistReducer from "../features/wishlist";
 
 const rootReducer = combineReducers({
   authDrawer: authDrawerReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   pincode: pincodeReducer,
   checkout: checkoutReducer,
   review: reviewReducer,
+  wishlist: wishlistReducer,
 });
 
 export default rootReducer;

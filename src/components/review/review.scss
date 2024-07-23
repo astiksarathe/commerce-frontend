@@ -127,6 +127,12 @@
         text-transform: capitalize;
         line-height: 1.4;
     }
+
+    &-reviews-pagination {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 3rem;
+    }
 }
 
 .hide {

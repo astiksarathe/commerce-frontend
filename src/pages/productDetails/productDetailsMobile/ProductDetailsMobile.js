@@ -1,13 +1,35 @@
-import React, { useState } from "react";
-import "./productDetailsMobile.scss";
-import ProductImageCarousel from "../ProductImageCarousel";
+import React from "react";
 import { Rate } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 import Review from "../../../components/review";
+import ProductImageCarousel from "../ProductImageCarousel";
+import "./productDetailsMobile.scss";
+import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
 
 const ProductDetailsMobile = () => {
-  const [wishlist, setWislisted] = useState(false);
+  const { wishlist } = useSelector((state) => state.wishlist);
+  const { productDetails } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+
+  const metaData = {
+    total_reviews: +productDetails.totalReviews || 0,
+    total_5_star_reviews: +productDetails.total_5_star_reviews || 0,
+    total_4_star_reviews: +productDetails.total_4_star_reviews || 0,
+    total_3_star_reviews: +productDetails.total_3_star_reviews || 0,
+    total_2_star_reviews: +productDetails.total_2_star_reviews || 0,
+    total_1_star_reviews: +productDetails.total_1_star_reviews || 0,
+  };
+
+  const isCurrentProductAddedWL = (product) => {
+    if (product && wishlist) {
+      const isPresent = wishlist.find((productId) => productId === product);
+      if (isPresent) return true;
+    }
+    return false;
+  };
+
   return (
     <div className="mv_container">
       <div>
@@ -26,12 +48,13 @@ const ProductDetailsMobile = () => {
             <del aria-hidden="true">
               <bdi className="mv_product_pricing-mrp">
                 <span className="mv_product_pricing-currencySymbol">₹</span>
+                {""}
                 2,499.00
               </bdi>
             </del>
             <ins aria-hidden="true">
               <bdi className="mv_product_pricing-sellingprice">
-                <span className="mv_product_pricing-currencySymbol">₹</span>
+                <span className="mv_product_pricing-currencySymbol">₹</span> {""}
                 2,499.00
               </bdi>
             </ins>
@@ -79,14 +102,24 @@ const ProductDetailsMobile = () => {
         <div className="mv_variant_wrapper seperation"></div>
         <div className="mv_wishlist_wrapper seperation">
           {wishlist ? (
-            <p>
+            <button
+              className="mv_wishlist_btn"
+              onClick={() => {
+                dispatch(addToWishlist(""));
+              }}
+            >
               <span>
                 <img src="/assets/icons/heart.svg" alt="Add to wishlist" />
               </span>
               <span>Add to Wishlist</span>
-            </p>
+            </button>
           ) : (
-            <p>
+            <button
+              className="mv_wishlist_btn"
+              onClick={() => {
+                dispatch(removeFromWishlist(""));
+              }}
+            >
               <span>
                 <img
                   className="btn-wishlist"
@@ -95,7 +128,7 @@ const ProductDetailsMobile = () => {
                 />
               </span>
               <span>Added to Wishlist</span>
-            </p>
+            </button>
           )}
         </div>
         <div className="seperation mv_delivery_question_wrapper">
@@ -169,7 +202,11 @@ const ProductDetailsMobile = () => {
         </div>
         <div className="seperation mv_review_wrapper">
           <ReadMoreToggle>
-            <Review />
+            <Review
+              metaData={metaData}
+              productId={productDetails._id}
+              title={productDetails.title}
+            />
           </ReadMoreToggle>
         </div>
         <div className="mv_product_meta_wrapper seperation">

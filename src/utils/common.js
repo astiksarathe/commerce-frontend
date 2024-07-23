@@ -8,7 +8,7 @@ export function capitalizeFirstLetters(sentence) {
 
 export function generateRandomNumber(limit) {
   if (limit <= 5) {
-    return "Limit should be greater than 5";
+    limit = 6;
   }
 
   // Generate a random number between 5 (inclusive) and limit (exclusive)
@@ -24,5 +24,16 @@ export function formatDate1(dateStr) {
 }
 
 export function calculatePercentage(total, value) {
+  if (total === 0) return (0).toFixed(0);
   return ((value / total) * 100).toFixed(0);
+}
+
+export function getQueryParamsFromObj(obj) {
+  if (!obj) return "";
+  let query = "";
+  Object.keys(obj).forEach((key) => {
+    query += `${key}=${obj[key]}&`;
+  });
+  console.log({ query });
+  return query;
 }

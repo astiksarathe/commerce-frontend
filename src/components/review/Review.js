@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Progress, Rate } from "antd";
+import { Avatar, Button, Pagination, Progress, Rate } from "antd";
 import React, { useEffect } from "react";
 import { green } from "@ant-design/colors";
 import PropTypes from "prop-types";
@@ -63,12 +63,12 @@ const ReviewDataItem = ({ rating, percentage }) => {
   );
 };
 
-const Review = () => {
+const Review = ({ metaData, productId, title }) => {
   const dispatch = useDispatch();
-  const { reviewList, metaData } = useSelector((state) => state.review);
+  const { reviewList } = useSelector((state) => state.review);
   useEffect(() => {
-    dispatch(getReviewsByProductId("667580fb5bcae87af0f8da36"));
-  }, [dispatch]);
+    if (productId) dispatch(getReviewsByProductId({ productId }));
+  }, [dispatch, productId]);
 
   const ratings = [5, 4, 3, 2, 1];
 
@@ -83,7 +83,14 @@ const Review = () => {
     />
   ));
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize);
+    if (productId)
+      dispatch(getReviewsByProductId({ productId, query: { page: page, limit: pageSize } }));
+  };
+
   const getAggregateRating = () => {
+    if (metaData.total_reviews === 0) return "0.00";
     return (
       (5 * metaData.total_5_star_reviews +
         4 * metaData.total_4_star_reviews +
@@ -127,8 +134,7 @@ const Review = () => {
         </div>
         <div className="recent-reviews">
           <h3 className="recent-reviews-title">
-            5 reviews for{" "}
-            <span> Breathing Otter Baby Soothing Sound and Light Plush Doll Toy </span>
+            {metaData.total_reviews} reviews for <span> {title} </span>
           </h3>
           <div className="recent-reviews-list">
             {reviewList.map((review) => (
@@ -136,6 +142,15 @@ const Review = () => {
                 <ReviewItems review={review} />
               </React.Fragment>
             ))}
+            <div className="recent-reviews-pagination">
+              <Pagination
+                defaultCurrent={1}
+                defaultPageSize={5}
+                align="center"
+                total={metaData.total_reviews}
+                onChange={onPageChange}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -150,4 +165,17 @@ ReviewDataItem.propTypes = {
   rating: PropTypes.number.isRequired,
   percentage: PropTypes.number.isRequired,
 };
+Review.propTypes = {
+  metaData: {
+    total_reviews: PropTypes.number.isRequired,
+    total_5_star_reviews: PropTypes.number.isRequired,
+    total_4_star_reviews: PropTypes.number.isRequired,
+    total_3_star_reviews: PropTypes.number.isRequired,
+    total_2_star_reviews: PropTypes.number.isRequired,
+    total_1_star_reviews: PropTypes.number.isRequired,
+  },
+  productId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
+
 export default Review;

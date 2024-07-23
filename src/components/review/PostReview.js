@@ -13,7 +13,7 @@ const PostReview = () => {
   const dispatch = useDispatch();
 
   const onFinish = (e) => {
-    console.log(e);
+    // console.log(e);
   };
   const onFinishFailed = () => {};
   useEffect(() => {

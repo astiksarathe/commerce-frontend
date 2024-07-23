@@ -99,6 +99,12 @@
         animation: scrollSold 8s infinite;
     }
 
+    &_wishlist_btn {
+        display: flex;
+        background-color: transparent;
+        gap: 10px;
+        align-items: center;
+    }
 
     &_delivery_question_wrapper {
         display: flex;

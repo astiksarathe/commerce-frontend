@@ -70,7 +70,6 @@ export const productSlice = createSlice({
     selectVariantHandler: (state, action) => {
       if (action.payload) {
         const { variantName, ind } = action.payload;
-        console.log(variantName, ind);
         state.selectedProductVariant[ind].name = variantName;
       } else {
         state.selectedProductVariant = options.map((_, ind) => ({ name: "", ind }));

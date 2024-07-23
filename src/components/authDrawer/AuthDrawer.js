@@ -20,7 +20,7 @@ const EmailForm = () => {
     dispatch(login(values));
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    // console.log("Failed:", errorInfo);
   };
   return (
     <>
