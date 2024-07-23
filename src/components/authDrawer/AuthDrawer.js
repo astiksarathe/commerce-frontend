@@ -19,13 +19,11 @@ const EmailForm = () => {
   const onFinish = (values) => {
     dispatch(login(values));
   };
-  const onFinishFailed = (errorInfo) => {
-    // console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo) => {};
   return (
     <>
       <Form
-        name="basic"
+        name="authForm"
         initialValues={{
           remember: true,
         }}

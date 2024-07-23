@@ -104,33 +104,35 @@ const Review = ({ metaData, productId, title }) => {
   return (
     <>
       <div className="review-component">
-        <div className="review-header">
-          <h2 className="review-title">Reviews ({metaData.total_reviews})</h2>
-          <div className="review-summary">
-            <p className="review-count">Based on {metaData.total_reviews} reviews</p>
-            <div>
-              <div className="review-stars">
-                <strong>{getAggregateRating()}</strong>
-                <span>Overall</span>
+        <div>
+          <div className="review-header">
+            <h2 className="review-title">Reviews ({metaData.total_reviews})</h2>
+            <div className="review-summary">
+              <p className="review-count">Based on {metaData.total_reviews} reviews</p>
+              <div>
+                <div className="review-stars">
+                  <strong>{getAggregateRating()}</strong>
+                  <span>Overall</span>
+                </div>
+                <p className="review-rating hide">{getAggregateRating()} out of 5 stars</p>
               </div>
-              <p className="review-rating hide">{getAggregateRating()} out of 5 stars</p>
             </div>
           </div>
-        </div>
-        <div className="review-data">
-          <dl className="review-data-list">{ReviewDataItems}</dl>
-        </div>
-        <div className="review-share">
-          <Button
-            size="large"
-            block
-            className="share-link"
-            onClick={() => {
-              dispatch(postReviewModelHandler(true));
-            }}
-          >
-            Write a review
-          </Button>
+          <div className="review-data">
+            <dl className="review-data-list">{ReviewDataItems}</dl>
+          </div>
+          <div className="review-share">
+            <Button
+              size="large"
+              block
+              className="share-link"
+              onClick={() => {
+                dispatch(postReviewModelHandler(true));
+              }}
+            >
+              Write a review
+            </Button>
+          </div>
         </div>
         <div className="recent-reviews">
           <h3 className="recent-reviews-title">

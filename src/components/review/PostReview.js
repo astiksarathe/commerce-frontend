@@ -5,15 +5,29 @@ import React, { useEffect, useState } from "react";
 import "./review.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { postReviewModelHandler } from "../../features/review";
-
-const PostReview = () => {
+import PropTypes from "prop-types";
+import { postReview } from "../../features/review";
+const PostReview = ({ productId }) => {
   const [form] = Form.useForm();
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(5);
   const { isPostReviewModelOpen } = useSelector((state) => state.review);
   const dispatch = useDispatch();
 
   const onFinish = (e) => {
-    // console.log(e);
+    if (!productId) {
+      // Error handling here
+      return;
+    }
+    if (e.fullName && e.email && e.content && productId)
+      dispatch(
+        postReview({
+          fullName: e.fullName,
+          email: e.email,
+          content: e.content,
+          rating: rating,
+          productId,
+        })
+      );
   };
   const onFinishFailed = () => {};
   useEffect(() => {
@@ -43,6 +57,7 @@ const PostReview = () => {
             type="text"
             style={{ color: "white", fontSize: 14 }}
             onClick={() => {
+              form.resetFields();
               dispatch(postReviewModelHandler(false));
             }}
           >
@@ -67,7 +82,7 @@ const PostReview = () => {
         </div>
         <Form
           form={form}
-          name="review"
+          name="reviewForm"
           initialValues={{
             remember: true,
           }}
@@ -134,6 +149,10 @@ const PostReview = () => {
       </div>
     </Drawer>
   );
+};
+
+PostReview.propTypes = {
+  productId: PropTypes.string.isRequired,
 };
 
 export default PostReview;

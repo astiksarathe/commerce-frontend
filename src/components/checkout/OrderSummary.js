@@ -78,7 +78,7 @@ const OrderSummary = () => {
       </div>
       <div className="coupon_code_wrapper">
         <Form
-          name="trigger"
+          name="discountForm"
           variant="filled"
           style={{ maxWidth: 700 }}
           layout="vertical"

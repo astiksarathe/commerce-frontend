@@ -14,17 +14,24 @@ export const getReviewsByProductId = createAsyncThunk(
   "reviewByProductId",
   async ({ productId, query }, { rejectWithValue }) => {
     try {
-      console.log("INSIDE REVIEW SLICE", { productId, query });
       const response = await axiosInstance.get(
         `/review/productId/${productId}?${getQueryParamsFromObj(query)}`
       );
-      console.log("INSIDE REVIEW SLICE", { response });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
+export const postReview = createAsyncThunk("postReview", async (data, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.post(`/review/post-review`, data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 export const reviewSlice = createSlice({
   name: "review",
@@ -46,6 +53,16 @@ export const reviewSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getReviewsByProductId.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
+    builder.addCase(postReview.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(postReview.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(postReview.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error;
     });

@@ -1,4 +1,8 @@
-import reviewReducer, { postReviewModelHandler, getReviewsByProductId } from "./reviewSlice";
+import reviewReducer, {
+  postReview,
+  postReviewModelHandler,
+  getReviewsByProductId,
+} from "./reviewSlice";
 
-export { postReviewModelHandler, getReviewsByProductId };
+export { postReviewModelHandler, postReview, getReviewsByProductId };
 export default reviewReducer;
