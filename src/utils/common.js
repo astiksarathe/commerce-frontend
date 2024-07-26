@@ -4,7 +4,8 @@
  * @param {Date} date - The date to format.
  * @returns {string} - The formatted date string.
  */
-export function formatDate(date) {
+export function formatDate(dateA) {
+  const date = new Date(dateA);
   const options = { year: "numeric", month: "long", day: "numeric" };
   return date.toLocaleDateString("en-US", options);
 }
