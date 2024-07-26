@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Rate } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import ShareButtons from "../../../components/shareButtons";
@@ -12,14 +12,6 @@ import { getMetaDataofReview } from "../../../utils/common";
 const ProductDetailsMobile = ({ productDetails }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
-
-  const isCurrentProductAddedWL = (product) => {
-    if (product && wishlist) {
-      const isPresent = wishlist.find((productId) => productId === product);
-      if (isPresent) return true;
-    }
-    return false;
-  };
 
   return (
     <div className="mv_container">
