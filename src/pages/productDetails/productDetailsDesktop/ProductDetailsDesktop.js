@@ -7,7 +7,7 @@ import {
   getMetaDataofReview,
 } from "../../../utils/common";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../../features/cart";
 import QtyInput from "../../../components/qtyInput";
 import {

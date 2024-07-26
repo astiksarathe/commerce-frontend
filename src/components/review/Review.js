@@ -6,7 +6,7 @@ import "./review.scss";
 import PostReview from "./PostReview";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviewsByProductId, postReviewModelHandler } from "../../features/review";
-import { calculatePercentage, formatDate1 } from "../../utils/common";
+import { calculatePercentage, formatDate } from "../../utils/common";
 
 const ReviewItems = ({ review }) => {
   return (
@@ -27,7 +27,7 @@ const ReviewItems = ({ review }) => {
                 {review.isVerified ? <span> ( verified owner ) </span> : ""}
               </em>
               <span>-</span>
-              <time dateTime={review.createdAt}>{formatDate1(review.createdAt)}</time>
+              <time dateTime={review.createdAt}>{formatDate(review.createdAt)}</time>
             </div>
           </div>
         </div>

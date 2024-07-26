@@ -64,3 +64,33 @@ export function getMetaDataofReview(productDetails) {
 export function containsElement(list, value, field) {
   return list.some((item) => item[field] === value);
 }
+
+/**
+ * Capitalizes the first letter of each word in a sentence.
+ *
+ * @param {string} sentence - The input sentence.
+ * @returns {string} - The sentence with the first letter of each word capitalized.
+ */
+export function capitalizeFirstLetters(sentence) {
+  if (!sentence) return sentence; // Return the original sentence if it's empty or undefined
+  return sentence
+    .split(" ") // Split the sentence into words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+    .join(" "); // Join the words back into a single string
+}
+
+/**
+ * Generates a random number between 6 (inclusive) and a specified limit (exclusive).
+ *
+ * @param {number} limit - The upper bound for the random number (exclusive).
+ * @returns {number} - A random number between 6 and limit.
+ */
+export function generateRandomNumber(limit) {
+  if (limit <= 5) {
+    limit = 6; // Ensure the limit is at least 6
+  }
+
+  // Generate a random number between 6 (inclusive) and limit (exclusive)
+  let randomNumber = Math.floor(Math.random() * (limit - 6)) + 6;
+  return randomNumber;
+}
