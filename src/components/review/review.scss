@@ -19,13 +19,6 @@
 .review-data {
     margin-bottom: 1rem;
 
-    &-item {
-        display: grid;
-        grid-template-columns: 7fr 1fr;
-        gap: 1%;
-        padding: 2px 0;
-    }
-
     &-label {
         display: grid;
         grid-template-columns: 2fr 4fr;

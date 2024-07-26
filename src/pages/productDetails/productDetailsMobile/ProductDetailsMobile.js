@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Rate } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import ShareButtons from "../../../components/shareButtons";
@@ -7,20 +7,11 @@ import Review from "../../../components/review";
 import ProductImageCarousel from "../ProductImageCarousel";
 import "./productDetailsMobile.scss";
 import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
+import { getMetaDataofReview } from "../../../utils/common";
 
-const ProductDetailsMobile = () => {
+const ProductDetailsMobile = ({ productDetails }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
-  const { productDetails } = useSelector((state) => state.product);
   const dispatch = useDispatch();
-
-  const metaData = {
-    total_reviews: +productDetails.totalReviews || 0,
-    total_5_star_reviews: +productDetails.total_5_star_reviews || 0,
-    total_4_star_reviews: +productDetails.total_4_star_reviews || 0,
-    total_3_star_reviews: +productDetails.total_3_star_reviews || 0,
-    total_2_star_reviews: +productDetails.total_2_star_reviews || 0,
-    total_1_star_reviews: +productDetails.total_1_star_reviews || 0,
-  };
 
   const isCurrentProductAddedWL = (product) => {
     if (product && wishlist) {
@@ -203,7 +194,7 @@ const ProductDetailsMobile = () => {
         <div className="seperation mv_review_wrapper">
           <ReadMoreToggle>
             <Review
-              metaData={metaData}
+              metaData={getMetaDataofReview(productDetails)}
               productId={productDetails._id}
               title={productDetails.title}
             />

@@ -24,8 +24,8 @@ export function formatDate1(dateStr) {
 }
 
 export function calculatePercentage(total, value) {
-  if (total === 0) return (0).toFixed(0);
-  return ((value / total) * 100).toFixed(0);
+  if (total === 0) return 0;
+  return Number(((value / total) * 100).toFixed(2));
 }
 
 export function getQueryParamsFromObj(obj) {
@@ -36,4 +36,17 @@ export function getQueryParamsFromObj(obj) {
   });
   console.log({ query });
   return query;
+}
+
+export function getMetaDataofReview(productDetails) {
+  return {
+    total_reviews: +productDetails.totalReviews || 0,
+    total_5_star_reviews: +productDetails.total_5_star_reviews || 0,
+    total_4_star_reviews: +productDetails.total_4_star_reviews || 0,
+    total_3_star_reviews: +productDetails.total_3_star_reviews || 0,
+    total_2_star_reviews: +productDetails.total_2_star_reviews || 0,
+    total_1_star_reviews: +productDetails.total_1_star_reviews || 0,
+    aggregateRating: productDetails.aggregateRating,
+    Id: "asdfghjkl",
+  };
 }

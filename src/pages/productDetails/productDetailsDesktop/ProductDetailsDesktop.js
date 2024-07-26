@@ -1,7 +1,11 @@
 import { Breadcrumb, Rate } from "antd";
 import React, { useState } from "react";
 import ProductImageCarousel from "../ProductImageCarousel";
-import { capitalizeFirstLetters, generateRandomNumber } from "../../../utils/common";
+import {
+  capitalizeFirstLetters,
+  generateRandomNumber,
+  getMetaDataofReview,
+} from "../../../utils/common";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../features/cart";
@@ -20,10 +24,9 @@ import ShareButtons from "../../../components/shareButtons";
 import DraftEditor from "../../../components/draftEditor/DraftEditor";
 import Review from "../../../components/review";
 
-const ProductDetailsDesktop = () => {
+const ProductDetailsDesktop = ({ productDetails }) => {
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState(0);
-  const { productDetails } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
@@ -34,15 +37,6 @@ const ProductDetailsDesktop = () => {
   const addToCartHandler = (product) => {
     dispatch(addToCart(product));
   };
-  const metaData = {
-    total_reviews: +productDetails.totalReviews || 0,
-    total_5_star_reviews: +productDetails.total_5_star_reviews || 0,
-    total_4_star_reviews: +productDetails.total_4_star_reviews || 0,
-    total_3_star_reviews: +productDetails.total_3_star_reviews || 0,
-    total_2_star_reviews: +productDetails.total_2_star_reviews || 0,
-    total_1_star_reviews: +productDetails.total_1_star_reviews || 0,
-  };
-
   const renderPrice = (product) => {
     const { MRP, sellingPrice } = product.price || {};
     return (
@@ -410,7 +404,11 @@ const ProductDetailsDesktop = () => {
           )}
         </div>
         <div>
-          <Review metaData={metaData} productId={productDetails._id} title={productDetails.title} />
+          <Review
+            metaData={getMetaDataofReview(productDetails)}
+            productId={productDetails._id}
+            title={productDetails.title}
+          />
         </div>
       </div>
     </>

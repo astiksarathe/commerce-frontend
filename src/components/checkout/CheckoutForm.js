@@ -122,8 +122,8 @@ const Address = ({ pincodeHandler, formName }) => {
 };
 
 Address.propTypes = {
-  pincodeHandler: PropTypes.func.isRequired,
-  formName: PropTypes.string.isRequired,
+  pincodeHandler: PropTypes.func,
+  formName: PropTypes.string,
 };
 
 const CheckoutForm = () => {

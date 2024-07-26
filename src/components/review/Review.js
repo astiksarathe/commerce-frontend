@@ -1,7 +1,6 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Pagination, Progress, Rate } from "antd";
-import React, { useEffect } from "react";
-import { green } from "@ant-design/colors";
+import { Avatar, Button, Flex, Pagination, Progress, Rate } from "antd";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./review.scss";
 import PostReview from "./PostReview";
@@ -49,28 +48,28 @@ const ReviewDataItem = ({ rating, percentage }) => {
           <Rate disabled value={rating} style={{ fontSize: "16px" }} />
         </div>
         <div aria-hidden="true" className="review-data-bar">
-          <Progress
-            percent={percentage}
-            percentPosition={{ align: "center", type: "inner" }}
-            size={["100%", 15]}
-            strokeLinecap="square"
-            strokeColor={green[6]}
-          />
+          <Flex vertical gap="small">
+            <Progress percent={percentage} strokeLinecap="square" type="line" size={["100%", 15]} />
+          </Flex>
         </div>
       </dt>
-      <dd className="review-data-percentage">{percentage}% </dd>
     </div>
   );
 };
 
 const Review = ({ metaData, productId, title }) => {
+  const [aggregateRating, setAggregateRating] = useState("0.00");
   const dispatch = useDispatch();
   const { reviewList } = useSelector((state) => state.review);
+  const ratings = [5, 4, 3, 2, 1];
+
   useEffect(() => {
     if (productId) dispatch(getReviewsByProductId({ productId }));
   }, [dispatch, productId]);
 
-  const ratings = [5, 4, 3, 2, 1];
+  useEffect(() => {
+    console.log(metaData, aggregateRating);
+  }, [aggregateRating, metaData.aggregateRating]);
 
   const ReviewDataItems = ratings.map((rating) => (
     <ReviewDataItem
@@ -82,25 +81,16 @@ const Review = ({ metaData, productId, title }) => {
       )}
     />
   ));
+  useEffect(() => {
+    if (metaData.aggregateRating !== undefined) {
+      setAggregateRating(metaData.aggregateRating.toFixed(2));
+    }
+  }, [metaData.aggregateRating]);
 
   const onPageChange = (page, pageSize) => {
-    console.log(page, pageSize);
     if (productId)
       dispatch(getReviewsByProductId({ productId, query: { page: page, limit: pageSize } }));
   };
-
-  const getAggregateRating = () => {
-    if (metaData.total_reviews === 0) return "0.00";
-    return (
-      (5 * metaData.total_5_star_reviews +
-        4 * metaData.total_4_star_reviews +
-        3 * metaData.total_3_star_reviews +
-        2 * metaData.total_2_star_reviews +
-        1 * metaData.total_1_star_reviews) /
-      metaData.total_reviews
-    ).toFixed(2);
-  };
-
   return (
     <>
       <div className="review-component">
@@ -111,10 +101,10 @@ const Review = ({ metaData, productId, title }) => {
               <p className="review-count">Based on {metaData.total_reviews} reviews</p>
               <div>
                 <div className="review-stars">
-                  <strong>{getAggregateRating()}</strong>
+                  <strong>{aggregateRating}</strong>
                   <span>Overall</span>
                 </div>
-                <p className="review-rating hide">{getAggregateRating()} out of 5 stars</p>
+                <p className="review-rating hide">{aggregateRating} out of 5 stars</p>
               </div>
             </div>
           </div>
@@ -136,7 +126,12 @@ const Review = ({ metaData, productId, title }) => {
         </div>
         <div className="recent-reviews">
           <h3 className="recent-reviews-title">
-            {metaData.total_reviews} reviews for <span> {title} </span>
+            {metaData.total_reviews === 0 ? (
+              <span>Be The First To Review</span>
+            ) : (
+              <span>{metaData.total_reviews} reviews</span>
+            )}
+            for <span> {title} </span>
           </h3>
           <div className="recent-reviews-list">
             {reviewList.map((review) => (
@@ -156,28 +151,21 @@ const Review = ({ metaData, productId, title }) => {
           </div>
         </div>
       </div>
-      <PostReview />
+      <PostReview productId={productId} />
     </>
   );
 };
 ReviewItems.propTypes = {
-  review: PropTypes.array,
+  review: PropTypes.any,
 };
 ReviewDataItem.propTypes = {
-  rating: PropTypes.number.isRequired,
-  percentage: PropTypes.number.isRequired,
+  rating: PropTypes.number,
+  percentage: PropTypes.number,
 };
 Review.propTypes = {
-  metaData: {
-    total_reviews: PropTypes.number.isRequired,
-    total_5_star_reviews: PropTypes.number.isRequired,
-    total_4_star_reviews: PropTypes.number.isRequired,
-    total_3_star_reviews: PropTypes.number.isRequired,
-    total_2_star_reviews: PropTypes.number.isRequired,
-    total_1_star_reviews: PropTypes.number.isRequired,
-  },
-  productId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  metaData: PropTypes.object,
+  productId: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default Review;
