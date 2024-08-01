@@ -7,7 +7,7 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProduct());
-  }, []);
+  }, [dispatch]);
   return <ProductCard />;
 };
 
