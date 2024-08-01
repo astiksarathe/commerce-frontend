@@ -1,5 +1,3 @@
-// utils/authAPI.js
-
 import axiosInstance from "../../utils/axiosInstance";
 
 const baseURL = "/product"; // Adjust base URL as per your API

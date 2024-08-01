@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   checkoutForm: {
+    personalDetails: {},
     shippingAddress: {},
     billingAddress: {},
     billingSameAsShipping: true,
@@ -37,6 +38,8 @@ const initialState = {
       shippingType: 1,
       shippingCharges: 0,
     },
+    totalPrice: 0,
+    totalAmount: 0,
     subtotal: 0,
   },
   isCheckoutModelOpen: false,
@@ -77,14 +80,22 @@ const checkoutSlice = createSlice({
         trackingLink: "",
         location: "",
       };
-      state.checkoutForm.subtotal = parseInt(product.price) * parseInt(product.quantity);
       state.checkoutForm.products = [product];
       state.checkoutForm.subtotal = state.checkoutForm.products.reduce(
-        (pre, cur) => pre + cur.quantity * cur.price,
+        (pre, cur) => pre + parseInt(cur.quantity) * parseInt(cur.price),
         0
       );
+      state.checkoutForm.totalPrice = state.checkoutForm.subtotal;
+      state.checkoutForm.totalAmount =
+        state.checkoutForm.totalPrice + state.checkoutForm.shipping.shippingCharges;
     },
 
+    addShippingDetails: (state, action) => {
+      state.checkoutForm.shippingAddress = action.payload;
+    },
+    addPersonalDetails: (state, action) => {
+      state.checkoutForm.personalDetails = action.payload;
+    },
     updateShippingMethod: (state, action) => {
       const { id, charges } = action.payload;
       if (!id || charges === undefined) return;
@@ -93,6 +104,11 @@ const checkoutSlice = createSlice({
         shippingType: id,
         shippingCharges: charges,
       };
+      const totalProductPrice = state.checkoutForm.products.reduce(
+        (pre, cur) => pre + parseInt(cur.quantity) * parseInt(cur.price),
+        0
+      );
+      state.checkoutForm.totalAmount = totalProductPrice + charges;
     },
   },
 });
@@ -102,63 +118,8 @@ export const {
   updateShippingMethod,
   checkoutFormHandler,
   buyNowButtonHandler,
+  addShippingDetails,
+  addPersonalDetails,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
-
-// fullName , -
-// phoneNumber, -
-// email, -
-// address1 -
-// landmark, -
-// city, -
-// state, -
-// pincode -
-// country -
-
-// productId
-// productTitle
-// productURL
-// SKU
-// quantity
-// price
-// trackingLink
-// location
-
-//   user:
-//   shippingAddress:
-//   billingSameAsShipping:
-//   billingAddress:
-//   additionalCharges: {
-//     amount ,
-//     reason,
-//   }
-//   totalPrice ,
-//   tax,
-//   totalAmount,
-//   shipping: {
-//     shippingType, // STANDARD SHIPPING, EXPRESS SHIPPING
-//     shippingCharges, // SHIPPING CHARGES
-//     RTOCharges, // RTO CHARGES
-//     CODCharges,
-//   },
-//   discount: {
-//     amount,
-//     reason
-//   },
-//   status: {
-//     type: String, // PENDINF, FULDULLED, CANCELLED, HOLD
-//     // required: true,
-//   },
-//   statusReason:
-//   trackingId:
-//   paymentStatus: {
-//     paymentMode: String, // COD , PARTIALLY PAID,  PAID
-//     prepaidMedium: String, // RAZORPAY, UPI
-//     paymentDate: Date,
-//     transactionId: String,
-//     partiallyPaidAmount: Number,
-//   },
-//   tags: [String],
-//   orderStatus: String, // COMPLETED, ABONDENT, DRAFT
-//   Note: String,

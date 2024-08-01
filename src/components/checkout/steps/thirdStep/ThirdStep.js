@@ -6,17 +6,13 @@ import ShippingMethods from "./shippingMethod/ShippingMethods";
 import Payment from "./payment/Payment";
 
 import { addressRenderer } from "../../../../utils/common";
+import { useSelector } from "react-redux";
 
 const ThirdStep = () => {
   const [openModel, setOpenModel] = useState(false);
-  const address = {
-    address1: "House no 12, word no 2",
-    landmark: undefined,
-    city: "obaidullaganj",
-    state: "Madhya Pradesg",
-    pincode: "464993",
-    country: "India",
-  };
+  const {
+    checkoutForm: { personalDetails, shippingAddress },
+  } = useSelector((state) => state.checkout);
 
   return (
     <div>
@@ -27,10 +23,12 @@ const ThirdStep = () => {
             Change
           </button>
         </p>
-        <p className="deliver_address">{addressRenderer(address)}</p>
+        <p className="deliver_address">{addressRenderer(shippingAddress)}</p>
         <p className="customer_phone_number">
           <span className="label">Phone - </span>
-          <span className="value">8849728938</span>
+          <span className="value">
+            {personalDetails?.phoneNumber ? personalDetails.phoneNumber : ""}
+          </span>
         </p>
       </div>
 

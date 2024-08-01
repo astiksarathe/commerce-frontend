@@ -6,15 +6,27 @@ import { Button, Drawer } from "antd";
 
 import { orderConfirmModalHandler } from "../../../../../features/orderConfirmModal";
 import { formatCurrency } from "../../../../../utils/common";
+import { createOrder } from "../../../../../features/order";
 
 import "./confirm-order.scss";
 
 const ConfirmOrder = () => {
   const { isOrderConfirmModalOpen } = useSelector((state) => state.orderConfirm);
+  const { checkoutForm } = useSelector((state) => state.checkout);
+  const { isLoading } = useSelector((state) => state.order);
+
   const dispatch = useDispatch();
 
   const onClose = () => {
     dispatch(orderConfirmModalHandler(false));
+  };
+  const createOrderHandler = () => {
+    dispatch(
+      createOrder({
+        ...checkoutForm,
+        shippingAddress: { ...checkoutForm.shippingAddress, ...checkoutForm.personalDetails },
+      })
+    );
   };
   return (
     <Drawer
@@ -38,12 +50,12 @@ const ConfirmOrder = () => {
         <div className="confirm_order_total_wrapper">
           <div className="confirm_order_total">
             <span>Total amount:</span>
-            <span>{formatCurrency(0)}</span>
+            <span>{formatCurrency(checkoutForm.totalAmount)}</span>
           </div>
           <div className="confirm_order_COD">Incl. {formatCurrency(0)} COD charges</div>
         </div>
         <div className="confirm_order_btn_wrapper">
-          <Button block size="large">
+          <Button block size="large" loading={isLoading} onClick={createOrderHandler}>
             Confirm & place order
           </Button>
           <Button type="primary" block size="large">

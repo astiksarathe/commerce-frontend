@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 
 import { Form, Input } from "antd";
 
-import { checkoutFormHandler } from "../../../../../features/checkout";
+import { addPersonalDetails } from "../../../../../features/checkout";
 import SubmitButton from "../../../../submitButton/SubmitButton";
 
 const PersonalDetails = ({ stepHandler }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const onClickHandler = (formFields) => {
-    console.log("Submit", formFields);
+    dispatch(addPersonalDetails(formFields));
     stepHandler(2);
   };
   return (
@@ -23,10 +23,6 @@ const PersonalDetails = ({ stepHandler }) => {
         style={{ maxWidth: 700 }}
         layout="vertical"
         autoComplete="off"
-        onFieldsChange={(event) => {
-          const { name, value } = event[0];
-          dispatch(checkoutFormHandler({ name: name[0], value, key: "shippingAddress" }));
-        }}
       >
         <Form.Item
           label="Your Name"

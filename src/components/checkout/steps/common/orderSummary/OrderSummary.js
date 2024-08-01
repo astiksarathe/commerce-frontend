@@ -11,7 +11,7 @@ import "./order-summary.scss";
 const OrderSummary = () => {
   const [summaryDrawer, setSummaryDrawer] = useState(false);
   const {
-    checkoutForm: { subtotal },
+    checkoutForm: { totalAmount },
   } = useSelector((state) => state.checkout);
 
   const openSummaryDrawer = () => setSummaryDrawer(true);
@@ -26,7 +26,7 @@ const OrderSummary = () => {
           <span>Order Summary</span>
           <span className="order_summary_item_count">(1 item)</span>
         </p>
-        <p className="order_totals_amount"> {formatCurrency(subtotal)}</p>
+        <p className="order_totals_amount"> {formatCurrency(totalAmount)}</p>
       </button>
 
       <OrderSummaryDrawer

@@ -3,7 +3,16 @@ import checkoutReducer, {
   checkoutModelHandler,
   buyNowButtonHandler,
   updateShippingMethod,
+  addShippingDetails,
+  addPersonalDetails,
 } from "./checkout";
 
-export { checkoutModelHandler, checkoutFormHandler, buyNowButtonHandler, updateShippingMethod };
+export {
+  checkoutModelHandler,
+  checkoutFormHandler,
+  buyNowButtonHandler,
+  updateShippingMethod,
+  addShippingDetails,
+  addPersonalDetails,
+};
 export default checkoutReducer;

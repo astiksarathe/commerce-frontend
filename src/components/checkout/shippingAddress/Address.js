@@ -11,11 +11,14 @@ const Address = ({
   onChange,
   onBtnClick,
   stepHandler,
+  onSubmit,
 }) => {
   const [form] = Form.useForm();
-  const onFinsihHandler = () => {
+  const onFinsihHandler = (value) => {
+    console.log(value);
     if (stepHandler) stepHandler(3);
     if (onBtnClick) onBtnClick();
+    if (onSubmit) onSubmit(value);
   };
   return (
     <Form

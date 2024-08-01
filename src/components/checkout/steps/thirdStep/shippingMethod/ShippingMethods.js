@@ -16,8 +16,8 @@ const ShippingMethods = () => {
       <h1 className="shipping_method_heading">Shipping Method</h1>
       <div className="shipping_method_options">
         {type.map((options) => (
-          <div
-            className={`shipping_type ${
+          <button
+            className={`btn_as_div shipping_type ${
               options.id === shipping.shippingType ? "selected-shipping" : ""
             }`}
             key={options.id}
@@ -36,7 +36,7 @@ const ShippingMethods = () => {
                 {options.charges === 0 ? " FREE" : ` +${options.charges}`}
               </span>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
