@@ -71,7 +71,7 @@ const CartDrawer = () => {
                   </Link>
                 </h3>
               </div>
-              <p className="cart-item__price">RS {product.sellingPrice}</p>
+              <p className="cart-item__price">₹ {product.sellingPrice}</p>
               <div className="cart-item__actions">
                 <p className="cart-item__quantity">
                   <QtyInput
