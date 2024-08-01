@@ -67,10 +67,6 @@ const Review = ({ metaData, productId, title }) => {
     if (productId) dispatch(getReviewsByProductId({ productId }));
   }, [dispatch, productId]);
 
-  useEffect(() => {
-    console.log(metaData, aggregateRating);
-  }, [aggregateRating, metaData.aggregateRating]);
-
   const ReviewDataItems = ratings.map((rating) => (
     <ReviewDataItem
       key={rating} // Use rating as a unique key
@@ -127,7 +123,7 @@ const Review = ({ metaData, productId, title }) => {
         <div className="recent-reviews">
           <h3 className="recent-reviews-title">
             {metaData.total_reviews === 0 ? (
-              <span>Be The First To Review</span>
+              <span>Be The First To Review </span>
             ) : (
               <span>{metaData.total_reviews} reviews</span>
             )}
@@ -140,13 +136,17 @@ const Review = ({ metaData, productId, title }) => {
               </React.Fragment>
             ))}
             <div className="recent-reviews-pagination">
-              <Pagination
-                defaultCurrent={1}
-                defaultPageSize={5}
-                align="center"
-                total={metaData.total_reviews}
-                onChange={onPageChange}
-              />
+              {reviewList.length ? (
+                <Pagination
+                  defaultCurrent={1}
+                  defaultPageSize={5}
+                  align="center"
+                  total={metaData.total_reviews}
+                  onChange={onPageChange}
+                />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
