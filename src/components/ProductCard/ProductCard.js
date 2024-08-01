@@ -89,7 +89,7 @@ const ProductCard = () => {
           {product.title}
         </h3>
         <p className="mt-1 text-lg font-medium text-gray-900">
-          {product.price.currencyCode === "INC" && "RS "}
+          {product.price.currencyCode === "INC" && "₹ "}
           {product.price.sellingPrice}
         </p>
       </div>

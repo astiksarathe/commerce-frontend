@@ -25,7 +25,7 @@ const OrderSummary = () => {
           <span>Order Summary</span>
           <span className="order_summary_item_count">(1 item)</span>
         </p>
-        <p className="order_totals_amount">Rs {subtotal}</p>
+        <p className="order_totals_amount">₹ {subtotal}</p>
       </button>
 
       <OrderSummaryDrawer

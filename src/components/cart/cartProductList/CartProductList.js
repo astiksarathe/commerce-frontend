@@ -33,7 +33,7 @@ const CartProductList = (props) => {
                     <p className="cart__product-variant">Moon</p>
                     <p className="cart__product-variant">6mm</p>
                   </div>
-                  <p className="cart__product-price">Rs 499</p>
+                  <p className="cart__product-price">₹ 499</p>
                 </div>
                 <div className="cart__product-quantity">
                   <QtyInput

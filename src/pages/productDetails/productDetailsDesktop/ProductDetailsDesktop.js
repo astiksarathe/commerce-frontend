@@ -41,8 +41,8 @@ const ProductDetailsDesktop = ({ productDetails }) => {
     const { MRP, sellingPrice } = product.price || {};
     return (
       <p className="avs awx axv">
-        {`Rs. ${sellingPrice}  `}
-        {MRP !== sellingPrice && <del>{` Rs. ${MRP}`}</del>}
+        {`₹. ${sellingPrice}  `}
+        {MRP !== sellingPrice && <del>{` ₹. ${MRP}`}</del>}
         <span> incl. GST</span>
       </p>
     );

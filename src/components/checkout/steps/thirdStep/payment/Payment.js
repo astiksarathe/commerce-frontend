@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutFormHandler } from "../../../../../features/checkout";
+import { orderConfirmModalHandler } from "../../../../../features/orderConfirmModal/OrderConfirmModalSlice";
 const Payment = () => {
   const dispatch = useDispatch();
   const {
@@ -11,6 +12,13 @@ const Payment = () => {
     dispatch(
       checkoutFormHandler({ name: "paymentMode", value: selectedMode, key: "paymentStatus" })
     );
+  };
+
+  const onClickHandler = (e) => {
+    e.preventDefault();
+    if (paymentStatus.paymentMode === 3) {
+      dispatch(orderConfirmModalHandler(true));
+    }
   };
   return (
     <div className="payment_container">
@@ -104,7 +112,7 @@ const Payment = () => {
         >
           Notify me for order updates & offers
         </Checkbox>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={onClickHandler}>
           {paymentStatus.paymentMode === 3 ? <span>Complete Order</span> : <span>Pay now</span>}
         </Button>
       </div>

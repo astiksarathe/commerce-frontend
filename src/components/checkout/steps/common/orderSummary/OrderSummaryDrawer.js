@@ -68,20 +68,16 @@ const OrderSummaryDrawer = ({ open, close, isOpen }) => {
       <div className="order_totals_wrapper">
         <div className="order_subtotal">
           <p className="order_totals_heading">Subtotal</p>
-          <p className="order_totals_value">Rs {subtotal}</p>
+          <p className="order_totals_value">₹ {subtotal}</p>
         </div>
         <div className="order_discount">
           <p className="order_totals_heading">Coupon Discount</p>
-          <p className="order_totals_value">Rs 0.00</p>
+          <p className="order_totals_value">₹ 0.00</p>
         </div>
         <div className="order_shipping">
           <p className="order_totals_heading">Shipping</p>
           <p className="order_totals_value">
-            {shipping.shippingCharges === 0 ? (
-              <span>FREE</span>
-            ) : (
-              `+ Rs ${shipping.shippingCharges}`
-            )}
+            {shipping.shippingCharges === 0 ? <span>FREE</span> : `+ ₹ ${shipping.shippingCharges}`}
           </p>
         </div>
         <div className="order_topay">

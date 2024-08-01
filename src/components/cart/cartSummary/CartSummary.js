@@ -18,13 +18,13 @@ const CartSummary = () => {
       <dl className="cart-dl">
         <div className="cart-price-detail">
           <dt className="cart-price-term">subtotal</dt>
-          <dd className="cart-price-desc">Rs 400</dd>
+          <dd className="cart-price-desc">₹ 400</dd>
         </div>
         <div className="cart-price-detail">
           <dt className="cart-price-term">
             Coupon Discount <QuestionCircleFilled />
           </dt>
-          <dd className="cart-price-desc">-£0.00</dd>
+          <dd className="cart-price-desc">-₹ 0.00</dd>
         </div>
         <div className="cart-price-detail">
           <dt className="cart-price-term">
@@ -34,7 +34,7 @@ const CartSummary = () => {
         </div>
         <div className="cart-price-detail">
           <dt className="cart-order-total">subtotal</dt>
-          <dd className="cart-order-total">Rs 400</dd>
+          <dd className="cart-order-total">₹ 400</dd>
         </div>
       </dl>
       <div className="cart-checkout-btn">
