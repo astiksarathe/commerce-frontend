@@ -1,33 +1,22 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Drawer } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+
+import OrderSummaryDrawer from "./OrderSummaryDrawer";
+
+import "./order-summary.scss";
 
 const OrderSummary = () => {
   const [summaryDrawer, setSummaryDrawer] = useState(false);
   const {
-    checkoutForm: { products, subtotal, shipping },
+    checkoutForm: { subtotal },
   } = useSelector((state) => state.checkout);
 
-  const getTotalShipping = () => {
-    let totalAmount = 0;
+  const openSummaryDrawer = () => setSummaryDrawer(true);
 
-    if (shipping.shippingCharges) {
-      totalAmount += shipping.shippingCharges;
-    }
-    if (subtotal) {
-      totalAmount += subtotal;
-    }
+  const closeSummaryDrawer = () => setSummaryDrawer(false);
 
-    return totalAmount;
-  };
-  const closeSummaryDrawer = () => {
-    setSummaryDrawer(false);
-  };
-  const openSummaryDrawer = () => {
-    setSummaryDrawer(true);
-  };
   return (
     <>
       <button className="btn_as_div order_summary_min_wrapper" onClick={openSummaryDrawer}>
@@ -38,64 +27,12 @@ const OrderSummary = () => {
         </p>
         <p className="order_totals_amount">Rs {subtotal}</p>
       </button>
-      <Drawer
-        placement="bottom"
-        closable={false}
-        onClose={closeSummaryDrawer}
-        open={summaryDrawer}
-        getContainer={false}
-      >
-        <h1>
-          Order Summary ({products.length} {products.length > 1 ? "Items" : "Item"})
-        </h1>
-        {products.length > 0 &&
-          products.map((product) => {
-            return (
-              <div className="order_products_wrapper checkout_card" key={product.SKU}>
-                <div className="order_product_wrapper">
-                  <div className="order_product_img">
-                    <img src={product.thumbnilImg} alt={"product"} />
-                  </div>
-                  <div className="order_product_details">
-                    <p className="order_product_title">{product.productTitle}</p>
-                    <div className="order_product_quantity">
-                      <span>Quantity:</span>
-                      <span>{product.quantity}</span>
-                    </div>
-                    <div className="order_product_price">
-                      <span>Price:</span>
-                      <span>{product.price}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        <div className="order_totals_wrapper">
-          <div className="order_subtotal">
-            <p className="order_totals_heading">Subtotal</p>
-            <p className="order_totals_value">Rs {subtotal}</p>
-          </div>
-          <div className="order_discount">
-            <p className="order_totals_heading">Coupon Discount</p>
-            <p className="order_totals_value">Rs 0.00</p>
-          </div>
-          <div className="order_shipping">
-            <p className="order_totals_heading">Shipping</p>
-            <p className="order_totals_value">
-              {shipping.shippingCharges === 0 ? (
-                <span>FREE</span>
-              ) : (
-                `+ Rs ${shipping.shippingCharges}`
-              )}
-            </p>
-          </div>
-          <div className="order_topay">
-            <p className="order_topay_heading">Total amount</p>
-            <p className="order_topay_value">{getTotalShipping()}</p>
-          </div>
-        </div>
-      </Drawer>
+
+      <OrderSummaryDrawer
+        isOpen={summaryDrawer}
+        open={openSummaryDrawer}
+        close={closeSummaryDrawer}
+      />
     </>
   );
 };
