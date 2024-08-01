@@ -12,6 +12,7 @@ import wishlistReducer from "../features/wishlist";
 import modelDrawerReducer from "../features/model-drawer";
 import shippingReducer from "../features/shipping";
 import checkoutExitReducer from "../features/checkoutExit";
+import orderConfirmModalReducer from "../features/orderConfirmModal";
 
 const rootReducer = combineReducers({
   authDrawer: authDrawerReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   modelDrawer: modelDrawerReducer,
   shipping: shippingReducer,
   checkoutExit: checkoutExitReducer,
+  orderConfirm: orderConfirmModalReducer,
 });
 
 export default rootReducer;

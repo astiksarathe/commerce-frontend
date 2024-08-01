@@ -12,13 +12,15 @@ import ThirdStep from "./steps/thirdStep";
 
 import ShippingDrawer from "./shippingAddress/ShippingDrawer";
 
-import "./checkout.scss";
 import Footer from "./steps/common/footer/Footer";
 import Header from "./steps/common/header/Header";
 import ExitCheckout from "./steps/common/exitCheckout/ExitCheckout";
+import ConfirmOrder from "./steps/thirdStep/confirmOrder/ConfirmOrder";
+
+import "./checkout.scss";
 
 const Checkout = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const { isCheckoutModelOpen } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
 
@@ -65,6 +67,7 @@ const Checkout = () => {
 
         <ShippingDrawer />
         <ExitCheckout />
+        <ConfirmOrder />
       </main>
     </Modal>
   );
