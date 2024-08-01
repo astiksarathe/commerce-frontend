@@ -18,13 +18,9 @@ import Header from "./steps/common/header/Header";
 import ExitCheckout from "./steps/common/exitCheckout/ExitCheckout";
 
 const Checkout = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const { isCheckoutModelOpen } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
-
-  const handleOk = () => {
-    dispatch(checkoutModelHandler(false));
-  };
 
   const handleCancel = () => {
     dispatch(checkoutModelHandler(false));
@@ -46,15 +42,11 @@ const Checkout = () => {
   };
   return (
     <Modal
-      mask
       closeIcon={false}
       style={{ top: 0 }}
-      maskClosable={false}
       open={isCheckoutModelOpen}
-      onOk={handleOk}
-      onCancel={handleCancel}
-      footer={[]}
       width={500}
+      footer={[]}
       className="checkout_modal"
     >
       <main className="checkout_wrapper">
@@ -70,6 +62,7 @@ const Checkout = () => {
         {step === 3 && <ThirdStep stepHandler={stepHandler} />}
 
         <Footer key={1} />
+
         <ShippingDrawer />
         <ExitCheckout />
       </main>

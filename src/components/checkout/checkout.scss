@@ -2,9 +2,9 @@
    Checkout Style Start
 */
 .ant-modal.checkout_modal {
-    height: 100vh;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    // height: 100vh;
+    // margin-bottom: 0;
+    // padding-bottom: 0;
 }
 
 .checkout_modal .ant-modal-close {
@@ -31,9 +31,9 @@
 }
 
 .checkout_wrapper {
-    height: 100vh;
-    position: relative;
-    overflow: scroll;
+    // height: 100vh;
+    // position: relative;
+    // overflow: scroll;
 }
 
 .checkout_left-section {
@@ -426,7 +426,7 @@
 
 .checkout_modal>div>.ant-modal-content {
     @media (max-width:48rem) {
-        height: 100vh !important;
+        // height: 100vh !important;
     }
 }
 
@@ -569,4 +569,26 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+
+.checkout_modal {
+    .ant-modal-content {
+        height: 100vh;
+        overflow: hidden;
+
+        .ant-modal-body {
+            height: 100vh;
+            overflow: hidden;
+
+            .checkout_wrapper {
+                height: 100vh;
+                overflow: scroll;
+            }
+        }
+    }
+}
+
+:where(.css-dev-only-do-not-override-1fumvat).ant-modal {
+    padding-bottom: 0;
 }
