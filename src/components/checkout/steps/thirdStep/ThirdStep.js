@@ -7,7 +7,7 @@ import Payment from "./payment/Payment";
 
 import { addressRenderer } from "../../../../utils/common";
 
-const ThirdStep = ({ stepHandler }) => {
+const ThirdStep = () => {
   const [openModel, setOpenModel] = useState(false);
   const address = {
     address1: "House no 12, word no 2",

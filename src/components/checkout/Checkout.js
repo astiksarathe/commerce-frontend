@@ -18,7 +18,7 @@ import Header from "./steps/common/header/Header";
 import ExitCheckout from "./steps/common/exitCheckout/ExitCheckout";
 
 const Checkout = () => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const { isCheckoutModelOpen } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
 

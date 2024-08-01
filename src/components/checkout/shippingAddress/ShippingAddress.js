@@ -3,7 +3,7 @@ import Address from "./Address";
 import { useDispatch } from "react-redux";
 import { getPinCodeDetails } from "../../../features/pincode/pincoodeSlice";
 
-const ShippingAddress = () => {
+const ShippingAddress = ({ stepHandler }) => {
   const dispatch = useDispatch();
 
   const pincodeHandler = (e) => {
@@ -14,7 +14,12 @@ const ShippingAddress = () => {
   return (
     <div className="checkout_form">
       <h1 className="checkout_heading">Add Shipping Address</h1>
-      <Address pincodeHandler={pincodeHandler} formName="shippingAddress" btnName={"Add address"} />
+      <Address
+        pincodeHandler={pincodeHandler}
+        formName="shippingAddress"
+        btnName={"Add address"}
+        stepHandler={stepHandler}
+      />
     </div>
   );
 };
