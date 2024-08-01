@@ -1,5 +1,6 @@
 import React from "react";
 
+import "./assurance.scss";
 const Assurance = () => {
   return (
     <div className="assureance_container">

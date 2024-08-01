@@ -451,38 +451,6 @@
 }
 
 
-/////
-/// 
-///  
-///     ASSURANCE.JS
-/// 
-/// 
-//////
-
-.assureance_container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-
-
-}
-
-.assurance_img,
-.verifiedSeller_img,
-.securePayment_img {
-    width: fit-content;
-    margin: auto;
-}
-
-.assurance_title,
-.verifiedSeller_title,
-.securePayment_title {
-    width: fit-content;
-    font-size: 13px;
-    color: #242424;
-    margin: auto;
-    margin-top: 5px;
-}
-
 
 /////
 /// 
