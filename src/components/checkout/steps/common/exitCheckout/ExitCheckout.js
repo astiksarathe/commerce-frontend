@@ -34,6 +34,14 @@ const ExitCheckout = () => {
 
   return (
     <Drawer
+      title={
+        <div className="exit_form_title">
+          <span>Sorry to see you go</span>
+          <button type="button" onClick={onClose}>
+            <CloseOutlined />
+          </button>
+        </div>
+      }
       className="checkout_exit_drawer"
       placement="bottom"
       height={480}
@@ -42,12 +50,6 @@ const ExitCheckout = () => {
       open={isExitDrawerOpen}
       getContainer={false}
     >
-      <div className="exit_form_title">
-        <span>Sorry to see you go</span>
-        <button type="button" onClick={onClose}>
-          <CloseOutlined />
-        </button>
-      </div>
       <div className="exit_form_container">
         <div>
           <label className="exit_form_label" htmlFor="givenReason">
