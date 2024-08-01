@@ -5,6 +5,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 
 import { orderConfirmModalHandler } from "../../../../../features/orderConfirmModal";
+import { formatCurrency } from "../../../../../utils/common";
 
 import "./confirm-order.scss";
 
@@ -37,9 +38,9 @@ const ConfirmOrder = () => {
         <div className="confirm_order_total_wrapper">
           <div className="confirm_order_total">
             <span>Total amount:</span>
-            <span>₹ 9898</span>
+            <span>{formatCurrency(0)}</span>
           </div>
-          <div className="confirm_order_COD">Incl. Rs731.9 COD charges</div>
+          <div className="confirm_order_COD">Incl. {formatCurrency(0)} COD charges</div>
         </div>
         <div className="confirm_order_btn_wrapper">
           <Button block size="large">

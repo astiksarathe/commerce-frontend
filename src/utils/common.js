@@ -134,3 +134,7 @@ export const addressRenderer = (address) => {
   }
   return addressArr;
 };
+
+export function formatCurrency(amount = 0) {
+  return `₹ ${amount.toFixed(2)}`;
+}

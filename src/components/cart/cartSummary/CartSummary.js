@@ -2,11 +2,12 @@ import React from "react";
 import "./cartSummary.scss";
 import { Button } from "antd";
 import { QuestionCircleFilled } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkoutModelHandler } from "../../../features/checkout";
+import { formatCurrency } from "../../../utils/common";
 const CartSummary = () => {
   const dispatch = useDispatch();
-
+  const { cartValue } = useSelector((state) => state.cart);
   const checkoutHandler = () => {
     dispatch(checkoutModelHandler(true));
   };
@@ -18,13 +19,13 @@ const CartSummary = () => {
       <dl className="cart-dl">
         <div className="cart-price-detail">
           <dt className="cart-price-term">subtotal</dt>
-          <dd className="cart-price-desc">₹ 400</dd>
+          <dd className="cart-price-desc">{formatCurrency(cartValue)}</dd>
         </div>
         <div className="cart-price-detail">
           <dt className="cart-price-term">
             Coupon Discount <QuestionCircleFilled />
           </dt>
-          <dd className="cart-price-desc">-₹ 0.00</dd>
+          <dd className="cart-price-desc"> -{formatCurrency()} </dd>
         </div>
         <div className="cart-price-detail">
           <dt className="cart-price-term">
@@ -34,7 +35,7 @@ const CartSummary = () => {
         </div>
         <div className="cart-price-detail">
           <dt className="cart-order-total">subtotal</dt>
-          <dd className="cart-order-total">₹ 400</dd>
+          <dd className="cart-order-total"> {formatCurrency(cartValue)}</dd>
         </div>
       </dl>
       <div className="cart-checkout-btn">

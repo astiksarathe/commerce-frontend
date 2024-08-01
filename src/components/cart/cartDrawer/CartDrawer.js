@@ -6,11 +6,12 @@ import { addToCart, cartDrawerHandler, removeFromCart } from "../../../features/
 import { useNavigate, Link } from "react-router-dom";
 import QtyInput from "../../qtyInput";
 import "./cartDrawer.scss";
+import { formatCurrency } from "../../../utils/common";
 
 const CartDrawer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isCartDrawerOpen, cartList } = useSelector((state) => state.cart);
+  const { isCartDrawerOpen, cartList, cartValue } = useSelector((state) => state.cart);
   const removeCart = (product) => {
     dispatch(removeFromCart({ ...product }));
   };
@@ -41,7 +42,7 @@ const CartDrawer = () => {
         <div className="cart__drawer-footer">
           <div className="cart__drawer-subtotal">
             <p>Subtotal</p>
-            <p>$262.00</p>
+            <p>{formatCurrency(cartValue)}</p>
           </div>
           <p className="cart__drawer-shipping">Shipping and taxes calculated at checkout.</p>
           <Button className="btn-black" size="large" type="primary" block>
@@ -71,7 +72,7 @@ const CartDrawer = () => {
                   </Link>
                 </h3>
               </div>
-              <p className="cart-item__price">₹ {product.sellingPrice}</p>
+              <p className="cart-item__price">{formatCurrency(product.sellingPrice)}</p>
               <div className="cart-item__actions">
                 <p className="cart-item__quantity">
                   <QtyInput
@@ -84,7 +85,7 @@ const CartDrawer = () => {
                 <div>
                   <button
                     type="button"
-                    className="cart-item__remove-button"
+                    className="btn_as_div cart-item__remove-button"
                     onClick={() => removeCart(product)}
                   >
                     Remove

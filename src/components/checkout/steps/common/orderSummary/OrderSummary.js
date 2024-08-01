@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
 import OrderSummaryDrawer from "./OrderSummaryDrawer";
+import { formatCurrency } from "../../../../../utils/common";
 
 import "./order-summary.scss";
 
@@ -25,7 +26,7 @@ const OrderSummary = () => {
           <span>Order Summary</span>
           <span className="order_summary_item_count">(1 item)</span>
         </p>
-        <p className="order_totals_amount">₹ {subtotal}</p>
+        <p className="order_totals_amount"> {formatCurrency(subtotal)}</p>
       </button>
 
       <OrderSummaryDrawer

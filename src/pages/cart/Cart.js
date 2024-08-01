@@ -9,7 +9,7 @@ const Cart = () => {
   const { cartList } = useSelector((state) => state.cart);
   useEffect(() => {
     dispatch(cartDrawerHandler(false));
-  }, []);
+  }, [dispatch]);
   return (
     <div className="container">
       {cartList.length === 0 && <EmptyCart />}

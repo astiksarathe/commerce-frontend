@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cartList: [],
+  cartValue: 0,
   isLoading: false,
   error: null,
   isCartDrawerOpen: false,
@@ -16,7 +17,14 @@ const cartSlice = createSlice({
     },
     setCart: (state, action) => {
       const cartList = JSON.parse(localStorage.getItem("cart"));
-      if (cartList && cartList.length) state.cartList = cartList;
+
+      if (cartList?.length) {
+        state.cartList = cartList;
+        state.cartValue = state.cartList.reduce(
+          (acc, cur) => acc + cur.sellingPrice * cur.quantity,
+          0
+        );
+      }
     },
     addToCart: (state, action) => {
       const { productId, quantity, title, url, price, MRP, sellingPrice } = action.payload;
@@ -40,7 +48,12 @@ const cartSlice = createSlice({
         // Add the new product to the cart
         state.cartList.push(updatedProduct);
       }
-
+      if (state.cartList?.length) {
+        state.cartValue = state.cartList.reduce(
+          (acc, cur) => acc + cur.sellingPrice * cur.quantity,
+          0
+        );
+      }
       // Update local storage
       localStorage.setItem("cart", JSON.stringify(state.cartList));
     },
@@ -48,6 +61,12 @@ const cartSlice = createSlice({
       const { productId } = action.payload;
       const updatedCartList = state.cartList.filter((product) => product.productId !== productId);
       state.cartList = updatedCartList;
+      if (state.cartList?.length) {
+        state.cartValue = state.cartList.reduce(
+          (acc, cur) => acc + cur.sellingPrice * cur.quantity,
+          0
+        );
+      }
       localStorage.setItem("cart", JSON.stringify(updatedCartList));
     },
     // Additional reducers can be defined here if needed

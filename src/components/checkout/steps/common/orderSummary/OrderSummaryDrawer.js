@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Drawer } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
+import { formatCurrency } from "../../../../../utils/common";
 import "./order-summary.scss";
 const OrderSummaryDrawer = ({ open, close, isOpen }) => {
   const {
@@ -58,7 +59,7 @@ const OrderSummaryDrawer = ({ open, close, isOpen }) => {
                   </div>
                   <div className="order_product_price">
                     <span>Price:</span>
-                    <span>{product.price}</span>
+                    <span> {formatCurrency(product.price)} </span>
                   </div>
                 </div>
               </div>
@@ -68,21 +69,25 @@ const OrderSummaryDrawer = ({ open, close, isOpen }) => {
       <div className="order_totals_wrapper">
         <div className="order_subtotal">
           <p className="order_totals_heading">Subtotal</p>
-          <p className="order_totals_value">₹ {subtotal}</p>
+          <p className="order_totals_value">{formatCurrency(subtotal)}</p>
         </div>
         <div className="order_discount">
           <p className="order_totals_heading">Coupon Discount</p>
-          <p className="order_totals_value">₹ 0.00</p>
+          <p className="order_totals_value">{formatCurrency(0)}</p>
         </div>
         <div className="order_shipping">
           <p className="order_totals_heading">Shipping</p>
           <p className="order_totals_value">
-            {shipping.shippingCharges === 0 ? <span>FREE</span> : `+ ₹ ${shipping.shippingCharges}`}
+            {shipping.shippingCharges === 0 ? (
+              <span>FREE</span>
+            ) : (
+              `+ ${formatCurrency(shipping.shippingCharges)}`
+            )}
           </p>
         </div>
         <div className="order_topay">
           <p className="order_topay_heading">Total amount</p>
-          <p className="order_topay_value">{getTotalShipping()}</p>
+          <p className="order_topay_value">{formatCurrency(getTotalShipping())}</p>
         </div>
       </div>
     </Drawer>

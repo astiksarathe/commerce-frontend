@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EyeOutlined, HeartOutlined, ShoppingOutlined } from "@ant-design/icons";
 
 import "./productCard.scss";
@@ -14,6 +14,7 @@ import {
 } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
 import { addToWishlist } from "../../features/wishlist";
+import { formatCurrency } from "../../utils/common";
 
 const ProductCard = () => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -89,8 +90,7 @@ const ProductCard = () => {
           {product.title}
         </h3>
         <p className="mt-1 text-lg font-medium text-gray-900">
-          {product.price.currencyCode === "INC" && "₹ "}
-          {product.price.sellingPrice}
+          {formatCurrency(product.price.sellingPrice)}
         </p>
       </div>
     ));

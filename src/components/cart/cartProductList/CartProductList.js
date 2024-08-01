@@ -5,6 +5,7 @@ import QtyInput from "../../qtyInput";
 import { CloseOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../../../features/cart";
+import { formatCurrency } from "../../../utils/common";
 const CartProductList = (props) => {
   const dispatch = useDispatch();
   const cartQunatityHandler = (value, product) => {
@@ -33,7 +34,7 @@ const CartProductList = (props) => {
                     <p className="cart__product-variant">Moon</p>
                     <p className="cart__product-variant">6mm</p>
                   </div>
-                  <p className="cart__product-price">₹ 499</p>
+                  <p className="cart__product-price">{formatCurrency(product.sellingPrice)}</p>
                 </div>
                 <div className="cart__product-quantity">
                   <QtyInput

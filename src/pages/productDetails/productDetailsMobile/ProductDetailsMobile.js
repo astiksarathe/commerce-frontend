@@ -1,5 +1,5 @@
 import React from "react";
-import { Rate, Skeleton } from "antd";
+import { Rate } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";

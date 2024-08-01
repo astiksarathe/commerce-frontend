@@ -79,6 +79,10 @@ const checkoutSlice = createSlice({
       };
       state.checkoutForm.subtotal = parseInt(product.price) * parseInt(product.quantity);
       state.checkoutForm.products = [product];
+      state.checkoutForm.subtotal = state.checkoutForm.products.reduce(
+        (pre, cur) => pre + cur.quantity * cur.price,
+        0
+      );
     },
 
     updateShippingMethod: (state, action) => {
