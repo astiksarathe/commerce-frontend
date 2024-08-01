@@ -105,7 +105,7 @@ export const productSlice = createSlice({
     });
     builder.addCase(getProductByURL.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.productDetails = action.payload[0] || {};
+      state.productDetails = action.payload || {};
     });
     builder.addCase(getProductByURL.rejected, (state, action) => {
       state.isLoading = false;

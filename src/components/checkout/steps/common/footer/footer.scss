@@ -1,0 +1,23 @@
+.checkout_main_footer {
+    text-align: center;
+    width: 100%;
+
+    .checkout_main_footer_direct_link {
+
+        a,
+        span {
+            font-size: 12px;
+            color: gray;
+        }
+
+        span {
+            margin: 0 5px;
+        }
+    }
+
+    .checkout_main_footer_rights {
+
+        font-size: 13px;
+        color: gray;
+    }
+}

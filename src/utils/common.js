@@ -95,3 +95,42 @@ export function generateRandomNumber(limit) {
   let randomNumber = Math.floor(Math.random() * (limit - 6)) + 6;
   return randomNumber;
 }
+
+/**
+ * Calculates the estimated delivery date range.
+ *
+ * @returns {string} - The formatted estimated delivery date range.
+ */
+export function calculateEstimatedDeliveryDate() {
+  const currentDate = new Date();
+
+  // Calculate start date (current date + 4 days)
+  const startDate = new Date();
+  startDate.setDate(currentDate.getDate() + 4);
+
+  // Calculate end date (current date + 7 days)
+  const endDate = new Date();
+  endDate.setDate(currentDate.getDate() + 7);
+
+  // Format the start and end dates
+  const formattedStartDate = formatDate(startDate);
+  const formattedEndDate = formatDate(endDate);
+
+  // Return the formatted delivery date range
+  return `${formattedStartDate} - ${formattedEndDate}`;
+}
+export const addressRenderer = (address) => {
+  const key = ["address1", "landmark", "city", "state", "country", "pincode"];
+  const addressArr = [];
+
+  for (let k of key) {
+    if (address[k]) {
+      addressArr.push(
+        <span className={`delivery_${k}`} key={k}>
+          {address[k] + ", "}
+        </span>
+      );
+    }
+  }
+  return addressArr;
+};

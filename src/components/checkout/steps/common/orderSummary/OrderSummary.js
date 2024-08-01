@@ -1,9 +1,11 @@
-import React from "react";
-import "./checkout.scss";
-import { Button, Form, Input } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+
+import { Drawer } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+
 const OrderSummary = () => {
+  const [summaryDrawer, setSummaryDrawer] = useState(false);
   const {
     checkoutForm: { products, subtotal, shipping },
   } = useSelector((state) => state.checkout);
@@ -20,18 +22,36 @@ const OrderSummary = () => {
 
     return totalAmount;
   };
-
+  const closeSummaryDrawer = () => {
+    setSummaryDrawer(false);
+  };
+  const openSummaryDrawer = () => {
+    setSummaryDrawer(true);
+  };
   return (
-    <div>
-      <div className="order_summary_wrapper">
+    <>
+      <button className="btn_as_div order_summary_min_wrapper" onClick={openSummaryDrawer}>
         <p className="order_summary_heading">
           <ShoppingCartOutlined style={{ fontSize: "20px", marginRight: "5px", fontWeight: 700 }} />{" "}
           <span>Order Summary</span>
+          <span className="order_summary_item_count">(1 item)</span>
         </p>
-        {products.length &&
+        <p className="order_totals_amount">Rs {subtotal}</p>
+      </button>
+      <Drawer
+        placement="bottom"
+        closable={false}
+        onClose={closeSummaryDrawer}
+        open={summaryDrawer}
+        getContainer={false}
+      >
+        <h1>
+          Order Summary ({products.length} {products.length > 1 ? "Items" : "Item"})
+        </h1>
+        {products.length > 0 &&
           products.map((product) => {
             return (
-              <div className="order_products_wrapper" key={product.SKU}>
+              <div className="order_products_wrapper checkout_card" key={product.SKU}>
                 <div className="order_product_wrapper">
                   <div className="order_product_img">
                     <img src={product.thumbnilImg} alt={"product"} />
@@ -71,30 +91,12 @@ const OrderSummary = () => {
             </p>
           </div>
           <div className="order_topay">
-            <p className="order_topay_heading">Total</p>
+            <p className="order_topay_heading">Total amount</p>
             <p className="order_topay_value">{getTotalShipping()}</p>
           </div>
         </div>
-      </div>
-      <div className="coupon_code_wrapper">
-        <Form
-          name="discountForm"
-          variant="filled"
-          style={{ maxWidth: 700 }}
-          layout="vertical"
-          autoComplete="off"
-        >
-          <div className="coupen_code">
-            <Form.Item name="discountCode" validateTrigger="onBlur">
-              <Input size="large" placeholder="Enter Discount Code" />
-            </Form.Item>
-            <Button size="large" type="primary">
-              Apply
-            </Button>
-          </div>
-        </Form>
-      </div>
-    </div>
+      </Drawer>
+    </>
   );
 };
 

@@ -16,7 +16,6 @@ export const getReviewsByProductId = createAsyncThunk(
   "reviewByProductId",
   async ({ productId, query }, { rejectWithValue }) => {
     try {
-      console.log("PRODUCT ID INSIDE CALL", productId);
       const response = await axiosInstance.get(
         `/review/productId/${productId}?${getQueryParamsFromObj(query)}`
       );

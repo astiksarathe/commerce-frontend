@@ -1,23 +1,33 @@
 import React from "react";
-import { Input, Form, Checkbox, Select } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { getPinCodeDetails } from "../../features/pincode/pincoodeSlice";
-import { checkoutFormHandler } from "../../features/checkout/checkout";
+import { Input, Form, Select } from "antd";
 import PropTypes from "prop-types";
-const Address = ({ pincodeHandler, formName }) => {
-  const dispatch = useDispatch();
+import SubmitButton from "../../submitButton/SubmitButton";
+
+const Address = ({
+  pincodeHandler,
+  formName,
+  btnName = "Save",
+  initialValues,
+  onChange,
+  onBtnClick,
+  stepHandler,
+}) => {
+  const [form] = Form.useForm();
+  const onFinsihHandler = () => {
+    if (stepHandler) stepHandler(3);
+    if (onBtnClick) onBtnClick();
+  };
   return (
     <Form
+      form={form}
       name={formName}
       style={{ maxWidth: 700 }}
       layout="vertical"
       variant="filled"
-      initialValues={{ remember: true }}
+      onFinish={onFinsihHandler}
+      initialValues={initialValues}
       autoComplete="off"
-      onFieldsChange={(event) => {
-        const { name, value } = event[0];
-        dispatch(checkoutFormHandler({ name: name[0], value, key: formName }));
-      }}
+      onFieldsChange={onChange}
     >
       <Form.Item
         label="Pincode"
@@ -117,104 +127,19 @@ const Address = ({ pincodeHandler, formName }) => {
       >
         <Input size="large" placeholder="Enter Your Country" />
       </Form.Item>
+      <SubmitButton form={form} size="large" block>
+        {btnName}
+      </SubmitButton>
     </Form>
   );
 };
-
 Address.propTypes = {
   pincodeHandler: PropTypes.func,
   formName: PropTypes.string,
+  btnName: PropTypes.string,
+  initialValues: PropTypes.any,
+  onChange: PropTypes.func,
+  onBtnClick: PropTypes.func,
 };
 
-const CheckoutForm = () => {
-  const { checkoutForm } = useSelector((state) => state.checkout);
-  const dispatch = useDispatch();
-
-  const pincodeHandler = (e) => {
-    e.preventDefault();
-    const { value } = e.target;
-    if (value.length === 6) dispatch(getPinCodeDetails(value));
-  };
-  return (
-    <div className="checkout_form">
-      <div>
-        <h1 className="checkout_heading first_heading">Personal Details</h1>
-        <Form
-          name="personalDetails"
-          variant="filled"
-          style={{ maxWidth: 700 }}
-          layout="vertical"
-          autoComplete="off"
-          onFieldsChange={(event) => {
-            const { name, value } = event[0];
-            dispatch(checkoutFormHandler({ name: name[0], value, key: "shippingAddress" }));
-          }}
-        >
-          <Form.Item
-            label="Your Name"
-            name="fullName"
-            validateTrigger="onBlur"
-            rules={[{ required: true, message: "Your name is required!" }]}
-          >
-            <Input size="large" placeholder="Enter Your Name" />
-          </Form.Item>
-
-          <Form.Item
-            label="Your Phone Number"
-            name="phoneNumber"
-            rules={[
-              { required: true, message: "Your phone number is required!" },
-              { len: 10, message: "Phone number should be valid" },
-            ]}
-          >
-            <Input
-              prefix={
-                <div className="phoneNumber-dialog-code">
-                  <img
-                    style={{ marginRight: "5px" }}
-                    src="/assets/indian_flag.svg"
-                    alt="Indian Dialing Code "
-                  />
-                  <span>+91</span>
-                </div>
-              }
-              size="large"
-              placeholder="Enter Phone Number"
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Email"
-            name="email"
-            validateTrigger="onBlur"
-            rules={[{ type: "email", message: "Enter a valid email!" }]}
-          >
-            <Input size="large" placeholder="Enter Your Name" />
-          </Form.Item>
-        </Form>
-      </div>
-      <div>
-        <h1 className="checkout_heading">Shipping Details</h1>
-        <Address pincodeHandler={pincodeHandler} formName="shippingAddress" />
-        <Checkbox
-          name="billingSameAsShipping"
-          checked={checkoutForm.billingSameAsShipping}
-          onChange={(event) => {
-            const { checked, name } = event.target;
-            dispatch(checkoutFormHandler({ name, value: checked }));
-          }}
-        >
-          Billing address is same as the shipping address
-        </Checkbox>
-      </div>
-      {!checkoutForm.billingSameAsShipping && (
-        <div>
-          <h1 className="checkout_heading">Billing Details</h1>
-          <Address pincodeHandler={pincodeHandler} formName="billingAddress" />
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default CheckoutForm;
+export default Address;

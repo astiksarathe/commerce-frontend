@@ -22,7 +22,6 @@
 }
 
 .ant-modal.checkout_modal .ant-modal-content {
-    // border-radius: 25px;
     background-color: #F5F5F5;
     padding: 0;
 
@@ -33,17 +32,8 @@
 
 .checkout_wrapper {
     height: 100vh;
+    position: relative;
     overflow: scroll;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "checkout_left_section checkout_right_section";
-    gap: 1rem;
-
-    @media (max-width:48rem) {
-        grid-template-columns: 1fr;
-        grid-template-areas: "checkout_right_section" "checkout_left_section";
-    }
 }
 
 .checkout_left-section {
@@ -99,8 +89,6 @@
     background-color: #fff;
     box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.0509803922);
     min-height: 1rem;
-    margin-right: 1rem;
-    margin-top: 1rem;
     border-radius: 10px;
 
     @media (max-width:48rem) {
@@ -109,21 +97,43 @@
     }
 }
 
-.order_summary_heading {
+.order_summary_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding-right: 1.5rem;
+    cursor: pointer;
+
+    &::after {
+        position: absolute;
+        content: ">";
+        top: 15px;
+        right: 10px;
+    }
+}
+
+.order_summary_heading,
+.order_totals_amount {
     color: #252525;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .checkout_heading {
     @extend .order_summary_heading;
     margin-bottom: 1rem;
-    @extend .payment_container;
+}
 
-    &.first_heading {
-        margin-top: 0;
-        padding-top: 0;
-        border-top: none;
+.order_summary_item_count {
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 7px;
+}
+
+.order_products_wrapper {
+    &.checkout_card {
+        margin: 0.5rem 0;
     }
 }
 
@@ -220,6 +230,10 @@
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 1%;
+
+    .ant-form-item {
+        margin-bottom: 0;
+    }
 }
 
 /*
@@ -269,6 +283,7 @@
     display: flex;
     align-items: center;
     border: 0.76px solid #CCD3DE;
+    background-color: transparent;
     height: 56px;
     width: 100%;
     cursor: pointer;
@@ -354,7 +369,6 @@
     border: 1px solid #e0e0e0;
     min-width: 145px;
     min-height: 50px;
-    /* width: 100%; */
     border-radius: 4px;
     padding: 8px 6px;
     box-sizing: border-box;
@@ -406,12 +420,153 @@
     @media (max-width:48rem) {
         overflow-x: hidden;
         max-width: 100vw !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
     }
 }
 
-.ant-modal-content {
+.checkout_modal>div>.ant-modal-content {
     @media (max-width:48rem) {
         height: 100vh !important;
     }
+}
+
+
+/////
+/// 
+/// 
+/// General
+.checkout_card_container,
+.checkout_card {
+    margin: 0.5rem;
+    box-sizing: border-box;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.0509803922);
+    min-height: 1rem;
+    border-radius: 10px;
+}
+
+.btn_as_div {
+    background-color: transparent;
+}
+
+
+/////
+/// 
+///  
+///     ASSURANCE.JS
+/// 
+/// 
+//////
+
+.assureance_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+
+}
+
+.assurance_img,
+.verifiedSeller_img,
+.securePayment_img {
+    width: fit-content;
+    margin: auto;
+}
+
+.assurance_title,
+.verifiedSeller_title,
+.securePayment_title {
+    width: fit-content;
+    font-size: 13px;
+    color: #242424;
+    margin: auto;
+    margin-top: 5px;
+}
+
+
+/////
+/// 
+///  
+///     Third.JS
+/// 
+/// 
+//////
+
+
+.delivery_address_wrapper {
+    .deliver_to {
+        @extend .order_summary_heading;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .deliver_address {
+        display: flex;
+        gap: 2px;
+        flex-wrap: wrap;
+    }
+
+    .change_deliver_to_btn {
+        color: rgb(0, 81, 191);
+        background-color: transparent;
+
+        &:hover {
+            color: rgb(0, 81, 191, 0.9);
+        }
+    }
+}
+
+
+/////////
+/// 
+/// 
+///     ShowAddress.js
+/// 
+/// 
+
+.show_addresses {
+    .show_addresses_title {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    p {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 5px 0 0 0;
+    }
+
+    .new_address_btn {
+        margin: 0.5rem 0;
+        font-weight: 500;
+        color: rgb(22, 119, 255);
+        display: grid;
+        width: fit-content;
+        margin-left: auto;
+
+        &:hover {
+            color: rgb(22, 119, 255, 0.8);
+        }
+
+    }
+}
+
+.checkout_card.address_list {
+    margin: 0.5rem 0;
+}
+
+
+
+
+////////
+/// 
+/// 
+/// 
+/// Order Summary
+/// 
+
+.order_summary_min_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }

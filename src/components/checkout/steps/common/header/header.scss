@@ -1,0 +1,24 @@
+.checkout_header {
+    height: 70px;
+    position: sticky;
+    top: 0;
+    opacity: 1;
+
+    overflow: visible;
+    background-color: whitesmoke;
+
+    .checkout_back_btn {
+        margin: 13px 7px;
+        background-color: transparent;
+        color: gray;
+    }
+
+    .checkout_header_announcement {
+        padding: 3px 0;
+        letter-spacing: 0.1px;
+        color: white;
+        text-align: center;
+        background-color: #4096ff;
+        box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+    }
+}

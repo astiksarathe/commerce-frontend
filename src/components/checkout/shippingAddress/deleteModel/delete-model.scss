@@ -1,0 +1,31 @@
+.delete_address_model {
+    padding: 1rem;
+    padding-bottom: 0;
+
+    h3 {
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    p {
+        font-size: 14px;
+        font-weight: 400;
+        text-align: center;
+        margin: 5px 0 0 0;
+    }
+
+
+
+}
+
+.delete_model_btn_wrapper {
+    width: fit-content;
+    margin: auto;
+    margin-top: 1.5rem;
+
+    .delete_modal_btn {
+        padding: 10px 20px;
+        margin: 0 10px;
+    }
+}

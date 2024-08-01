@@ -9,6 +9,9 @@ import pincodeReducer from "../features/pincode";
 import checkoutReducer from "../features/checkout";
 import reviewReducer from "../features/review";
 import wishlistReducer from "../features/wishlist";
+import modelDrawerReducer from "../features/model-drawer";
+import shippingReducer from "../features/shipping";
+import checkoutExitReducer from "../features/checkoutExit";
 
 const rootReducer = combineReducers({
   authDrawer: authDrawerReducer,
@@ -20,6 +23,9 @@ const rootReducer = combineReducers({
   checkout: checkoutReducer,
   review: reviewReducer,
   wishlist: wishlistReducer,
+  modelDrawer: modelDrawerReducer,
+  shipping: shippingReducer,
+  checkoutExit: checkoutExitReducer,
 });
 
 export default rootReducer;

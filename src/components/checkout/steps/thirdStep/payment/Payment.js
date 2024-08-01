@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { checkoutFormHandler } from "../../features/checkout";
+import { checkoutFormHandler } from "../../../../../features/checkout";
 const Payment = () => {
   const dispatch = useDispatch();
   const {
@@ -22,25 +22,23 @@ const Payment = () => {
             paymentStatus.paymentMode === 1 ? "selected" : ""
           }`}
         >
-          <div
+          <button
             className={`payment_option_wrapper ${paymentStatus.paymentMode === 1 && "selected"}`}
             onClick={() => paymentSelectHandler(1)}
           >
             <h3 className="payment_type">
               <img src="/assets/upiIcon.svg" alt="full payment" style={{ width: "22px" }} />
-              UPI/Credit Card/Debit Card
+              {""} UPI/Credit Card/Debit Card
               <span className="saving_message">
                 Save upto <strong>10%</strong>
               </span>
             </h3>
-          </div>
+          </button>
           {paymentStatus.paymentMode === 1 && (
-            <>
-              <p className="payment_note">
-                After clicking “Pay now”, you will be redirected to Razorpay Secure (UPI, Cards,
-                Wallets, NetBanking) to complete your purchase securely.
-              </p>
-            </>
+            <p className="payment_note">
+              After clicking “Pay now”, you will be redirected to Razorpay Secure (UPI, Cards,
+              Wallets, NetBanking) to complete your purchase securely.
+            </p>
           )}
         </div>
         <div
@@ -48,16 +46,16 @@ const Payment = () => {
             paymentStatus.paymentMode === 2 ? "selected" : ""
           }`}
         >
-          <div
+          <button
             className={`payment_option_wrapper ${paymentStatus.paymentMode === 2 && "selected"}`}
             onClick={() => paymentSelectHandler(2)}
           >
             <h3 className="payment_type">
               <img src="/assets/bnplIcon.svg" alt="parital pay" style={{ width: "22px" }} />
-              Pay with EMI
+              {""} Pay with EMI
               <span className="saving_message">{/* Save upto <strong>5%</strong> */}</span>
             </h3>
-          </div>
+          </button>
           {paymentStatus.paymentMode === 2 && (
             <>
               <p className="payment_note">
@@ -76,15 +74,15 @@ const Payment = () => {
             paymentStatus.paymentMode === 3 ? "selected" : ""
           }`}
         >
-          <div
+          <button
             className={`payment_option_wrapper ${paymentStatus.paymentMode === 3 && "selected"}`}
             onClick={() => paymentSelectHandler(3)}
           >
             <h3 className="payment_type">
               <img src="/assets/codIcon.svg" alt="cash on delivery" style={{ width: "22px" }} />
-              Cash on Delivery
+              {""} Cash on Delivery
             </h3>
-          </div>
+          </button>
           {paymentStatus.paymentMode === 3 && (
             <p className="payment_note">Pay with cash upon delivery.</p>
           )}

@@ -1,7 +1,6 @@
 import React from "react";
-import "./checkout.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { updateShippingMethod } from "../../features/checkout/checkout";
+import { updateShippingMethod } from "../../../../../features/checkout/checkout";
 const ShippingMethods = () => {
   const {
     checkoutForm: { shipping },
