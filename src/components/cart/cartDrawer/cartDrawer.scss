@@ -9,7 +9,7 @@
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 0.375rem;
-    border: 1px solid rgb(229, 231, 235 / 1);
+    border: 1px solid rgba(229, 231, 235, 1);
   }
 
   &__image {
@@ -32,7 +32,7 @@
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.5rem;
-    color: rgb(17, 24, 39 / 1);
+    color: rgba(17, 24, 39, 1);
   }
 
   &__title {
@@ -43,7 +43,7 @@
     margin-top: 0.25rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    color: rgb(107, 114, 128 / 1);
+    color: rgba(107, 114, 128, 1);
   }
 
   &__actions {
@@ -56,16 +56,16 @@
   }
 
   &__quantity {
-    color: rgb(107, 114, 128 / 1);
+    color: rgba(107, 114, 128, 1);
   }
 
   &__remove-button {
     font-weight: 500;
-    color: rgb(79, 70, 229 / 1);
+    color: rgba(79, 70, 229, 1);
     cursor: pointer;
 
     &:hover {
-      color: rgb(99, 102, 241 / 1);
+      color: rgba(99, 102, 241, 1);
     }
   }
 }
@@ -84,14 +84,14 @@
 .cart__drawer-subtotal {
   display: flex;
   justify-content: space-between;
-  color: rgb(17 24 39 / 1);
+  color: rgba(17, 24, 39, 1);
   font-weight: 500;
   font-size: 1rem;
   line-height: 1.5rem;
 }
 
 .cart__drawer-shipping {
-  color: rgb(107 114 128 / 1);
+  color: rgba(107, 114, 128, 1);
   font-size: 0.875rem;
   line-height: 1.25rem;
   margin-top: 0.125rem;
