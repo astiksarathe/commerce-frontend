@@ -37,11 +37,16 @@
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
 
     .confirm_order_total {
-        color: #252525;
+        color: #000;
         font-size: 14px;
         font-weight: 500;
+        font-style: normal;
+        line-height: 28px;
+        letter-spacing: 0.3px;
+        margin: 5px 0;
 
         span {
             padding-right: 5px;
@@ -55,9 +60,18 @@
         background: linear-gradient(96deg, #FFF8EF 1.5%, #FFD1C3 97.15%);
         color: #E95123;
         border-radius: 4px;
-        height: 19px;
         padding: 4px 12px;
         font-size: 12px;
         font-weight: 500;
+    }
+
+}
+
+.confirm_order_btn_wrapper {
+    button {
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 10px;
+
     }
 }

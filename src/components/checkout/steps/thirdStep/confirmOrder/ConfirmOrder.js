@@ -11,6 +11,7 @@ import "./confirm-order.scss";
 const ConfirmOrder = () => {
   const { isOrderConfirmModalOpen } = useSelector((state) => state.orderConfirm);
   const dispatch = useDispatch();
+
   const onClose = () => {
     dispatch(orderConfirmModalHandler(false));
   };
@@ -41,11 +42,11 @@ const ConfirmOrder = () => {
           <div className="confirm_order_COD">Incl. Rs731.9 COD charges</div>
         </div>
         <div className="confirm_order_btn_wrapper">
-          <Button type="primary" block size="large">
+          <Button block size="large">
             Confirm & place order
           </Button>
-          <Button type="" block size="large">
-            Pay now (save upto 10%)
+          <Button type="primary" block size="large">
+            Pay now ( save upto 10% )
           </Button>
         </div>
       </div>
