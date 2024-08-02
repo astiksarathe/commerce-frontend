@@ -42,6 +42,7 @@ const PersonalDetails = ({ stepHandler }) => {
           ]}
         >
           <Input
+            type="number"
             prefix={
               <div className="phoneNumber-dialog-code">
                 <img

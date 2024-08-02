@@ -41,7 +41,12 @@ const Address = ({
           { len: 6, message: "Enter a valid pincode" },
         ]}
       >
-        <Input size="large" placeholder="Enter Your Picode" onChange={pincodeHandler} />
+        <Input
+          size="large"
+          type="number"
+          placeholder="Enter Your Picode"
+          onChange={pincodeHandler}
+        />
       </Form.Item>
 
       <Form.Item
