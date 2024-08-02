@@ -357,6 +357,7 @@
     display: flex;
     gap: 5px;
     align-items: center;
+    overflow: scroll;
 }
 
 .shipping_type_wrapper {
@@ -532,12 +533,6 @@
 /// 
 /// Order Summary
 /// 
-
-.order_summary_min_wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
 
 
 .checkout_modal {

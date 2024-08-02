@@ -53,7 +53,7 @@ const Checkout = () => {
     >
       <main className="checkout_wrapper">
         <Header />
-        <div className="checkout_card_container">
+        <div className="checkout_card_container" style={{ marginTop: "1rem" }}>
           <OrderSummary />
         </div>
         <div className="checkout_card_container">

@@ -1,3 +1,14 @@
+.order_summary_min_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+        display: flex;
+        gap: 5px;
+    }
+}
+
 .order_confirm_drawer {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
