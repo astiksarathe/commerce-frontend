@@ -48,11 +48,11 @@ const SideMenuBar = () => {
       ],
     },
     {
-      key: "BRAND",
-      label: "BEST SELLET",
+      key: "BEST_SELLER",
+      label: "BEST SELLER",
     },
     {
-      key: "BRAND",
+      key: "LOGIN_REGISTER",
       label: (
         <div
           onClick={() => {
