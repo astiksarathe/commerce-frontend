@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Drawer, Space, Segmented } from "antd";
+import { Button, Checkbox, Form, Input, Drawer, Space, Segmented, Row, Col } from "antd";
 import "./authDrawer.scss";
 import {
   DribbbleOutlined,
@@ -43,7 +43,7 @@ const EmailForm = () => {
             },
           ]}
         >
-          <Input size="large" />
+          <Input autoComplete="off" name="email" size="large" />
         </Form.Item>
 
         <Form.Item
@@ -56,28 +56,32 @@ const EmailForm = () => {
             },
           ]}
         >
-          <Input.Password size="large" />
+          <Input.Password autoComplete="off" name="password" size="large" />
         </Form.Item>
-        <Form.Item>
-          <Button
-            loading={isLoading}
-            iconPosition={"end"}
-            style={{ width: "100%", margin: "auto" }}
-            htmlType="submit"
-          >
-            Submit
-          </Button>
-        </Form.Item>
-        <Form.Item name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
-          <DribbbleOutlined
-            style={{
-              marginRight: "8px",
-              marginLeft: "10px",
-            }}
-          />
-          <Link to={"/"}>Lost your password?</Link>
-        </Form.Item>
+
+        <Button
+          loading={isLoading}
+          iconPosition={"end"}
+          style={{ width: "100%", margin: "auto" }}
+          htmlType="submit"
+        >
+          Submit
+        </Button>
+        <div className="flex">
+          <Form.Item name="remember" valuePropName="checked">
+            <Checkbox name="remember">Remember me</Checkbox>
+          </Form.Item>
+
+          <Form.Item>
+            <DribbbleOutlined
+              style={{
+                marginRight: "8px",
+                marginLeft: "10px",
+              }}
+            />
+            <Link to={"/"}>Lost your password?</Link>
+          </Form.Item>
+        </div>
       </Form>
       <div className="create_account_link">
         <UserOutlined
