@@ -77,16 +77,14 @@ const AskQuestion = () => {
               autoSize={{ minRows: 5, maxRows: 5 }}
             />
           </Form.Item>
-          <Form.Item validateTrigger="onBlur">
-            <Button
-              iconPosition={"end"}
-              style={{ width: "100%", margin: "auto" }}
-              htmlType="submit"
-              size="large"
-            >
-              Send
-            </Button>
-          </Form.Item>
+          <Button
+            iconPosition={"end"}
+            style={{ width: "100%", margin: "auto" }}
+            htmlType="submit"
+            size="large"
+          >
+            Send
+          </Button>
         </Form>
       </Drawer>
     </div>
