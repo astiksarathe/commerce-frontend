@@ -57,8 +57,8 @@ const Header = () => {
       ],
     },
     {
-      key: "BRAND",
-      label: "BEST SELLET",
+      key: "BEST_SELLER",
+      label: "BEST SELLER",
     },
   ];
 
