@@ -65,3 +65,28 @@
 .product-card-title {
   cursor: pointer;
 }
+
+// SKELETON
+
+.product_card_skeleton {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  .ant-skeleton {
+    width: 100%;
+  }
+
+  .ant-skeleton-image {
+    height: 300px !important;
+    width: unset !important;
+
+    @media (max-width:48rem) {
+      height: 170px !important;
+    }
+  }
+
+  .ant-space-item {
+    display: block;
+    width: 100%;
+  }
+}

@@ -1,10 +1,10 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { Skeleton, Space } from "antd";
 import { EyeOutlined, HeartOutlined, ShoppingOutlined } from "@ant-design/icons";
 
-import "./productCard.scss";
-import "./productCardCustom.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { productQuickView, quickViewModelHandler } from "../../features/product";
 import {
   creaetVariantTree,
@@ -14,10 +14,13 @@ import {
 } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
 import { addToWishlist } from "../../features/wishlist";
+
 import { formatCurrency } from "../../utils/common";
 
+import "./productCard.scss";
+import "./productCardCustom.scss";
+
 const ProductCard = () => {
-  const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,14 +44,6 @@ const ProductCard = () => {
     dispatch(selectedProductForDetail(product.url)); //selectedProductURL
     dispatch(getProductByURL(product.url));
     navigate(`/shop/${product.url}`);
-  };
-
-  const isCurrentProductAddedWL = (product) => {
-    if (product && wishlist) {
-      const isPresent = wishlist.find((productId) => productId === product);
-      if (isPresent) return true;
-    }
-    return false;
   };
 
   const productRender = () => {
@@ -83,23 +78,30 @@ const ProductCard = () => {
             </div>
           </div>
         </div>
-        <h3
-          className="mt-4 text-sm text-gray-700 product-card-title"
-          onClick={() => productDetail(product)}
-        >
-          {product.title}
-        </h3>
+        <button type="button" className="btn_as_div" onClick={() => productDetail(product)}>
+          <h3 className="mt-4 text-sm text-gray-700 product-card-title">{product.title}</h3>
+        </button>
         <p className="mt-1 text-lg font-medium text-gray-900">
           {formatCurrency(product.price.sellingPrice)}
         </p>
       </div>
     ));
   };
+  const productSkelton = () => {
+    return Array.from({ length: 20 }).map((val) => (
+      <Space key={val} className="product_card_skeleton">
+        <Skeleton.Image active />
+        <Skeleton.Button active size="small" block />
+        <Skeleton.Button active size="small" block />
+      </Space>
+    ));
+  };
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
       <h2 className="sr-only">Products</h2>
 
-      <div className="product-container">{productRender()}</div>
+      <div className="product-container">{isLoading ? productSkelton() : productRender()}</div>
     </div>
   );
 };
