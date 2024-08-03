@@ -13,7 +13,7 @@ import {
 
 function ShareButtons({ url, title }) {
   return (
-    <div className="share-buttons">
+    <div className="share-buttons space-x-2">
       <FacebookShareButton url={url} quote={title}>
         <FacebookIcon size={32} round />
       </FacebookShareButton>
