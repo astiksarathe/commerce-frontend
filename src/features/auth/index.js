@@ -4,9 +4,9 @@ import authReducer, {
   refreshToken,
   register,
   changePassword,
-  getCurrentUser,
+  getUser,
   updateAccount,
 } from "./authSlice";
 
-export { login, logout, refreshToken, register, changePassword, getCurrentUser, updateAccount };
+export { login, logout, refreshToken, register, changePassword, getUser, updateAccount };
 export default authReducer;

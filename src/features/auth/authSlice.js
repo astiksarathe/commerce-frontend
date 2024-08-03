@@ -8,11 +8,10 @@ import {
   getCurrentUserApi,
   updateAccountApi,
 } from "./authAPI";
-import { useCookies } from "../../hooks/useCookies";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const initialState = {
   user: null,
+  accessToken: null,
   isLoading: false,
   error: null,
 };
@@ -69,7 +68,7 @@ export const changePassword = createAsyncThunk(
   }
 );
 
-export const getCurrentUser = createAsyncThunk(
+export const getUser = createAsyncThunk(
   "auth/getCurrentUser",
   async (data, { rejectWithValue }) => {
     try {
@@ -101,43 +100,66 @@ const authSlice = createSlice({
     // Additional reducers can be defined here if needed
   },
   extraReducers: (builder) => {
-    // Handle pending actions
-    builder.addMatcher(
-      (action) => action.type.endsWith("/pending"),
-      (state) => {
-        state.isLoading = true;
-        state.error = null;
-      }
-    );
-
-    // Handle fulfilled actions
-    builder.addMatcher(
-      (action) => action.type.endsWith("/fulfilled"),
-      (state, action) => {
-        if (action.type === "auth/login/fulfilled") {
-          const { setCookie } = useCookies();
-          const { setItem } = useLocalStorage();
-          setCookie("accessToken", action.payload.accessToken, {
-            expires: new Date(Date.now() + 3600 * 1000),
-            secure: true,
-          });
-          setCookie("refreshToken", action.payload.refreshToken);
-          setItem("user", JSON.stringify(action.payload));
-        }
-        state.isLoading = false;
-        state.error = null;
-        state.user = action.payload; // Assuming payload contains user data
-      }
-    );
-
-    // Handle rejected actions
-    builder.addMatcher(
-      (action) => action.type.endsWith("/rejected"),
-      (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload; // Assuming payload contains error message
-      }
-    );
+    // LOGIN
+    builder.addCase(login.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      localStorage.setItem("accessToken", action.payload.accessToken);
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload?.error || { message: "Failed to login" };
+    });
+    // REGISTER
+    builder.addCase(register.fulfilled, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(register.rejected, (state) => {
+      state.isLoading = true;
+    });
+    // LOGOUT
+    builder.addCase(logout.fulfilled, (state) => {
+      state.isLoading = false;
+      state.user = null;
+      state.accessToken = null;
+      localStorage.removeItem("accessToken");
+    });
+    builder.addCase(logout.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload || "Failed to logout";
+    });
+    // REFRESH_TOKEN
+    builder.addCase(refreshToken.fulfilled, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(refreshToken.rejected, (state) => {
+      state.isLoading = true;
+    });
+    // CHANGE_PASSWORD
+    builder.addCase(changePassword.fulfilled, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changePassword.rejected, (state) => {
+      state.isLoading = true;
+    });
+    // GET_USER
+    builder.addCase(getUser.fulfilled, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getUser.rejected, (state) => {
+      state.isLoading = true;
+    });
+    // UPDATE_ACCOUNT
+    builder.addCase(updateAccount.fulfilled, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateAccount.rejected, (state) => {
+      state.isLoading = true;
+    });
   },
 });
 
