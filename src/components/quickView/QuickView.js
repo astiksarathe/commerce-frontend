@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Modal, Rate } from "antd";
-import { quickViewModelHandler } from "../../features/product";
+
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { Modal, Rate } from "antd";
+
+import QtyInput from "../qtyInput/QtyInput";
 import Variant from "../variant/Variant";
 import { options, variant } from "./data";
-import { Link } from "react-router-dom";
-import "./quickView.scss";
-import QtyInput from "../qtyInput/QtyInput";
+
 import { addToCart } from "../../features/cart";
+import { quickViewModelHandler } from "../../features/product";
 const QuickView = () => {
   const { isQuickViewModelOpen, quickViewProduct } = useSelector((state) => state.product);
   const [quantity, setQuantity] = useState(1);
