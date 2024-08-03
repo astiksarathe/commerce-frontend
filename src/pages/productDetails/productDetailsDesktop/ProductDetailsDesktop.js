@@ -183,35 +183,39 @@ const ProductDetailsDesktop = ({ productDetails }) => {
           </div>
           <div className="p-4">
             <h1 className="text-2xl tracking-wide">Shipping and Return : </h1>
-            <div className="grid sm:grid-cols-2">
-              <div className="p-8">
-                <h4 className="text-lg font-semibold">
-                  <TruckOutlined className="animate-bounce text-xl" />
-                  <span className="ml-2"> Free Shipping on Orders Over INR 1000</span>
-                </h4>
-                <ul className="mt-4 pl-8 list-disc">
-                  <li className="leading-6 mb-2">
-                    For orders below INR 1000, shipping charges will be calculated at checkout.
-                  </li>
-                  <li className="leading-6 mb-2">Delivery within 5-7 business days.</li>
-                  <li className="leading-6 mb-2">Express delivery services are also available.</li>
-                </ul>
-              </div>
-              <div className="p-8">
-                <h4 className="text-lg font-semibold">
-                  <RollbackOutlined className="animate-bounce text-xl" />
-                  <span className="ml-2">Return and Exchange</span>
-                </h4>
-                <ul className="mt-4 pl-8 list-disc">
-                  <li className="leading-6 mb-2">
-                    We offer a return or exchange in case of damage or if an incorrect product is
-                    delivered.
-                  </li>
-                  <li className="leading-6 mb-2">Easy and complimentary, within 3 days.</li>
-                  <li className="leading-6 mb-2">
-                    See our return and exchange policy for conditions and procedures.
-                  </li>
-                </ul>
+            <div className="lg:pl-36">
+              <div className="grid sm:grid-cols-2 gap-3 pt-8">
+                <div>
+                  <h4 className="text-lg font-semibold">
+                    <TruckOutlined className="animate-bounce text-xl" />
+                    <span className="ml-2"> Free Shipping on Orders Over INR 1000</span>
+                  </h4>
+                  <ul className="mt-4 pl-8 list-disc">
+                    <li className="leading-6 mb-2">
+                      For orders below INR 1000, shipping charges will be calculated at checkout.
+                    </li>
+                    <li className="leading-6 mb-2">Delivery within 5-7 business days.</li>
+                    <li className="leading-6 mb-2">
+                      Express delivery services are also available.
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold">
+                    <RollbackOutlined className="animate-bounce text-xl" />
+                    <span className="ml-2">Return and Exchange</span>
+                  </h4>
+                  <ul className="mt-4 pl-8 list-disc">
+                    <li className="leading-6 mb-2">
+                      We offer a return or exchange in case of damage or if an incorrect product is
+                      delivered.
+                    </li>
+                    <li className="leading-6 mb-2">Easy and complimentary, within 3 days.</li>
+                    <li className="leading-6 mb-2">
+                      See our return and exchange policy for conditions and procedures.
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

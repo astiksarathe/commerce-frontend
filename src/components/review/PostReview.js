@@ -44,117 +44,129 @@ const PostReview = ({ productId }) => {
     if (val <= 0) setRating(1);
     else setRating(val);
   };
+
+  const ReviewForm = () => (
+    <div className="post-review-container">
+      <div className="post-review-header">
+        <h1 className="mt-4 text-lg font-semibold text-center lg:hidden">Add a Review</h1>
+        <p className="text-center">
+          <span>Your email address will not be published. </span>
+          <span>
+            Required fields are marked <span className="leading-6 text-red-600">*</span>
+          </span>
+        </p>
+      </div>
+      <div className="w-fit my-4 mx-auto">
+        <Rate value={rating} style={{ fontSize: "30px" }} onChange={ratingChangeHandler} />
+      </div>
+      <Form
+        form={form}
+        name="reviewForm"
+        variant="filled"
+        initialValues={{
+          remember: true,
+        }}
+        layout="vertical"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        className="review-form"
+      >
+        <Form.Item
+          label="Your Review"
+          name="content"
+          rules={[
+            {
+              required: true,
+              message: "Please input your review!",
+            },
+          ]}
+        >
+          <TextArea
+            placeholder="Your Review"
+            autoSize={{ minRows: 5, maxRows: 5 }}
+            className="review-textarea"
+          />
+        </Form.Item>
+        <Form.Item
+          label="Name"
+          name="fullName"
+          rules={[
+            {
+              required: true,
+              message: "Please input your name!",
+            },
+          ]}
+        >
+          <Input size="large" className="name-input" />
+        </Form.Item>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please input your email!",
+            },
+            {
+              type: "email",
+              message: "Invalid email address",
+            },
+          ]}
+        >
+          <Input size="large" className="email-input" />
+        </Form.Item>
+        <Button
+          size="large"
+          type="primary"
+          block
+          className="submit-button"
+          htmlType="submit"
+          onClick={onFinish}
+          loading={isLoading}
+        >
+          {isLoading ? "Loading" : "Submit"}
+        </Button>
+      </Form>
+    </div>
+  );
+
   return (
-    <Drawer
-      className="login_drawer"
-      title="Review"
-      placement={"right"}
-      width={340}
-      onClose={() => {
-        dispatch(postReviewModelHandler(false));
-      }}
-      open={isPostReviewModelOpen}
-      extra={
-        <Space>
-          <Button
-            type="text"
-            style={{ color: "white", fontSize: 14 }}
-            onClick={() => {
-              form.resetFields();
-              dispatch(postReviewModelHandler(false));
-            }}
-          >
-            CLOSE
-            <MinusOutlined style={{ color: "white", fontSize: 14 }} />
-          </Button>
-        </Space>
-      }
-    >
-      <>
-        {contextHolder}
-        <div className="post-review-container">
-          <div className="post-review-header">
-            <h1 className="post-review-title">Add a Review</h1>
-            <p className="review-instructions">
-              <span>Your email address will not be published. </span>
-              <span>
-                Required fields are marked <span className="required-mark">*</span>
-              </span>
-            </p>
-          </div>
-          <div className="select-rating">
-            <Rate value={rating} style={{ fontSize: "30px" }} onChange={ratingChangeHandler} />
-          </div>
-          <Form
-            form={form}
-            name="reviewForm"
-            initialValues={{
-              remember: true,
-            }}
-            layout="vertical"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-            className="review-form"
-          >
-            <Form.Item
-              label="Your Review"
-              name="content"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your review!",
-                },
-              ]}
-            >
-              <TextArea
-                placeholder="Your Review"
-                autoSize={{ minRows: 5, maxRows: 5 }}
-                className="review-textarea"
-              />
-            </Form.Item>
-            <Form.Item
-              label="Name"
-              name="fullName"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your name!",
-                },
-              ]}
-            >
-              <Input size="large" className="name-input" />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-                {
-                  type: "email",
-                  message: "Invalid email address",
-                },
-              ]}
-            >
-              <Input size="large" className="email-input" />
-            </Form.Item>
-            <Button
-              type="primary"
-              block
-              className="submit-button"
-              htmlType="submit"
-              onClick={onFinish}
-              loading={isLoading}
-            >
-              {isLoading ? "Loading" : "Submit"}
-            </Button>
-          </Form>
-        </div>
-      </>
-    </Drawer>
+    <>
+      <div className="sm:hidden">
+        <Drawer
+          className="login_drawer"
+          title="Review"
+          placement={"right"}
+          width={340}
+          onClose={() => {
+            dispatch(postReviewModelHandler(false));
+          }}
+          open={isPostReviewModelOpen}
+          extra={
+            <Space>
+              <Button
+                type="text"
+                style={{ color: "white", fontSize: 14 }}
+                onClick={() => {
+                  form.resetFields();
+                  dispatch(postReviewModelHandler(false));
+                }}
+              >
+                CLOSE
+                <MinusOutlined style={{ color: "white", fontSize: 14 }} />
+              </Button>
+            </Space>
+          }
+        >
+          <>{contextHolder}</>
+          <ReviewForm />
+        </Drawer>
+      </div>
+      <div className="hidden md:block">
+        <ReviewForm />
+      </div>
+    </>
   );
 };
 

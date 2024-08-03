@@ -7,6 +7,21 @@ import PostReview from "./PostReview";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviewsByProductId, postReviewModelHandler } from "../../features/review";
 import { calculatePercentage, formatDate } from "../../utils/common";
+const ReviewTitle = ({ metaData, title }) => {
+  return (
+    <h3 className="recent-reviews-title text-center">
+      {metaData.total_reviews === 0 ? (
+        <>
+          Be The First To Review for <span>{title}</span>
+        </>
+      ) : (
+        <>
+          {metaData.total_reviews} reviews for <span>{title}</span>
+        </>
+      )}
+    </h3>
+  );
+};
 
 const ReviewItems = ({ review }) => {
   return (
@@ -20,7 +35,7 @@ const ReviewItems = ({ review }) => {
             <div className="author-stars">
               <Rate disabled value={review.rating} style={{ fontSize: "16px" }} />
             </div>
-            <p className="author-rating hide">{review.rating} out of 5 stars</p>
+            <p className="author-rating sr-only">{review.rating} out of 5 stars</p>
             <div className="author-meta">
               <strong>{review.fullName}</strong>
               <em className="author-verified">
@@ -42,15 +57,19 @@ const ReviewItems = ({ review }) => {
 
 const ReviewDataItem = ({ rating, percentage }) => {
   return (
-    <div className="review-data-item">
-      <dt className="review-data-label">
-        <div className="review-data-star">
-          <Rate disabled value={rating} style={{ fontSize: "16px" }} />
+    <div className="">
+      <dt className="flex gap-3 leading-7">
+        <div className="w-48">
+          <Rate className="me-0" disabled value={rating} style={{ fontSize: "16px" }} />
         </div>
-        <div aria-hidden="true" className="review-data-bar">
-          <Flex vertical gap="small">
-            <Progress percent={percentage} strokeLinecap="square" type="line" size={["100%", 15]} />
-          </Flex>
+        <div aria-hidden="true" className="w-full">
+          <Progress
+            className="justify-self-end"
+            percent={percentage}
+            strokeLinecap="square"
+            type="line"
+            size={["100%", 15]}
+          />
         </div>
       </dt>
     </div>
@@ -89,69 +108,74 @@ const Review = ({ metaData, productId, title }) => {
   };
   return (
     <>
-      <div className="review-component">
-        <div>
-          <div className="review-header">
-            <h2 className="review-title">Reviews ({metaData.total_reviews})</h2>
-            <div className="review-summary">
-              <p className="review-count">Based on {metaData.total_reviews} reviews</p>
-              <div>
-                <div className="review-stars">
-                  <strong>{aggregateRating}</strong>
-                  <span>Overall</span>
+      <div className="md:p-4">
+        <h1 className="hidden sm:block text-2xl tracking-wide my-3">Reviews :</h1>
+        <div className="lg:pl-36">
+          <div className="md:grid grid-cols-2 gap-5">
+            <div>
+              <div className="review-header">
+                <h2 className="review-title">Reviews ({metaData.total_reviews})</h2>
+                <div className="review-summary">
+                  <p className="review-count">Based on {metaData.total_reviews} reviews</p>
+                  <div>
+                    <div className="review-stars">
+                      <strong>{aggregateRating}</strong>
+                      <span>Overall</span>
+                    </div>
+                    <p className="review-rating sr-only">{aggregateRating} out of 5 stars</p>
+                  </div>
                 </div>
-                <p className="review-rating hide">{aggregateRating} out of 5 stars</p>
+              </div>
+              <div className="mb-4">
+                <dl className="review-data-list">{ReviewDataItems}</dl>
+              </div>
+              <div className="review-share md:hidden">
+                <Button
+                  size="large"
+                  block
+                  className="share-link"
+                  onClick={() => {
+                    dispatch(postReviewModelHandler(true));
+                  }}
+                >
+                  Write a review
+                </Button>
               </div>
             </div>
+            <div className="w-10/12 m-auto">
+              <div className="hidden md:block">
+                <ReviewTitle metaData={metaData} title={title} />
+              </div>
+              <PostReview productId={productId} />
+            </div>
           </div>
-          <div className="review-data">
-            <dl className="review-data-list">{ReviewDataItems}</dl>
-          </div>
-          <div className="review-share">
-            <Button
-              size="large"
-              block
-              className="share-link"
-              onClick={() => {
-                dispatch(postReviewModelHandler(true));
-              }}
-            >
-              Write a review
-            </Button>
-          </div>
-        </div>
-        <div className="recent-reviews">
-          <h3 className="recent-reviews-title">
-            {metaData.total_reviews === 0 ? (
-              <span>Be The First To Review </span>
-            ) : (
-              <span>{metaData.total_reviews} reviews</span>
-            )}
-            for <span> {title} </span>
-          </h3>
-          <div className="recent-reviews-list">
-            {reviewList.map((review) => (
-              <React.Fragment key={review._id}>
-                <ReviewItems review={review} />
-              </React.Fragment>
-            ))}
-            <div className="recent-reviews-pagination">
-              {reviewList.length ? (
-                <Pagination
-                  defaultCurrent={1}
-                  defaultPageSize={5}
-                  align="center"
-                  total={metaData.total_reviews}
-                  onChange={onPageChange}
-                />
-              ) : (
-                ""
-              )}
+          <div className="recent-reviews">
+            <h3 className="recent-reviews-title md:sr-only">
+              <ReviewTitle metaData={metaData} title={title} />
+            </h3>
+            <div className="recent-reviews-list">
+              {reviewList.map((review) => (
+                <React.Fragment key={review._id}>
+                  <ReviewItems review={review} />
+                </React.Fragment>
+              ))}
+              <div className="recent-reviews-pagination">
+                {reviewList.length ? (
+                  <Pagination
+                    defaultCurrent={1}
+                    defaultPageSize={5}
+                    align="center"
+                    total={metaData.total_reviews}
+                    onChange={onPageChange}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <PostReview productId={productId} />
     </>
   );
 };
