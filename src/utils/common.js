@@ -135,6 +135,17 @@ export const addressRenderer = (address) => {
   return addressArr;
 };
 
-export function formatCurrency(amount = 0) {
-  return `₹ ${amount.toFixed(2)}`;
+export function formatCurrency(val = "0") {
+  const amount = val.toString();
+  let numberString = amount.replace(/[₹,\s]/g, "");
+
+  // Parse the string to a float
+  let number = parseFloat(numberString);
+
+  // Format the number with commas
+  const formattedNumber = number.toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `₹ ${formattedNumber}`;
 }
