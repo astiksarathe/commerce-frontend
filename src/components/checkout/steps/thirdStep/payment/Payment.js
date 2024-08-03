@@ -3,10 +3,12 @@ import { Button, Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutFormHandler } from "../../../../../features/checkout";
 import { orderConfirmModalHandler } from "../../../../../features/orderConfirmModal/OrderConfirmModalSlice";
+import { nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
 const Payment = () => {
   const dispatch = useDispatch();
   const {
-    checkoutForm: { paymentStatus, subscribeToUpdate },
+    checkoutForm: { personalDetails, paymentStatus, subscribeToUpdate, totalAmount },
   } = useSelector((state) => state.checkout);
   const paymentSelectHandler = (selectedMode) => {
     dispatch(
@@ -18,8 +20,83 @@ const Payment = () => {
     e.preventDefault();
     if (paymentStatus.paymentMode === 3) {
       dispatch(orderConfirmModalHandler(true));
+    } else if (paymentStatus.paymentMode === 1) {
+      paymentHandler(totalAmount, personalDetails, () => {});
+    } else {
+      paymentHandler(100, personalDetails, () => {});
     }
   };
+
+  const paymentHandler = async (amount, personalDetails, setPaymentStatus) => {
+    try {
+      const payload = {
+        amount: amount * 100, // Ensure the amount is in the smallest currency unit
+        currency: "INR",
+        receipt: nanoid(),
+      };
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}payment/create-order`,
+        payload
+      );
+      const order = response.data;
+      console.log(process.env.REACT_APP_RAZORPAY_KEY_ID);
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID, // Ensure this key is set in your .env file
+        amount: payload.amount,
+        currency: "INR",
+        name: "EveryDayGadget",
+        description: "Test Transaction",
+        image: "https://i.ibb.co/5Y3m33n/test.png",
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            const validateResponse = await axios.post(
+              `${process.env.REACT_APP_API_URL}payment/validate`,
+              response
+            );
+            const jsonResponse = validateResponse.data;
+
+            if (jsonResponse.success) {
+              setPaymentStatus("Payment successful!");
+              // Redirect to a confirmation page or update the UI accordingly
+            } else {
+              setPaymentStatus("Payment validation failed. Please try again.");
+              // Handle validation failure case
+            }
+
+            console.log("jsonResponse", jsonResponse);
+          } catch (error) {
+            setPaymentStatus("Error validating payment. Please try again.");
+            console.error("Error validating payment:", error);
+          }
+        },
+        prefill: {
+          name: personalDetails.fullName,
+          email: personalDetails.email,
+          contact: personalDetails.phoneNumber,
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on("payment.failed", function (response) {
+        setPaymentStatus("Payment failed. Please try again.");
+        console.error("Payment failed:", response);
+      });
+
+      rzp1.open();
+    } catch (error) {
+      setPaymentStatus("Error creating order. Please try again.");
+      console.error("Error creating order:", error);
+    }
+  };
+
   return (
     <div className="payment_container">
       <h1 className="payment_heading">Payment Methods</h1>
@@ -32,7 +109,9 @@ const Payment = () => {
         >
           <button
             className={`payment_option_wrapper ${paymentStatus.paymentMode === 1 && "selected"}`}
-            onClick={() => paymentSelectHandler(1)}
+            onClick={() => {
+              paymentSelectHandler(1);
+            }}
           >
             <h3 className="payment_type">
               <img src="/assets/upiIcon.svg" alt="full payment" style={{ width: "22px" }} />
