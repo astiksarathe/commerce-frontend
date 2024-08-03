@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import { EyeOutlined, HeartOutlined, ShoppingOutlined } from "@ant-design/icons"
 import { productQuickView, quickViewModelHandler } from "../../features/product";
 import {
   creaetVariantTree,
+  getProduct,
   getProductByURL,
   selectVariantHandler,
   selectedProductForDetail,
@@ -18,13 +19,15 @@ import { addToWishlist } from "../../features/wishlist";
 import { formatCurrency } from "../../utils/common";
 
 import "./productCard.scss";
-import "./productCardCustom.scss";
 
 const ProductCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { productList, isLoading } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getProduct());
+  }, [dispatch]);
 
   const addToCartHandler = (product) => {
     dispatch(addToCart({ ...product, quantity: 1 }));
@@ -49,28 +52,28 @@ const ProductCard = () => {
   const productRender = () => {
     return productList.map((product) => (
       <div className="group" key={product._id}>
-        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+        <div className="relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img
             src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
             alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
             className="h-full w-full object-cover object-center group-hover:opacity-75"
           />
-          <div className="product_actions">
-            <div>
+          <div className="absolute bottom-1 w-full">
+            <div className="flex justify-center gap-3 my-1">
               <button
-                className="product_action-icon group-hover:opacity-75 "
+                className="bg-white size-9 rounded-full hover:bg-gray-50"
                 onClick={() => addToCartHandler(product)}
               >
                 <ShoppingOutlined style={{ fontSize: "15px" }} />
               </button>
               <button
-                className="product_action-icon group-hover:opacity-75"
+                className="bg-white size-9 rounded-full hover:bg-gray-50"
                 onClick={() => addToWishListHandler(product._id)}
               >
                 <HeartOutlined style={{ fontSize: "15px" }} />
               </button>
               <button
-                className="product_action-icon group-hover:opacity-75"
+                className="bg-white size-9 rounded-full hover:bg-gray-50"
                 onClick={() => quickView(product)}
               >
                 <EyeOutlined style={{ fontSize: "15px" }} />
@@ -88,20 +91,24 @@ const ProductCard = () => {
     ));
   };
   const productSkelton = () => {
-    return Array.from({ length: 20 }).map((val) => (
-      <Space key={val} className="product_card_skeleton">
-        <Skeleton.Image active />
-        <Skeleton.Button active size="small" block />
-        <Skeleton.Button active size="small" block />
-      </Space>
+    return Array.from({ length: 20 }).map((_, ind) => (
+      <React.Fragment key={ind}>
+        <Space className="product_card_skeleton">
+          <Skeleton.Image active />
+          <Skeleton.Button active size="small" block />
+          <Skeleton.Button active size="small" block />
+        </Space>
+      </React.Fragment>
     ));
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <div className="container mx-auto p-2 py-10 sm:py-14">
       <h2 className="sr-only">Products</h2>
 
-      <div className="product-container">{isLoading ? productSkelton() : productRender()}</div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+        {isLoading ? productSkelton() : productRender()}
+      </div>
     </div>
   );
 };
