@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Drawer, Space, Segmented, Row, Col } from "antd";
+import { Button, Checkbox, Form, Input, Drawer, Space, Segmented } from "antd";
 import "./authDrawer.scss";
 import {
   DribbbleOutlined,

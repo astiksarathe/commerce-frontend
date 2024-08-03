@@ -17,7 +17,7 @@ const ShippingMethods = () => {
       <div className="shipping_method_options">
         {type.map((options) => (
           <button
-            className={`btn_as_div shipping_type ${
+            className={`bg-transparent shipping_type ${
               options.id === shipping.shippingType ? "selected-shipping" : ""
             }`}
             key={options.id}

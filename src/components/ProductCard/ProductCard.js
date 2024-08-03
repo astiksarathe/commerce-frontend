@@ -61,19 +61,19 @@ const ProductCard = () => {
           <div className="absolute bottom-1 w-full">
             <div className="flex justify-center gap-3 my-1">
               <button
-                className="bg-white size-9 rounded-full hover:bg-gray-50"
+                className="bg-white size-9 rounded-full hover:bg-gray-50 hover:rounded-full"
                 onClick={() => addToCartHandler(product)}
               >
                 <ShoppingOutlined style={{ fontSize: "15px" }} />
               </button>
               <button
-                className="bg-white size-9 rounded-full hover:bg-gray-50"
+                className="bg-white size-9 rounded-full hover:bg-gray-50 hover:rounded-full"
                 onClick={() => addToWishListHandler(product._id)}
               >
                 <HeartOutlined style={{ fontSize: "15px" }} />
               </button>
               <button
-                className="bg-white size-9 rounded-full hover:bg-gray-50"
+                className="bg-white size-9 rounded-full hover:bg-gray-50 hover:rounded-full"
                 onClick={() => quickView(product)}
               >
                 <EyeOutlined style={{ fontSize: "15px" }} />
@@ -81,7 +81,7 @@ const ProductCard = () => {
             </div>
           </div>
         </div>
-        <button type="button" className="btn_as_div" onClick={() => productDetail(product)}>
+        <button type="button" className="bg-transparent" onClick={() => productDetail(product)}>
           <h3 className="mt-4 text-sm text-gray-700 product-card-title">{product.title}</h3>
         </button>
         <p className="mt-1 text-lg font-medium text-gray-900">

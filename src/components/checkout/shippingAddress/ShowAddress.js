@@ -42,7 +42,7 @@ const ShowAddress = () => {
       key: "1",
       label: (
         <button
-          className="btn_as_div"
+          className="bg-transparent"
           onClick={(e) => {
             dispatch(setShippingEditMode({ isEditMode: true }));
             dispatch(openShippingDrawer());
@@ -55,7 +55,7 @@ const ShowAddress = () => {
     {
       key: "2",
       label: (
-        <button className="btn_as_div" onClick={() => setDeleteModel(true)}>
+        <button className="bg-transparent" onClick={() => setDeleteModel(true)}>
           Delete
         </button>
       ),
@@ -92,7 +92,7 @@ const ShowAddress = () => {
           previously delivered orders
         </p>
         <button
-          className="btn_as_div new_address_btn"
+          className="bg-transparent new_address_btn"
           onClick={() => {
             dispatch(setShippingEditMode({ isEditMode: false }));
             dispatch(openShippingDrawer());

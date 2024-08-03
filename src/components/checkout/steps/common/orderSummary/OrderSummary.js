@@ -20,7 +20,7 @@ const OrderSummary = () => {
 
   return (
     <>
-      <button className="btn_as_div order_summary_min_wrapper" onClick={openSummaryDrawer}>
+      <button className="bg-transparent order_summary_min_wrapper" onClick={openSummaryDrawer}>
         <p className="order_summary_heading">
           <ShoppingCartOutlined style={{ fontSize: "20px", marginRight: "5px", fontWeight: 700 }} />{" "}
           <span>Order Summary</span>
@@ -28,7 +28,7 @@ const OrderSummary = () => {
         </p>
         <div>
           <p className="order_totals_amount"> {formatCurrency(totalAmount)}</p>
-          <button className="btn_as_div" onClick={openSummaryDrawer}>
+          <button className="bg-transparent" onClick={openSummaryDrawer}>
             <RightOutlined />
           </button>
         </div>

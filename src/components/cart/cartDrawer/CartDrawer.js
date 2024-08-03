@@ -85,7 +85,7 @@ const CartDrawer = () => {
                 <div>
                   <button
                     type="button"
-                    className="btn_as_div cart-item__remove-button"
+                    className="bg-transparent cart-item__remove-button"
                     onClick={() => removeCart(product)}
                   >
                     Remove
