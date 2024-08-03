@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import "./productDetails.scss";
-import "./ProductOverviewCustom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductByURL } from "../../features/product/productSlice";
 import { useParams } from "react-router-dom";
 import ProductDetailsMobile from "./productDetailsMobile/ProductDetailsMobile.js";
 import ProductDetailsDesktop from "./productDetailsDesktop/ProductDetailsDesktop.js";
 import { useMediaQuery } from "react-responsive";
+import "./productDetails.scss";
 const ProductDetails = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 48rem)" });
 

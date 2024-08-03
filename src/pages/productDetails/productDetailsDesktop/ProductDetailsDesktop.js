@@ -1,8 +1,9 @@
-import { Breadcrumb, Rate } from "antd";
+import { Breadcrumb, Button, Rate } from "antd";
 import React, { useState } from "react";
 import ProductImageCarousel from "../ProductImageCarousel";
 import {
   capitalizeFirstLetters,
+  formatCurrency,
   generateRandomNumber,
   getMetaDataofReview,
 } from "../../../utils/common";
@@ -37,295 +38,138 @@ const ProductDetailsDesktop = ({ productDetails }) => {
   const addToCartHandler = (product) => {
     dispatch(addToCart(product));
   };
-  const renderPrice = (product) => {
-    const { MRP, sellingPrice } = product.price || {};
-    return (
-      <p className="avs awx axv">
-        {`₹. ${sellingPrice}  `}
-        {MRP !== sellingPrice && <del>{` ₹. ${MRP}`}</del>}
-        <span> incl. GST</span>
-      </p>
-    );
-  };
   const currentUrl = window.location.href; // or any specific URL you want to share
   const title = "Check out this amazing product!";
 
   return (
     <>
       <Breadcrumb title={productDetails.title} />
-      <div className="aln product-details-container">
-        <div className="gx tw ari cex cxe ddc">
-          <div className="cuv cym cyz czu">
-            {/* <div className="lx yt">
-              <div className="gx lk md to tw bxi cxh">
-                <div className="mb yl zs" role="tablist" aria-orientation="horizontal">
-                  <button
-                    className="ab lx nq xr za zf adv aln awa awe awh axv bid bmv bmx boa bod"
-                    id="headlessui-tabs-tab-:r0:"
-                    role="tab"
-                    type="button"
-                    aria-selected="true"
-                    tabIndex="0"
-                    data-headlessui-state="selected"
-                    data-selected=""
-                    aria-controls="headlessui-tabs-panel-:r4:"
-                  >
-                    <span className="t">Angled view</span>
-                    <span className="aa ak adh adv">
-                      <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg"
-                        alt=""
-                        className="ph to aqe aqf"
-                      />
-                    </span>
-                    <span className="bcv u aa ak adv bbu bdt" aria-hidden="true"></span>
-                  </button>
-                  <button
-                    className="ab lx nq xr za zf adv aln awa awe awh axv bid bmv bmx boa bod"
-                    id="headlessui-tabs-tab-:r1:"
-                    role="tab"
-                    type="button"
-                    aria-selected="false"
-                    tabIndex="-1"
-                    data-headlessui-state=""
-                    aria-controls="headlessui-tabs-panel-:r5:"
-                  >
-                    <span className="t">Front view</span>
-                    <span className="aa ak adh adv">
-                      <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-02.jpg"
-                        alt=""
-                        className="ph to aqe aqf"
-                      />
-                    </span>
-                    <span className="bdj u aa ak adv bbu bdt" aria-hidden="true"></span>
-                  </button>
-                  <button
-                    className="ab lx nq xr za zf adv aln awa awe awh axv bid bmv bmx boa bod"
-                    id="headlessui-tabs-tab-:r2:"
-                    role="tab"
-                    type="button"
-                    aria-selected="false"
-                    tabIndex="-1"
-                    data-headlessui-state=""
-                    aria-controls="headlessui-tabs-panel-:r6:"
-                  >
-                    <span className="t">Back view</span>
-                    <span className="aa ak adh adv">
-                      <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-03.jpg"
-                        alt=""
-                        className="ph to aqe aqf"
-                      />
-                    </span>
-                    <span className="bdj u aa ak adv bbu bdt" aria-hidden="true"></span>
-                  </button>
-                  <button
-                    className="ab lx nq xr za zf adv aln awa awe awh axv bid bmv bmx boa bod"
-                    id="headlessui-tabs-tab-:r3:"
-                    role="tab"
-                    type="button"
-                    aria-selected="false"
-                    tabIndex="-1"
-                    data-headlessui-state=""
-                    aria-controls="headlessui-tabs-panel-:r7:"
-                  >
-                    <span className="t">Back angle open view</span>
-                    <span className="aa ak adh adv">
-                      <img
-                        src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-04.jpg"
-                        alt=""
-                        className="ph to aqe aqf"
-                      />
-                    </span>
-                    <span className="bdj u aa ak adv bbu bdt" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-              <div className="b i to">
-                <div
-                  id="headlessui-tabs-panel-:r4:"
-                  role="tabpanel"
-                  tabIndex="0"
-                  data-headlessui-state="selected"
-                  data-selected=""
-                  aria-labelledby="headlessui-tabs-tab-:r0:"
-                >
-                  <img
-                    src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg"
-                    alt="Angled front view with bag zipped and handles upright."
-                    className="ph to aqe aqf cde"
-                  />
-                </div>
-                <span
-                  aria-hidden="true"
-                  id="headlessui-tabs-panel-:r5:"
-                  role="tabpanel"
-                  tabIndex="-1"
-                  aria-labelledby="headlessui-tabs-tab-:r1:"
-                  style={{
-                    position: "fixed",
-                    top: "1px",
-                    left: "1px",
-                    width: "1px",
-                    height: "0px",
-                    padding: "0px",
-                    margin: "-1px",
-                    overflow: "hidden",
-                    clip: "rect(0px, 0px, 0px, 0px)",
-                    whiteSpace: "nowrap",
-                    borderWidth: "0px",
-                  }}
-                ></span>
-                <span
-                  aria-hidden="true"
-                  id="headlessui-tabs-panel-:r6:"
-                  role="tabpanel"
-                  tabIndex="-1"
-                  aria-labelledby="headlessui-tabs-tab-:r2:"
-                  style={{
-                    position: "fixed",
-                    top: "1px",
-                    left: "1px",
-                    width: "1px",
-                    height: "0px",
-                    padding: "0px",
-                    margin: "-1px",
-                    overflow: "hidden",
-                    clip: "rect(0px, 0px, 0px, 0px)",
-                    whiteSpace: "nowrap",
-                    borderWidth: "0px",
-                  }}
-                ></span>
-                <span
-                  aria-hidden="true"
-                  id="headlessui-tabs-panel-:r7:"
-                  role="tabpanel"
-                  tabIndex="-1"
-                  aria-labelledby="headlessui-tabs-tab-:r3:"
-                  style={{
-                    position: "fixed",
-                    top: "1px",
-                    left: "1px",
-                    width: "1px",
-                    height: "0px",
-                    padding: "0px",
-                    margin: "-1px",
-                    overflow: "hidden",
-                    clip: "rect(0px, 0px, 0px, 0px)",
-                    whiteSpace: "nowrap",
-                    borderWidth: "0px",
-                  }}
-                ></span>
-              </div>
-            </div> */}
-            <ProductImageCarousel />
-            <div className="kw bwu cen cud">
-              <h1 className="avs awd awx axv product-title">
+      <div className="container m-auto my-4">
+        <div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="sm:p-4">
+              <ProductImageCarousel />
+            </div>
+            <div className="sm:p-4">
+              <h1 className="text-3xl tracking-wide">
                 {capitalizeFirstLetters(productDetails.title)}
               </h1>
-              <p className="product-sku">SKU: {productDetails.SKU}</p>
-              <div className="lf">
-                <h3 className="t">Reviews</h3>
-                <div className="lx za">
-                  <p className="awa axt">
-                    3.9<span className="t"> out of 5 stars</span>
+              <p className="text-sm text-gray-500 leading-8">SKU: {productDetails.SKU}</p>
+              <div>
+                <h3 className="sr-only">Reviews</h3>
+                <div className="flex gap-3">
+                  <p className="sr-only">
+                    3.9<span> out of 5 stars</span>
                   </p>
-                  <div className="jp lx za">
-                    <Rate disabled allowHalf defaultValue={2.5} />
+                  <div>
+                    <Rate className="text-lg" disabled allowHalf defaultValue={2.5} />
                   </div>
-                  <div aria-hidden="true" className="jx awa axo"></div>
-                  <div className="jx lx">
-                    <Link to="#" className="awa awe ayh blb">
-                      (5 customer reviews)
+                  <div className="text-base">
+                    <Link to="#" className="text-gray-500">
+                      ( 5 customer reviews )
                     </Link>
                   </div>
                 </div>
               </div>
-              <div className="lf">
-                <h2 className="t">Product information</h2>
-                {renderPrice(productDetails)}
+              <div className="my-3">
+                <h2 className="sr-only">Product information</h2>
+                <div className="flex gap-4 leading-13 flex-wrap">
+                  <p className="text-2xl text-gray-500 font-semibold line-through">
+                    <span className="sr-only">It's MRP</span>
+                    <span aria-hidden="true">{formatCurrency(productDetails?.price?.MRP)}</span>
+                  </p>
+                  <p className="text-3xl font-semibold">
+                    <span className="sr-only">Selling price</span>
+                    <span aria-hidden="true">
+                      {formatCurrency(productDetails?.price?.sellingPrice)}
+                    </span>
+                  </p>
+                  <p className="text-sm font-semibold">Incl. GST</p>
+                </div>
               </div>
-              <div className="announcement">
+              <div className=" p-1 sr-only">
                 <p>
-                  <img className="flashit" src="/assets/flames-icon.svg" alt="flames" /> Hurry! Over
-                  14 people have this in their carts
+                  <img className="animate-ping" src="/assets/flames-icon.svg" alt="flames" /> Hurry!
+                  Over 14 people have this in their carts
                 </p>
                 <p>
-                  <img className="flashit" src="/assets/flames-icon.svg" alt="flames" />2 sold in
-                  last 12 hours
+                  <img className="animate-ping" src="/assets/flames-icon.svg" alt="flames" />2 sold
+                  in last 12 hours
                 </p>
               </div>
-              <div className="lk">
-                <h3 className="t">Options</h3>
-                <div className="abz avy axt">
-                  <p>Size Free</p>
+              <div className="my-2">
+                <h3 className="sr-only">availablility</h3>
+                <div className="flex gap-3 items-center">
+                  <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-700"></span>
+                  </span>
+                  <p className="text-green-700">In Stock</p>
                 </div>
               </div>
 
-              <div className="lk">
-                <h3 className="t">availablility</h3>
-                <div className="abz avy axt">
-                  <p>In Stock</p>
-                </div>
+              <div>
+                <h4 className="text-sm text-gray-500 leading-8">Quantity:</h4>
+                <QtyInput value={quantity} quantityHandler={quantityHandler} />
               </div>
-              <form className="lk">
-                <div className="quantity-container">
-                  <h4>Quantity</h4>
-                  <QtyInput value={quantity} quantityHandler={quantityHandler} />
-                </div>
-                <div className="checkout-rel-btns">
-                  <div>
-                    <button
-                      type="button"
-                      className="lx um un za zf adv afa agz ajq arm arz avy awe bah bir bmv bna bnm boc bog bze add-to-cart-btn"
-                      onClick={() => {
-                        addToCartHandler({ ...productDetails, quantity });
-                      }}
-                    >
-                      <ShoppingCartOutlined /> <span>Add to Cart</span>
-                    </button>
-                    <button type="button" className="jx lx za zf adv arf arz axp bhy bkt">
-                      <HeartOutlined style={{ fontSize: "22px" }} />
-                      <span className="t">Add to favorites</span>
-                    </button>
-                  </div>
+              <div className="grid grid-cols-2 gap-4 my-3">
+                <Button
+                  size="large"
+                  className="h-11  font-medium tracking-wide"
+                  onClick={() => {
+                    addToCartHandler({ ...productDetails, quantity });
+                  }}
+                >
+                  <ShoppingCartOutlined className="text-lg leading-3" /> <span>Add to Cart</span>
+                </Button>
 
-                  <button
-                    className="buy-now-btn"
-                    type="button"
-                    onClick={() => {
-                      dispatch(buyNowButtonHandler({ quantity, productDetails }));
-                      dispatch(checkoutModelHandler(true));
-                    }}
-                  >
-                    <div>
-                      BUY NOW with UPI / COD{" "}
-                      <img src="/assets/upi_options.svg" alt="payment options" />
-                      <RightOutlined />
-                    </div>
-                  </button>
-                </div>
-                <div className="product-delivery-view-status">
-                  <p>
-                    <strong>
-                      <TruckOutlined />
-                      Estimated Delivery
-                    </strong>
-                    <span>: Wednesday, Jul 17 – Friday, Jul 19</span>
-                  </p>
-                  <p>
-                    <SmileOutlined /> <strong>{generateRandomNumber(100)} people</strong>{" "}
-                    <span> are viewing this right now</span>
-                  </p>
-                </div>
-              </form>
-              <p className="share-container">
-                <span>
-                  <ShareAltOutlined /> <strong>Share</strong>
-                </span>
-                <ShareButtons url={currentUrl} title={title} />
-              </p>
+                <Button
+                  className="flex h-11 font-medium tracking-wide"
+                  type="primary"
+                  size="large"
+                  onClick={() => {
+                    dispatch(buyNowButtonHandler({ quantity, productDetails }));
+                    dispatch(checkoutModelHandler(true));
+                  }}
+                >
+                  BUY NOW
+                  <img src="/assets/upi_options.svg" alt="payment options" />
+                  <RightOutlined />
+                </Button>
+              </div>
+              <button className="py-2 space-x-2">
+                <HeartOutlined className="hover:animate-ping text-lg" />
+                <span>Add to Wishlist</span>
+              </button>
+              <div className="space-y-2">
+                <p>
+                  <strong className="space-x-2 font-medium">
+                    <span>
+                      <TruckOutlined className="text-lg" />
+                    </span>
+                    <span>Estimated Delivery</span>
+                  </strong>
+                  <span>: Wednesday, Jul 17 – Friday, Jul 19</span>
+                </p>
+                <p>
+                  <strong className="space-x-2 font-medium">
+                    <span>
+                      <SmileOutlined className="text-lg" />
+                    </span>
+                    <span>{generateRandomNumber(100)} people</span>
+                  </strong>
+                  <span> are viewing this right now</span>
+                </p>
+                <p className="flex gap-5 items-center">
+                  <strong className="space-x-2 font-medium">
+                    <span>
+                      <ShareAltOutlined className="text-lg" />
+                    </span>
+                    <span>Share</span>
+                  </strong>
+                  <ShareButtons url={currentUrl} title={title} />
+                </p>
+              </div>
               <div className="razorpay-secured safe-checkout">
                 <fieldset>
                   <legend>Guaranteed Safe Checkout</legend>
@@ -334,82 +178,57 @@ const ProductDetailsDesktop = ({ productDetails }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="product-details">
-          <div>
-            <button
-              className={`product-details__description ${tab === 0 && "active"}`}
-              onClick={() => setTab(0)}
-            >
-              DESCRIPTION
-            </button>
-            <button
-              className={`product-details__specification ${tab === 1 && "active"}`}
-              onClick={() => setTab(1)}
-            >
-              SPECIFICATION
-            </button>
-            <button
-              className={`product-details__shipping-and-delivery ${tab === 2 && "active"}`}
-              onClick={() => setTab(2)}
-            >
-              SHIPPING & DELIVERY
-            </button>
+          <div title="descriptopn" className="p-4">
+            <h1 className="text-2xl tracking-wide">Description</h1>
           </div>
-        </div>
-        <div>
-          {tab === 0 && <DraftEditor value={productDetails.description} />}
-          {tab === 1 && (
-            <div className="specification">
-              {productDetails.specification.map(({ _id, key, value }, index) => (
-                <React.Fragment key={_id}>
-                  <div className="specification-key">{key}</div>
-                  <div className="specification-value" style={{ justifySelf: "end" }}>
-                    {value}
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-          )}
-          {tab === 2 && (
-            <div className="shipping-and-delivery_tab">
-              <div className="shipping_section">
-                <h4>
-                  <TruckOutlined />
-                  <span className="text"> Free Shipping on Orders Over INR 1000</span>
+          <div className="p-4">
+            <h1 className="text-2xl tracking-wide">Shipping and Return : </h1>
+            <div className="grid sm:grid-cols-2">
+              <div className="p-8">
+                <h4 className="text-lg font-semibold">
+                  <TruckOutlined className="animate-bounce text-xl" />
+                  <span className="ml-2"> Free Shipping on Orders Over INR 1000</span>
                 </h4>
-                <ul>
-                  <li>
+                <ul className="mt-4 pl-8 list-disc">
+                  <li className="leading-6 mb-2">
                     For orders below INR 1000, shipping charges will be calculated at checkout.
                   </li>
-                  <li>Delivery within 5-7 business days.</li>
-                  <li>Express delivery services are also available.</li>
+                  <li className="leading-6 mb-2">Delivery within 5-7 business days.</li>
+                  <li className="leading-6 mb-2">Express delivery services are also available.</li>
                 </ul>
               </div>
-              <div className="return-and-exchange_section">
-                <h4>
-                  <RollbackOutlined />
-                  <span className="text">Return and Exchange</span>
+              <div className="p-8">
+                <h4 className="text-lg font-semibold">
+                  <RollbackOutlined className="animate-bounce text-xl" />
+                  <span className="ml-2">Return and Exchange</span>
                 </h4>
-                <ul>
-                  <li>
+                <ul className="mt-4 pl-8 list-disc">
+                  <li className="leading-6 mb-2">
                     We offer a return or exchange in case of damage or if an incorrect product is
                     delivered.
                   </li>
-                  <li>Easy and complimentary, within 3 days.</li>
-                  <li>See our return and exchange policy for conditions and procedures.</li>
+                  <li className="leading-6 mb-2">Easy and complimentary, within 3 days.</li>
+                  <li className="leading-6 mb-2">
+                    See our return and exchange policy for conditions and procedures.
+                  </li>
                 </ul>
               </div>
             </div>
-          )}
+          </div>
+          <div>
+            <Review
+              metaData={getMetaDataofReview(productDetails)}
+              productId={productDetails._id}
+              title={productDetails.title}
+            />
+          </div>
         </div>
-        <div>
-          <Review
-            metaData={getMetaDataofReview(productDetails)}
-            productId={productDetails._id}
-            title={productDetails.title}
-          />
-        </div>
+        {/* <div >
+                <h3 className="sr-only">Options</h3>
+                <div >
+                  <p>Size Free</p>
+                </div>
+              </div> */}
       </div>
     </>
   );
