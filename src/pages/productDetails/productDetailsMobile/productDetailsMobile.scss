@@ -1,33 +1,4 @@
 .mv {
-    &_product_details_wrapper {
-        padding: 0 10px;
-    }
-
-    &_product_main_title {
-        padding-right: 68px;
-        word-wrap: break-word;
-        font-weight: 500;
-        font-size: 150%;
-        line-height: 1.4;
-        color: #2d2a2a;
-    }
-
-    &_product_review {
-        margin-top: 10px;
-
-        span {
-            font-size: 17px;
-        }
-
-        &>span {
-            display: inline-block;
-            margin-left: 10px;
-            color: #777;
-            line-height: 1.6;
-            font-size: 14.5px;
-        }
-    }
-
     &_product_pricing {
         padding-top: 10px;
         font-size: 110%;

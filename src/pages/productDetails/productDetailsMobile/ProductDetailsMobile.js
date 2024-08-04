@@ -5,7 +5,6 @@ import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 import Review from "../../../components/review";
 import ProductImageCarousel from "../ProductImageCarousel";
-import "./productDetailsMobile.scss";
 import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
 import {
   calculateEstimatedDeliveryDate,
@@ -14,21 +13,69 @@ import {
 } from "../../../utils/common";
 import { openResponsiveModel } from "../../../features/model-drawer";
 import DeliveryAndReturns from "../../../components/delivery-return/DeliveryAndReturns";
+import DOMPurify from "dompurify";
 
+import "./productDetailsMobile.scss";
 const ProductDetailsMobile = ({ productDetails }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
+  const createMarkup = (content) => {
+    if (!content) return { __html: "" };
+    return { __html: DOMPurify.sanitize(content) };
+  };
+
+  const getSpecification = (specification) => {
+    if (specification === undefined) return <></>;
+    return specification.map(({ _id, key, value }) => {
+      return (
+        <div key={_id} className="space-x-2">
+          <span>{key} : </span> <span>{value}</span>
+        </div>
+      );
+    });
+  };
+  const getVairnats = ({ variants, options }) => {
+    if (!variants || !options) return <></>;
+    const variantType = options[0] || "color";
+    const variantOptions = variants.map((variant) => {
+      if (!variant.option1.trim()) return <React.Fragment key={variant._id}></React.Fragment>;
+      return (
+        <div key={variant._id}>
+          <button
+            className="px-4 py-1 rounded border border-blue-500 tracking-wide shadow-sm text-blue-500 hover:bg-blue-500 hover:text-white"
+            onClick={() => {
+              console.log(variant.SKU);
+            }}
+          >
+            {variant.option1}
+          </button>
+        </div>
+      );
+    });
+
+    return (
+      <>
+        <h1 className="uppercase tracking-wide text-sm my-3">{variantType} :</h1>
+        <div className="flex flex-wrap gap-4 mb-3">{variantOptions}</div>
+      </>
+    );
+  };
+
   return (
-    <div className="mv_container">
-      <div>
+    <div className="">
+      <div className="w-screen overflow-x-hidden">
         <ProductImageCarousel />
       </div>
-      <div className="mv_product_details_wrapper">
+      <div className="p-2">
         <div className="mv_product_main_info seperation">
-          <h1 className="mv_product_main_title">{capitalizeFirstLetters(productDetails.title)}</h1>
-          <div className="mv_product_review">
-            <Rate disabled allowHalf value={productDetails.aggregateRating} />
-            <span>( {productDetails.totalReviews} customer reviews )</span>
+          <h1 className="pr-16 text-pretty font-medium leading-6 tracking-wide text-xl">
+            {capitalizeFirstLetters(productDetails.title)}
+          </h1>
+          <div className="mt-2 space-x-1">
+            <Rate className="text-sm" disabled allowHalf value={productDetails.aggregateRating} />
+            <span className="text-base text-gray-500 text-sm">
+              ( {productDetails.totalReviews} customer reviews )
+            </span>
           </div>
           <p className="mv_product_pricing">
             <del aria-hidden="true">
@@ -46,6 +93,16 @@ const ProductDetailsMobile = ({ productDetails }) => {
             </ins>
             <small className="mv_product_pricing-suffix">incl. GST</small>
           </p>
+          <div className="mt-4">
+            <h3 className="sr-only">availablility</h3>
+            <div className="flex gap-3 items-center">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-700"></span>
+              </span>
+              <p className="text-green-700">In Stock</p>
+            </div>
+          </div>
         </div>
         <div className="mv_incart_sold_wrapper seperation">
           <div className="mv_incart_sold">
@@ -65,10 +122,14 @@ const ProductDetailsMobile = ({ productDetails }) => {
             </div>
           </div>
         </div>
-        {/* <div className="mv_product_short_description_wrapper seperation">
-          <p>{productDetails?.shortDescription}</p>
-        </div> */}
-        <div className="mv_variant_wrapper seperation"></div>
+        <div className="mv_variant_wrapper seperation">
+          <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
+            <div dangerouslySetInnerHTML={createMarkup(productDetails?.shortDescription)}></div>
+          </div>
+        </div>
+        <div className="mv_variant_wrapper seperation">
+          <div>{getVairnats(productDetails)}</div>
+        </div>
         <div className="mv_wishlist_wrapper seperation">
           {wishlist ? (
             <button
@@ -80,7 +141,7 @@ const ProductDetailsMobile = ({ productDetails }) => {
               <span>
                 <img src="/assets/icons/heart.svg" alt="Add to wishlist" />
               </span>
-              <span>Add to Wishlist</span>
+              <span className="text-sm">Add to Wishlist</span>
             </button>
           ) : (
             <button
@@ -96,7 +157,7 @@ const ProductDetailsMobile = ({ productDetails }) => {
                   alt="Added to wishlist"
                 />
               </span>
-              <span>Added to Wishlist</span>
+              <span className="text-sm">Added to Wishlist</span>
             </button>
           )}
         </div>
@@ -109,44 +170,50 @@ const ProductDetailsMobile = ({ productDetails }) => {
             <span className="mv_delivery_icon">
               <img src="/assets/icons/share.svg" alt="Delivery and return details" />
             </span>
-            <strong className="mv_delivery_title">Delivery & Return</strong>
+            <strong className="font-medium tracking-wide text-sm">Delivery & Return</strong>
             <span className="mv_delivery_right-icon"></span>
           </button>
           <button type="button" className="mv_question_wrapper">
             <span className="mv_question_icon">
               <img src="/assets/icons/question.svg" alt="Ask a question" />
             </span>
-            <strong className="mv_question_title">Ask a Question</strong>
+            <strong className="font-medium tracking-wide text-sm">Ask a Question</strong>
             <span className="mv_question_right-icon"></span>
           </button>
         </div>
-        <div className="mv_estimated_delivery_wrapper seperation">
+        <div className="mv_estimated_delivery_wrapper seperation space-y-1">
           <div>
             <span className="mv_estimated_delivery_icon">
               <img src="/assets/icons/truck.svg" alt="Estimated Delivery" />
             </span>
-            <strong className="mv_estimated_delivery_title">Estimated Delivery:</strong>
+            <strong className="font-medium tracking-wide text-sm">Estimated Delivery:</strong>
           </div>
-          <span className="mv_estimated_delivery_date">{calculateEstimatedDeliveryDate()}</span>
+          <span className="mv_estimated_delivery_date text-sm">
+            {calculateEstimatedDeliveryDate()}
+          </span>
         </div>
         <div className="mv_views_wrapper seperation">
           <span className="mv_views_icon">
             <img src="/assets/icons/smiley.svg" alt="smiley" />
           </span>
-          <strong className="mv_views_count">{productDetails.viewStatus} people </strong>
-          <span className="mv_views_desc">are viewing this right now</span>
+          <div className="text-sm">
+            <strong className="font-medium tracking-wide">
+              {productDetails.viewStatus} people{" "}
+            </strong>
+            <span className="mv_views_desc">are viewing this right now</span>
+          </div>
         </div>
         <div className="mv_share_wrapper seperation">
           <span className="mv_share_icon">
             <img src="/assets/icons/share2.svg" alt="share" />
           </span>
-          <span className="mv_share_title">Share:</span>
+          <span className="mv_share_title font-medium text-sm">Share:</span>
           <span className="mv_share_links">
             <ShareButtons />
           </span>
         </div>
         <div className="mv_safe_payment_wrapper seperation safe-checkout">
-          <fieldset>
+          <fieldset className="mt-6 mb-5 border border-gray-200 p-2.5 px-9 text-center rounded-md">
             <legend>Guaranteed Safe Checkout</legend>
             <img src="/assets/razorpay_secure.jpg" alt="Razorpay Secure Payment Option" />
           </fieldset>
@@ -154,17 +221,15 @@ const ProductDetailsMobile = ({ productDetails }) => {
         <div className="mv_description_wrapper seperation">
           <ReadMoreToggle>
             <>
-              <h1 className="mv_description_heading">Description</h1>
-              {/* {productDetails.description} */}
+              <h1 className="text-xl tracking-wide font-medium">Description</h1>
+              <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
+                <div dangerouslySetInnerHTML={createMarkup(productDetails?.description)}></div>
+                <div className="pb-9">{getSpecification(productDetails.specification)}</div>
+              </div>
             </>
           </ReadMoreToggle>
         </div>
-        <div className="mv_additional_info_wrapper seperation">
-          <h1 className="mv_additional_info_heading">Additional information</h1>
-          <p>
-            <strong>Color</strong> <span>Beige, Purple</span>
-          </p>
-        </div>
+
         <div className="seperation mv_review_wrapper">
           <ReadMoreToggle>
             <Review
@@ -175,11 +240,12 @@ const ProductDetailsMobile = ({ productDetails }) => {
           </ReadMoreToggle>
         </div>
         <div className="mv_product_meta_wrapper seperation">
-          <p>
-            <strong>SKU</strong> <span>{productDetails.SKU}</span>
+          <p className="text-sm space-x-2">
+            <strong className="font-semibold tracking-wide">SKU :</strong>{" "}
+            <span>{productDetails.SKU}</span>
           </p>
-          <p>
-            <strong>Categories:</strong>{" "}
+          <p className="text-sm space-x-2">
+            <strong className="font-semibold tracking-wide">Categories:</strong>{" "}
             {productDetails?.tags?.length > 0 ? productDetails.tags.join(",  ") : ""}
           </p>
         </div>

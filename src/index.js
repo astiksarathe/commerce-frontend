@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.scss";
-import $ from "jquery";
-
 import reportWebVitals from "./reportWebVitals";
+
+import "./index.scss";
 
 // React Redux
 import { Provider } from "react-redux";
@@ -29,6 +28,9 @@ import Search from "./pages/search/Search";
 import Home from "./pages/home";
 import ProductDetails from "./pages/productDetails/";
 import ProductList from "./pages/productList/ProductList";
+
+import NotificationProvider from "./context/NotificationProvider";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
@@ -95,7 +97,9 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <NotificationProvider>
+        <RouterProvider router={router} />
+      </NotificationProvider>
     </Provider>
   </React.StrictMode>
 );

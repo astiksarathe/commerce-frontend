@@ -2,6 +2,7 @@ import { Breadcrumb, Button, Rate } from "antd";
 import React, { useState } from "react";
 import ProductImageCarousel from "../ProductImageCarousel";
 import {
+  calculateEstimatedDeliveryDate,
   capitalizeFirstLetters,
   formatCurrency,
   generateRandomNumber,
@@ -9,6 +10,9 @@ import {
 } from "../../../utils/common";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
+import DOMPurify from "dompurify";
+
 import { addToCart } from "../../../features/cart";
 import QtyInput from "../../../components/qtyInput";
 import {
@@ -22,12 +26,10 @@ import {
 } from "@ant-design/icons";
 import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout/checkout";
 import ShareButtons from "../../../components/shareButtons";
-import DraftEditor from "../../../components/draftEditor/DraftEditor";
 import Review from "../../../components/review";
 
 const ProductDetailsDesktop = ({ productDetails }) => {
   const [quantity, setQuantity] = useState(1);
-  const [tab, setTab] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -40,6 +42,48 @@ const ProductDetailsDesktop = ({ productDetails }) => {
   };
   const currentUrl = window.location.href; // or any specific URL you want to share
   const title = "Check out this amazing product!";
+
+  const createMarkup = (content) => {
+    if (!content) return { __html: "" };
+    return { __html: DOMPurify.sanitize(content) };
+  };
+
+  const getSpecification = (specification) => {
+    if (specification === undefined) return <></>;
+    return specification.map(({ _id, key, value }) => {
+      return (
+        <div key={_id} className="space-x-2">
+          <span>{key} : </span> <span>{value}</span>
+        </div>
+      );
+    });
+  };
+  const getVairnats = ({ variants, options }) => {
+    if (!variants || !options) return <></>;
+    const variantType = options[0] || "color";
+    const variantOptions = variants.map((variant) => {
+      if (!variant.option1.trim()) return <React.Fragment key={variant._id}></React.Fragment>;
+      return (
+        <div key={variant._id}>
+          <button
+            className="px-4 py-1 rounded border border-blue-500 tracking-wide shadow-sm text-blue-500 hover:bg-blue-500 hover:text-white"
+            onClick={() => {
+              console.log(variant.SKU);
+            }}
+          >
+            {variant.option1}
+          </button>
+        </div>
+      );
+    });
+
+    return (
+      <>
+        <h1 className="uppercase tracking-wide text-sm my-3">{variantType}</h1>
+        <div className="flex flex-wrap gap-4 mb-3">{variantOptions}</div>
+      </>
+    );
+  };
 
   return (
     <>
@@ -100,14 +144,17 @@ const ProductDetailsDesktop = ({ productDetails }) => {
               <div className="my-2">
                 <h3 className="sr-only">availablility</h3>
                 <div className="flex gap-3 items-center">
-                  <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-700"></span>
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-700"></span>
                   </span>
                   <p className="text-green-700">In Stock</p>
                 </div>
               </div>
-
+              <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
+                <div dangerouslySetInnerHTML={createMarkup(productDetails?.shortDescription)}></div>
+              </div>
+              <div>{getVairnats(productDetails)}</div>
               <div>
                 <h4 className="text-sm text-gray-500 leading-8">Quantity:</h4>
                 <QtyInput value={quantity} quantityHandler={quantityHandler} />
@@ -132,7 +179,7 @@ const ProductDetailsDesktop = ({ productDetails }) => {
                     dispatch(checkoutModelHandler(true));
                   }}
                 >
-                  BUY NOW
+                  BUY NOW{""}
                   <img src="/assets/upi_options.svg" alt="payment options" />
                   <RightOutlined />
                 </Button>
@@ -141,17 +188,17 @@ const ProductDetailsDesktop = ({ productDetails }) => {
                 <HeartOutlined className="hover:animate-ping text-lg" />
                 <span>Add to Wishlist</span>
               </button>
-              <div className="space-y-2">
-                <p>
+              <div className="space-y-3">
+                <div>
                   <strong className="space-x-2 font-medium">
                     <span>
                       <TruckOutlined className="text-lg" />
                     </span>
                     <span>Estimated Delivery</span>
                   </strong>
-                  <span>: Wednesday, Jul 17 – Friday, Jul 19</span>
-                </p>
-                <p>
+                  <span>: {calculateEstimatedDeliveryDate()}</span>
+                </div>
+                <div>
                   <strong className="space-x-2 font-medium">
                     <span>
                       <SmileOutlined className="text-lg" />
@@ -159,8 +206,8 @@ const ProductDetailsDesktop = ({ productDetails }) => {
                     <span>{generateRandomNumber(100)} people</span>
                   </strong>
                   <span> are viewing this right now</span>
-                </p>
-                <p className="flex gap-5 items-center">
+                </div>
+                <div className="flex gap-5 items-center">
                   <strong className="space-x-2 font-medium">
                     <span>
                       <ShareAltOutlined className="text-lg" />
@@ -168,10 +215,10 @@ const ProductDetailsDesktop = ({ productDetails }) => {
                     <span>Share</span>
                   </strong>
                   <ShareButtons url={currentUrl} title={title} />
-                </p>
+                </div>
               </div>
               <div className="razorpay-secured safe-checkout">
-                <fieldset>
+                <fieldset className="mt-6 mb-5 border border-gray-200 p-2.5 px-9 text-center rounded-md">
                   <legend>Guaranteed Safe Checkout</legend>
                   <img src="/assets/razorpay_secure.jpg" alt="Razorpay Secure Payment Option" />
                 </fieldset>
@@ -179,7 +226,11 @@ const ProductDetailsDesktop = ({ productDetails }) => {
             </div>
           </div>
           <div title="descriptopn" className="p-4">
-            <h1 className="text-2xl tracking-wide">Description</h1>
+            <h1 className="text-2xl tracking-wide">Description : </h1>
+            <div className="text-gray-500 my-4 leading-6 tracking-wide text-base lg:pl-36">
+              <div dangerouslySetInnerHTML={createMarkup(productDetails?.description)}></div>
+              <div>{getSpecification(productDetails.specification)}</div>
+            </div>
           </div>
           <div className="p-4">
             <h1 className="text-2xl tracking-wide">Shipping and Return : </h1>
