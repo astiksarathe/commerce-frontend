@@ -150,9 +150,9 @@ const Review = ({ metaData, productId, title }) => {
             </div>
           </div>
           <div className="recent-reviews">
-            <h3 className="recent-reviews-title md:sr-only">
+            <div className="recent-reviews-title md:sr-only">
               <ReviewTitle metaData={metaData} title={title} />
-            </h3>
+            </div>
             <div className="recent-reviews-list">
               {reviewList.map((review) => (
                 <React.Fragment key={review._id}>
