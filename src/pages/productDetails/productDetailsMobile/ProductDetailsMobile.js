@@ -6,16 +6,17 @@ import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 import Review from "../../../components/review";
 import ProductImageCarousel from "../ProductImageCarousel";
 import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
+import { deliveryInfoOpenHandler } from "../../../features/drawer";
 import {
   calculateEstimatedDeliveryDate,
   capitalizeFirstLetters,
   getMetaDataofReview,
 } from "../../../utils/common";
-import { openResponsiveModel } from "../../../features/model-drawer";
-import DeliveryAndReturns from "../../../components/delivery-return/DeliveryAndReturns";
+
 import DOMPurify from "dompurify";
 
 import "./productDetailsMobile.scss";
+
 const ProductDetailsMobile = ({ productDetails }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ const ProductDetailsMobile = ({ productDetails }) => {
           </h1>
           <div className="mt-2 space-x-1">
             <Rate className="text-sm" disabled allowHalf value={productDetails.aggregateRating} />
-            <span className="text-base text-gray-500 text-sm">
+            <span className="text-sm text-gray-500">
               ( {productDetails.totalReviews} customer reviews )
             </span>
           </div>
@@ -165,7 +166,7 @@ const ProductDetailsMobile = ({ productDetails }) => {
           <button
             type="button"
             className="mv_delivery_wrapper"
-            onClick={() => dispatch(openResponsiveModel({ body: <DeliveryAndReturns /> }))}
+            onClick={() => dispatch(deliveryInfoOpenHandler(true))}
           >
             <span className="mv_delivery_icon">
               <img src="/assets/icons/share.svg" alt="Delivery and return details" />
@@ -250,6 +251,21 @@ const ProductDetailsMobile = ({ productDetails }) => {
           </p>
         </div>
       </div>
+
+      {/* <div className="w-screen grid grid-cols-2 fixed bottom-0 z-30">
+        <Button
+          size="large"
+          className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-orange-400 border-none text-white shadow-md"
+        >
+          Add to Cart
+        </Button>
+        <Button
+          size="large"
+          className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-green-500 border-none text-white shadow-md"
+        >
+          Buy now
+        </Button>
+      </div> */}
     </div>
   );
 };

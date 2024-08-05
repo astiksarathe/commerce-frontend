@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import { getProductByURL } from "../../features/product/productSlice";
 import ProductDetailsMobile from "./productDetailsMobile/ProductDetailsMobile.js";
 import ProductDetailsDesktop from "./productDetailsDesktop/ProductDetailsDesktop.js";
+import DeliveryAndReturns from "../../components/delivery-return/DeliveryAndReturns.js";
 
 const ProductDetails = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 48rem)" });
@@ -29,6 +30,7 @@ const ProductDetails = () => {
           <ProductDetailsDesktop productDetails={productDetails} />
         </div>
       )}
+      <DeliveryAndReturns />
     </>
   );
 };
