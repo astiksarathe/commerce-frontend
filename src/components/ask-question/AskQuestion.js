@@ -1,29 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import TextArea from "antd/es/input/TextArea";
 import { Button, Drawer, Form, Input } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { askQuestionOpenHandler } from "../../features/drawer";
+import { postQuery } from "../../features/query";
+import { notifySuccess } from "../../utils/Notification";
 const AskQuestion = () => {
+  const [form] = Form.useForm();
   const {
     askQuestionOpen,
     askQuestionDrawer: { title },
   } = useSelector((state) => state.drawer);
+  const { isLoading, query } = useSelector((state) => state.query);
   const dispatch = useDispatch();
   const onFinish = (value) => {
-    console.log(value);
+    if (!value.fullName || !value.email || !value.message) {
+      return;
+    }
+    dispatch(postQuery(value));
   };
-  const onFinishFailed = (value) => {
-    console.log(value);
-  };
+  useEffect(() => {
+    if (query) {
+      form.resetFields();
+      notifySuccess("Your query has been successfully posted. We will reach out to you shortly");
+    }
+  }, [query, form]);
+  const onFinishFailed = (value) => {};
   const onClose = () => dispatch(askQuestionOpenHandler({ open: false, title: "" }));
 
   return (
     <div>
       <Drawer
-        className="rounded-tl-3xl rounded-tr-3xl"
         title={
           <div className="flex justify-between gap-3 items-baseline">
             <h1 className="text-lg tracking-wide font-medium">{title}</h1>
@@ -32,8 +42,7 @@ const AskQuestion = () => {
             </button>
           </div>
         }
-        height={700}
-        placement="bottom"
+        placement="right"
         closable={false}
         onClose={onClose}
         open={askQuestionOpen}
@@ -41,6 +50,7 @@ const AskQuestion = () => {
       >
         <h1 className="text-lg text-center tracking-wide">Ask a Question</h1>
         <Form
+          form={form}
           name="askQuestionForm"
           initialValues={{
             remember: false,
@@ -91,6 +101,7 @@ const AskQuestion = () => {
             style={{ width: "100%", margin: "auto" }}
             htmlType="submit"
             size="large"
+            loading={isLoading}
           >
             Send
           </Button>

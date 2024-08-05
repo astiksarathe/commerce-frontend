@@ -15,6 +15,7 @@ import checkoutExitReducer from "../features/checkoutExit";
 import orderConfirmModalReducer from "../features/orderConfirmModal";
 import orderReducer from "../features/order";
 import drawerReducer from "../features/drawer";
+import queryReducer from "../features/query";
 
 const rootReducer = combineReducers({
   authDrawer: authDrawerReducer,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   orderConfirm: orderConfirmModalReducer,
   order: orderReducer,
   drawer: drawerReducer,
+  query: queryReducer,
 });
 
 export default rootReducer;
