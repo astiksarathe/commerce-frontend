@@ -8,6 +8,7 @@ import { getProductByURL } from "../../features/product/productSlice";
 import ProductDetailsMobile from "./productDetailsMobile/ProductDetailsMobile.js";
 import ProductDetailsDesktop from "./productDetailsDesktop/ProductDetailsDesktop.js";
 import DeliveryAndReturns from "../../components/delivery-return/DeliveryAndReturns.js";
+import AskQuestion from "../../components/ask-question/AskQuestion.js";
 
 const ProductDetails = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 48rem)" });
@@ -31,6 +32,7 @@ const ProductDetails = () => {
         </div>
       )}
       <DeliveryAndReturns />
+      <AskQuestion />
     </>
   );
 };

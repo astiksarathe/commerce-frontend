@@ -6,7 +6,7 @@ import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 import Review from "../../../components/review";
 import ProductImageCarousel from "../ProductImageCarousel";
 import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
-import { deliveryInfoOpenHandler } from "../../../features/drawer";
+import { askQuestionOpenHandler, deliveryInfoOpenHandler } from "../../../features/drawer";
 import {
   calculateEstimatedDeliveryDate,
   capitalizeFirstLetters,
@@ -174,7 +174,18 @@ const ProductDetailsMobile = ({ productDetails }) => {
             <strong className="font-medium tracking-wide text-sm">Delivery & Return</strong>
             <span className="mv_delivery_right-icon"></span>
           </button>
-          <button type="button" className="mv_question_wrapper">
+          <button
+            type="button"
+            className="mv_question_wrapper"
+            onClick={() =>
+              dispatch(
+                askQuestionOpenHandler({
+                  open: true,
+                  title: productDetails.title,
+                })
+              )
+            }
+          >
             <span className="mv_question_icon">
               <img src="/assets/icons/question.svg" alt="Ask a question" />
             </span>

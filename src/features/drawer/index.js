@@ -1,4 +1,4 @@
-import drawerReducer, { deliveryInfoOpenHandler } from "./drawerSlice";
+import drawerReducer, { deliveryInfoOpenHandler, askQuestionOpenHandler } from "./drawerSlice";
 
-export { deliveryInfoOpenHandler };
+export { deliveryInfoOpenHandler, askQuestionOpenHandler };
 export default drawerReducer;

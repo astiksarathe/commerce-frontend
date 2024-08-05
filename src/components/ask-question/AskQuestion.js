@@ -1,36 +1,45 @@
-import { Button, Drawer, Form, Input } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import React from "react";
-import "./askquestion.scss";
+import { useDispatch, useSelector } from "react-redux";
+
+import TextArea from "antd/es/input/TextArea";
+import { Button, Drawer, Form, Input } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+
+import { askQuestionOpenHandler } from "../../features/drawer";
 const AskQuestion = () => {
+  const {
+    askQuestionOpen,
+    askQuestionDrawer: { title },
+  } = useSelector((state) => state.drawer);
+  const dispatch = useDispatch();
   const onFinish = (value) => {
     console.log(value);
   };
   const onFinishFailed = (value) => {
     console.log(value);
   };
+  const onClose = () => dispatch(askQuestionOpenHandler({ open: false, title: "" }));
+
   return (
     <div>
       <Drawer
-        className="ask-question-drawer"
+        className="rounded-tl-3xl rounded-tr-3xl"
         title={
-          <div className="ask-question-title">
-            <p className="ask-question-name">
-              Breathing Otter Baby Soothing Sound and Light Plush Doll Toy
-            </p>
-            <div className="ask-question-price">
-              <div className="ask-question-mrp">₹2,499.00</div>
-              <div className="ask-question-selling-price">₹1,499.00</div>
-              <div className="ask-question-gst">inc. GST</div>
-            </div>
+          <div className="flex justify-between gap-3 items-baseline">
+            <h1 className="text-lg tracking-wide font-medium">{title}</h1>
+            <button onClick={onClose}>
+              <CloseOutlined />
+            </button>
           </div>
         }
+        height={700}
+        placement="bottom"
         closable={false}
-        onClose={() => {}}
-        open={() => {}}
+        onClose={onClose}
+        open={askQuestionOpen}
         footer={[]}
       >
-        <h1 className="ask-question-heading">Ask a Question</h1>
+        <h1 className="text-lg text-center tracking-wide">Ask a Question</h1>
         <Form
           name="askQuestionForm"
           initialValues={{
