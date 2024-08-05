@@ -10,6 +10,7 @@ import { CartDrawer } from "./components/cart";
 import { setCart } from "./features/cart";
 import QuickView from "./components/quickView/";
 import Checkout from "./components/checkout";
+import BottomBar from "./components/bottom-bar/BottomBar";
 
 import "./animation.scss";
 
@@ -29,7 +30,8 @@ function App() {
       <QuickView />
       <Checkout />
       <Footer />
-      <FloatButton.BackTop />
+      <FloatButton.BackTop className="bottom-20 right-2 md:bottom md:right-2" />
+      <BottomBar />
     </>
   );
 }
