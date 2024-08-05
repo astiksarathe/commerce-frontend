@@ -1,47 +1,73 @@
 import React from "react";
-import "./deliveryandreturns.scss";
-const DeliveryAndReturns = () => (
-  <div data-elementor-type="wp-post" data-elementor-id="3711" className="delivery-returns__modal">
-    <div className="delivery-returns__container" data-id="148ecd6" data-element_type="container">
-      <div className="delivery-returns__inner">
-        <div
-          className="delivery-returns__widget delivery-returns__text-editor"
-          data-element_type="widget"
-          data-widget_type="text-editor.default"
-        >
-          <div className="delivery-returns__content">
-            <h2 className="delivery-returns__title">Delivery</h2>
-            <h5 className="delivery-returns__charges">
-              Delivery Charges (Pan India)&nbsp;
-              <span
-                className="delivery-returns__free-delivery"
-                style={{ fontSize: "14px", color: "#00ca8d" }}
-              >
-                FREE
-              </span>
-            </h5>
-            <div className="delivery-returns__estimated-time">
-              <h5 style={{ color: "#333333" }}>Estimated Delivery Time</h5>
-            </div>
-            <p className="delivery-returns__time-ncr">
-              In NCR (Delhi, Gurugram and Noida), Punjab, Haryana&nbsp;
-              <span style={{ color: "#00ca8d", fontSize: "14px" }}>2 – 3 days</span>
+import { useDispatch, useSelector } from "react-redux";
+
+import { Drawer } from "antd";
+
+import { deliveryInfoOpenHandler } from "../../features/drawer";
+
+const DeliveryAndReturns = () => {
+  const { deliveryInfoOpen } = useSelector((state) => state.drawer);
+  const dispatch = useDispatch();
+
+  return (
+    <Drawer
+      className="rounded-tl-3xl rounded-tr-3xl"
+      closable={false}
+      placement="bottom"
+      height={430}
+      onClose={() => {
+        dispatch(deliveryInfoOpenHandler(false));
+      }}
+      open={deliveryInfoOpen}
+      footer={[]}
+    >
+      <div className="container m-auto space-y-3">
+        <h2 className="text-sm tracking-wide font-medium">Delivery Information</h2>
+        <h5 className="text-base tracking-wide font-medium mb-3 leading-relaxed">
+          Delivery Charges ( Pan India )&nbsp;
+          <span className="text-green-600">FREE</span>
+        </h5>
+        <div>
+          <h5 className="text-base tracking-wide font-medium mb-3 leading-relaxed">
+            Estimated Delivery Time
+          </h5>
+        </div>
+        <div className="space-y-1">
+          <h2 className="text-sm tracking-wide font-medium">Prepaid Orders:</h2>{" "}
+          <div className="space-y-2">
+            <p className="text-sm">
+              Same Region (Madhya Pradesh, Gujarat, and Maharashtra)&nbsp;
+              <span className="text-green-600">2 – 3 days</span>
             </p>
-            <p className="delivery-returns__time-rest">
-              Rest of India <span style={{ color: "#00ca8d", fontSize: "14px" }}>5 – 7 days</span>
-            </p>
-            <h2 className="delivery-returns__title">Returns</h2>
-            <h5 className="delivery-returns__return-title">Return</h5>
-            <p className="delivery-returns__policy">
-              We will accept returns of unused toys and our other products within&nbsp;
-              <span style={{ color: "#00ca8d", fontSize: "14px" }}>5 days&nbsp;</span>
-              <span>of the date of delivery.</span>
+            <p>
+              Rest of India <span className="text-green-600">5 – 7 days</span>
             </p>
           </div>
         </div>
+        <div className="space-y-1">
+          <h2 className="text-sm tracking-wide font-medium">Cash on Delivery (COD) Orders:</h2>{" "}
+          <p className="text-sm">
+            <span className="text-green-600">5-7 working days </span>
+            after order confirmation
+          </p>
+        </div>
+        <div>
+          <p className="text-sm">
+            <span className="font-semibold tracking-wide">Note:</span> These shipping details apply
+            to standard shipping only. Please be aware that monsoon conditions may affect the
+            estimated delivery dates
+          </p>
+        </div>
+        <div className="space-y-1">
+          <h5 className="text-base tracking-wide font-medium mb-3 leading-relaxed">Return</h5>
+          <p className="text-sm">
+            We will accept returns of products within&nbsp;
+            <span className="text-green-600">5 days&nbsp;</span>
+            <span>of the date of delivery.</span>
+          </p>
+        </div>
       </div>
-    </div>
-  </div>
-);
-
+    </Drawer>
+  );
+};
 export default DeliveryAndReturns;
