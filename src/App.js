@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 
 import { FloatButton } from "antd";
 
+import ScrollToTop from "./components/scrollToTop/ScrollToTop";
 import { CartDrawer } from "./components/cart";
 import { setCart } from "./features/cart";
 import QuickView from "./components/quickView/";
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       <Header />
       <Outlet />
       <Checkout />
