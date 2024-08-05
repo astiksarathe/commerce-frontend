@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FooterCollapse from "./FooterCollapse";
-import "./footer.scss";
+
+import { Collapse } from "antd";
 
 const Footer = () => {
   const footerList = [
@@ -45,59 +45,85 @@ const Footer = () => {
   ];
 
   const getListItem = (item) => (
-    <li className="footer__menu-item" key={item.id}>
+    <li className="mb-4" key={item.id}>
       {item.link ? (
-        <Link className="footer__menu-link" to={item.link}>
+        <Link className="text-sm text-black no-underline" to={item.link}>
           {item.label}
         </Link>
       ) : (
-        <span className="footer__menu-text">{item.label}</span>
+        <span className="text-sm text-black no-underline">{item.label}</span>
       )}
     </li>
   );
 
   const getFooterMenuList = (section) => (
-    <ul className="footer__menu-list">{section.items.map((item) => getListItem(item))}</ul>
+    <ul className="list-none pl-2 md:pl-0">{section.items.map((item) => getListItem(item))}</ul>
   );
 
   const getFooterMenu = () => (
     <>
       {footerList.map((section) => (
         <div key={section.id}>
-          <h5 className="footer__menu-title">{section.label}</h5>
+          <h5 className="font-semibold text-base uppercase tracking-wide mb-6 relative pb-1">
+            {section.label}
+          </h5>
           {getFooterMenuList(section)}
         </div>
       ))}
     </>
   );
+  const mobileFooterItems = footerList.map((item) => ({
+    key: item.id,
+    label: item.label,
+    children: getFooterMenuList(item),
+  }));
 
   return (
-    <footer className="footer">
-      <div className="footer__services-overview">
-        <div className="container">
-          <div className="footer__services-list">
-            <h6 className="footer__service-item">FAST DELIVERY SERVICE</h6>
-            <h6 className="footer__service-item">AUTHENTIC PRODUCTS</h6>
-            <h6 className="footer__service-item">ONLINE SUPPORT 24/7</h6>
-            <h6 className="footer__service-item">SECURE PAYMENTS</h6>
+    <footer className="pb-16 pt-4 sm:py-4">
+      <div className="min-h-12 bg-black py-3 relative mb-6">
+        <div className="container m-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4">
+            <h6 className="text-xs p-2 uppercase text-center font-li text-white m-0">
+              FAST DELIVERY SERVICE
+            </h6>
+            <h6 className="text-xs p-2 uppercase text-center font-li text-white m-0">
+              AUTHENTIC PRODUCTS
+            </h6>
+            <h6 className="text-xs p-2 uppercase text-center font-li text-white m-0">
+              ONLINE SUPPORT 24/7
+            </h6>
+            <h6 className="text-xs p-2 uppercase text-center font-li text-white m-0">
+              SECURE PAYMENTS
+            </h6>
           </div>
         </div>
       </div>
 
-      <div className="container">
-        <div className="footer__menu">{getFooterMenu()}</div>
-        <div className="footer__menu-mobile">
-          <FooterCollapse footerList={footerList} />
+      <div className="container m-auto">
+        <div className="hidden md:grid md:grid-cols-4 gap-3">{getFooterMenu()}</div>
+        <div className="px-2 md:hidden">
+          <Collapse
+            className="pl-0"
+            expandIconPosition={"end"}
+            accordion
+            items={mobileFooterItems}
+            bordered={false}
+            ghost={true}
+          />
         </div>
 
-        <div className="footer__payment-option">
-          <h5>Complete Safe and Secure Payment Methods</h5>
-          <div className="footer__payment-options-image">
+        <div className="max-w-full grid justify-center border-t overflow-hidden py-5 border-b">
+          <h5 className="w-fit m-auto font-medium text-sm mb-5 leading-normal">
+            Complete Safe and Secure Payment Methods
+          </h5>
+          <div className="w-auto h-4  sm:w-full">
             <img src="/assets/payment-links.png" alt="payment options" />
           </div>
         </div>
-        <div className="footer__copy-write">
-          <h5>© EverydayGadget. All Right Reserved.</h5>
+        <div className="pt-6">
+          <h5 className="w-fit m-auto font-medium text-sm mb-5 leading-normal">
+            © EverydayGadget. All Right Reserved.
+          </h5>
         </div>
       </div>
     </footer>
