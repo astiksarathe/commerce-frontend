@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 
+import { FloatButton } from "antd";
+
 import { CartDrawer } from "./components/cart";
 import { setCart } from "./features/cart";
 import QuickView from "./components/quickView/";
@@ -27,6 +29,7 @@ function App() {
       <QuickView />
       <Checkout />
       <Footer />
+      <FloatButton.BackTop />
     </>
   );
 }
