@@ -1,4 +1,4 @@
-import queryReducer, { postQuery } from "./querySlice";
+import queryReducer, { postQuery, clearState } from "./querySlice";
 
-export { postQuery };
+export { postQuery, clearState };
 export default queryReducer;

@@ -19,6 +19,11 @@ export const postQuery = createAsyncThunk("Query", async (data, { rejectWithValu
 export const querySlice = createSlice({
   name: "Query",
   initialState,
+  reducers: {
+    clearState: (state) => {
+      state.query = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(postQuery.pending, (state) => {
       state.isLoading = false;
@@ -36,5 +41,5 @@ export const querySlice = createSlice({
     });
   },
 });
-
+export const { clearState } = querySlice.actions;
 export default querySlice.reducer;

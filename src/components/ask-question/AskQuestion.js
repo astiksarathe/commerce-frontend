@@ -6,7 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { askQuestionOpenHandler } from "../../features/drawer";
-import { postQuery } from "../../features/query";
+import { clearState, postQuery } from "../../features/query";
 import { notifySuccess } from "../../utils/Notification";
 const AskQuestion = () => {
   const [form] = Form.useForm();
@@ -26,8 +26,9 @@ const AskQuestion = () => {
     if (query) {
       form.resetFields();
       notifySuccess("Your query has been successfully posted. We will reach out to you shortly");
+      dispatch(clearState());
     }
-  }, [query, form]);
+  }, [query, form, dispatch]);
   const onFinishFailed = (value) => {};
   const onClose = () => dispatch(askQuestionOpenHandler({ open: false, title: "" }));
 
