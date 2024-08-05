@@ -25,7 +25,7 @@ export const getProductByURL = createAsyncThunk("product", async (data, { reject
   }
 });
 
-export const getProduct = createAsyncThunk("product", async (data, { rejectWithValue }) => {
+export const getProduct = createAsyncThunk("productId", async (data, { rejectWithValue }) => {
   try {
     const response = await getProductsAPI(data);
     return response.data; // Assuming response contains data key for successful request
@@ -112,30 +112,18 @@ export const productSlice = createSlice({
       state.error = action.payload;
     });
 
-    builder.addMatcher(
-      (action) => action.type.endsWith("/fulfilled"),
-      (state, action) => {
-        state.isLoading = false;
-        if (action.meta.arg === state.selectedProductURL) {
-          state.selectedProduct = action.payload[0] || {};
-        } else if (action.type === "product/fulfilled") {
-          state.productList = action.payload || [];
-        }
-      }
-    );
-    builder.addMatcher(
-      (action) => action.type.endsWith("/pending"),
-      (state, action) => {
-        state.isLoading = true;
-      }
-    );
-    builder.addMatcher(
-      (action) => action.type.endsWith("/rejected"),
-      (state, action) => {
-        state.error = action.error.message;
-        state.isLoading = false;
-      }
-    );
+    // Extra reducers for getProduct
+    builder.addCase(getProduct.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getProduct.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.productList = action.payload || [];
+    });
+    builder.addCase(getProduct.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   },
 });
 
