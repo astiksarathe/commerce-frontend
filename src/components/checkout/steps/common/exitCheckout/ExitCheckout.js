@@ -6,6 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { exitDrawerHandler } from "../../../../../features/checkoutExit";
+import { checkoutModelHandler } from "../../../../../features/checkout";
 
 import "./exit-checkout.scss";
 const ExitCheckout = () => {
@@ -26,6 +27,7 @@ const ExitCheckout = () => {
   };
   const onExitHandler = (e) => {
     e.preventDefault();
+    dispatch(checkoutModelHandler(false));
   };
 
   const onClose = () => {

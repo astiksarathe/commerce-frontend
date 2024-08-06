@@ -1,5 +1,5 @@
 import React from "react";
-import { Rate } from "antd";
+import { Button, Rate } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
@@ -16,6 +16,8 @@ import {
 import DOMPurify from "dompurify";
 
 import "./productDetailsMobile.scss";
+import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout";
+import { addToCart } from "../../../features/cart";
 
 const ProductDetailsMobile = ({ productDetails }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -62,6 +64,9 @@ const ProductDetailsMobile = ({ productDetails }) => {
     );
   };
 
+  const addToCartHandler = (product) => {
+    dispatch(addToCart(product));
+  };
   return (
     <div className="">
       <div className="w-screen overflow-x-hidden">
@@ -263,20 +268,27 @@ const ProductDetailsMobile = ({ productDetails }) => {
         </div>
       </div>
 
-      {/* <div className="w-screen grid grid-cols-2 fixed bottom-0 z-30">
+      <div className="w-screen grid h-14 bg-white grid-cols-2 fixed bottom-0 z-40 items-end">
         <Button
           size="large"
           className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-orange-400 border-none text-white shadow-md"
+          onClick={() => {
+            addToCartHandler({ ...productDetails, quantity: 1 });
+          }}
         >
           Add to Cart
         </Button>
         <Button
           size="large"
-          className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-green-500 border-none text-white shadow-md"
+          className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-blue-500 border-none text-white shadow-md"
+          onClick={() => {
+            dispatch(buyNowButtonHandler({ quantity: 1, productDetails }));
+            dispatch(checkoutModelHandler(true));
+          }}
         >
           Buy now
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 };
