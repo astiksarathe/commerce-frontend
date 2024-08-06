@@ -31,6 +31,12 @@ import ProductList from "./pages/productList/ProductList";
 
 import NotificationProvider from "./context/NotificationProvider";
 
+import MyAccount from "./pages/profile/my-account";
+import Dashboard from "./pages/profile/dashboard";
+import Addresses from "./pages/profile/addresses";
+import Orders from "./pages/profile/orders";
+import AccountDetails from "./pages/profile/account-details";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
@@ -90,7 +96,33 @@ const router = createBrowserRouter([
         path: "wishlist",
         element: <WishList />,
       },
+      {
+        path: "my-account",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "",
+            element: <MyAccount />,
+          },
+          {
+            path: "addresses",
+            element: <Addresses />,
+          },
+          {
+            path: "account-details",
+            element: <AccountDetails />,
+          },
+          {
+            path: "orders",
+            element: <Orders />,
+          },
+        ],
+      },
     ],
+  },
+  {
+    path: "*",
+    element: () => <>Not FOUND</>,
   },
 ]);
 
