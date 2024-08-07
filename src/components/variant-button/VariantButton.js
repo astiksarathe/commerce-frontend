@@ -1,6 +1,6 @@
 import React from "react";
 
-const VariantButton = ({ variant }) => {
+const VariantButton = ({ variant, onChange }) => {
   const isFree = variant.title === "Free";
   const getClassNames = (available) => {
     let baseClass =
@@ -16,11 +16,11 @@ const VariantButton = ({ variant }) => {
     <label className={getClassNames(variant.available)}>
       <input
         type="radio"
-        disabled={!variant.available}
+        disabled={variant.available}
         name={variant.title}
-        value={variant.title}
+        value={variant.sku}
         className="sr-only"
-        onClick={() => {}}
+        onClick={onChange}
       />
       <span>{variant.title}</span>
       <span className="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>

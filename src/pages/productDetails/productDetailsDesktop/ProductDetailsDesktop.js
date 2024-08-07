@@ -10,16 +10,12 @@ import {
   ShoppingCartOutlined,
   SmileOutlined,
   TruckOutlined,
-  UploadOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Button, Form, Input, Rate, Upload } from "antd";
-
-import DOMPurify from "dompurify";
+import { Breadcrumb, Button, Rate } from "antd";
 
 import Review from "../../../components/review";
 import QtyInput from "../../../components/qtyInput";
 import ShareButtons from "../../../components/shareButtons";
-import VariantButton from "../../../components/variant-button";
 
 import { addToCart } from "../../../features/cart";
 import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout/checkout";
@@ -31,11 +27,16 @@ import {
   generateRandomNumber,
   getMetaDataofReview,
 } from "../../../utils/common";
-import { notifyError } from "../../../utils/Notification";
 
 import ProductImageCarousel from "../ProductImageCarousel";
 
-const ProductDetailsDesktop = ({ productDetails }) => {
+const ProductDetailsDesktop = ({
+  productDetails,
+  getVariants,
+  getSpecification,
+  getCustomizedFields,
+  createMarkup,
+}) => {
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
@@ -49,104 +50,6 @@ const ProductDetailsDesktop = ({ productDetails }) => {
   };
   const currentUrl = window.location.href; // or any specific URL you want to share
   const title = "Check out this amazing product!";
-
-  const createMarkup = (content) => {
-    if (!content) return { __html: "" };
-    return { __html: DOMPurify.sanitize(content) };
-  };
-
-  const getSpecification = (specification) => {
-    if (specification === undefined) return <></>;
-    return specification.map(({ _id, key, value }) => {
-      return (
-        <div key={_id} className="space-x-2">
-          <span>{key} : </span> <span>{value}</span>
-        </div>
-      );
-    });
-  };
-  const getVariants = ({ variants = [], options = [] }) => {
-    const variantType = options[0] || "color";
-    const variantOptions = variants.map((variant) => {
-      if (!variant.option1.trim()) return <React.Fragment key={variant._id}></React.Fragment>;
-      return (
-        <div key={variant._id}>
-          <VariantButton variant={variant} />
-        </div>
-      );
-    });
-
-    return (
-      <>
-        <h1 className="uppercase tracking-wide text-sm my-3">{variantType}</h1>
-        {variantOptions.length ? (
-          <div className="flex flex-wrap gap-4 mb-3 gap-y-5">{variantOptions}</div>
-        ) : (
-          <VariantButton variant={{ available: false, title: "Free" }} />
-        )}
-      </>
-    );
-  };
-  const getCustomizedFields = (productDetails) => {
-    const { fields } = productDetails;
-    if (!fields?.length)
-      return (
-        <div className="text-sm text-gray-500">Customization is not available for this product</div>
-      );
-
-    const image = (
-      <Upload
-        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-        listType="picture"
-        maxCount={1}
-        beforeUpload={(file) => {
-          console.log(file);
-          const isPngOrJpeg = file.type === "image/png" || file.type === "image/jpeg";
-          if (!isPngOrJpeg) {
-            notifyError(`${file.name} is not a PNG or JPEG file.`);
-          }
-          return isPngOrJpeg || Upload.LIST_IGNORE;
-        }}
-      >
-        <Button icon={<UploadOutlined />}>Upload png or jpeg only </Button>
-      </Upload>
-    );
-
-    const text = <Input size="large" className="max-w-sm" />;
-    return (
-      <>
-        <Form variant="filled" layout="vertical">
-          {fields.map((fieldDetails) => {
-            const rules = [];
-            if (fieldDetails.isRequired === 1)
-              rules.push({ required: true, message: "This field is required." });
-            if (fieldDetails.maxLength > 0)
-              rules.push({
-                max: fieldDetails.maxLength,
-                message: `Maximum length is ${fieldDetails.maxLength} characters.`,
-              });
-            if (fieldDetails.minLength > 0)
-              rules.push({
-                min: fieldDetails.minLength,
-                message: `Minimum length is ${fieldDetails.minLength} characters.`,
-              });
-
-            return (
-              <div className="" key={fieldDetails._id}>
-                <Form.Item
-                  name={fieldDetails.fieldName}
-                  label={fieldDetails.fieldLabel}
-                  rules={rules}
-                >
-                  {fieldDetails.fieldType === "IMAGE" ? image : text}
-                </Form.Item>
-              </div>
-            );
-          })}
-        </Form>
-      </>
-    );
-  };
 
   return (
     <>
@@ -204,7 +107,7 @@ const ProductDetailsDesktop = ({ productDetails }) => {
                   in last 12 hours
                 </p>
               </div>
-              <div className="my-2">
+              <div className="my-3">
                 <h3 className="sr-only">availablility</h3>
                 <div className="flex gap-3 items-center">
                   <span className="relative flex h-3 w-3">
@@ -217,12 +120,12 @@ const ProductDetailsDesktop = ({ productDetails }) => {
               <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
                 <div dangerouslySetInnerHTML={createMarkup(productDetails?.shortDescription)}></div>
               </div>
-              <div className="my-2">
+              <div className="my-3">
                 <h1 className="uppercase tracking-wide text-sm my-3">Customize Your Product</h1>
                 <div>{getCustomizedFields(productDetails)}</div>
               </div>
-              <div className="my-2">{getVariants(productDetails)}</div>
-              <div>
+              <div className="my-3">{getVariants(productDetails)}</div>
+              <div className="my-3">
                 <h4 className="text-sm text-gray-500 leading-8">Quantity:</h4>
                 <QtyInput value={quantity} quantityHandler={quantityHandler} />
               </div>
@@ -296,7 +199,7 @@ const ProductDetailsDesktop = ({ productDetails }) => {
             <h1 className="text-2xl tracking-wide">Description : </h1>
             <div className="text-gray-500 my-4 leading-6 tracking-wide text-base lg:pl-36">
               <div dangerouslySetInnerHTML={createMarkup(productDetails?.description)}></div>
-              <div>{getSpecification(productDetails.specification)}</div>
+              <div>{getSpecification(productDetails)}</div>
             </div>
           </div>
           <div className="p-4">

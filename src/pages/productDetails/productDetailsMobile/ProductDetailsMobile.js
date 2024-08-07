@@ -1,15 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Form, Input, Rate, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-
-import DOMPurify from "dompurify";
+import { Button, Rate } from "antd";
 
 import Review from "../../../components/review";
 import ProductImageCarousel from "../ProductImageCarousel";
 import ShareButtons from "../../../components/shareButtons";
-import VariantButton from "../../../components/variant-button";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 
 import { addToCart } from "../../../features/cart";
@@ -23,112 +19,21 @@ import {
   formatCurrency,
   getMetaDataofReview,
 } from "../../../utils/common";
-import { notifyError } from "../../../utils/Notification";
 
-const ProductDetailsMobile = ({ productDetails }) => {
+const ProductDetailsMobile = ({
+  productDetails,
+  getCustomizedFields,
+  getVariants,
+  getSpecification,
+  createMarkup,
+}) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
-  const createMarkup = (content) => {
-    if (!content) return { __html: "" };
-    return { __html: DOMPurify.sanitize(content) };
-  };
-
-  const getSpecification = (specification) => {
-    if (specification === undefined) return <></>;
-    return specification.map(({ _id, key, value }) => {
-      return (
-        <div key={_id} className="space-x-2">
-          <span>{key} : </span> <span>{value}</span>
-        </div>
-      );
-    });
-  };
-  const getCustomizedFields = (productDetails) => {
-    const { fields } = productDetails;
-    if (!fields?.length)
-      return (
-        <div className="text-sm text-gray-500">Customization is not available for this product</div>
-      );
-
-    const image = (
-      <Upload
-        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-        listType="picture"
-        maxCount={1}
-        beforeUpload={(file) => {
-          console.log(file);
-          const isPngOrJpeg = file.type === "image/png" || file.type === "image/jpeg";
-          if (!isPngOrJpeg) {
-            notifyError(`${file.name} is not a PNG or JPEG file.`);
-          }
-          return isPngOrJpeg || Upload.LIST_IGNORE;
-        }}
-      >
-        <Button icon={<UploadOutlined />}>Upload png or jpeg only</Button>
-      </Upload>
-    );
-
-    const text = <Input size="large" />;
-    return (
-      <>
-        <Form variant="filled" layout="vertical">
-          {fields.map((fieldDetails) => {
-            const rules = [];
-            if (fieldDetails.isRequired === 1)
-              rules.push({ required: true, message: "This field is required." });
-            if (fieldDetails.maxLength > 0)
-              rules.push({
-                max: fieldDetails.maxLength,
-                message: `Maximum length is ${fieldDetails.maxLength} characters.`,
-              });
-            if (fieldDetails.minLength > 0)
-              rules.push({
-                min: fieldDetails.minLength,
-                message: `Minimum length is ${fieldDetails.minLength} characters.`,
-              });
-
-            return (
-              <div className="" key={fieldDetails._id}>
-                <Form.Item
-                  name={fieldDetails.fieldName}
-                  label={fieldDetails.fieldLabel}
-                  rules={rules}
-                >
-                  {fieldDetails.fieldType === "IMAGE" ? image : text}
-                </Form.Item>
-              </div>
-            );
-          })}
-        </Form>
-      </>
-    );
-  };
-  const getVariants = ({ variants = [], options = [] }) => {
-    const variantType = options[0] || "color";
-    const variantOptions = variants.map((variant) => {
-      if (!variant.option1.trim()) return <React.Fragment key={variant._id}></React.Fragment>;
-      return (
-        <div key={variant._id}>
-          <VariantButton variant={variant} />
-        </div>
-      );
-    });
-
-    return (
-      <>
-        <h1 className="uppercase tracking-wide text-sm my-3">{variantType}</h1>
-        {variantOptions.length ? (
-          <div className="flex flex-wrap gap-4 mb-3 gap-y-5">{variantOptions}</div>
-        ) : (
-          <VariantButton variant={{ available: false, title: "Free" }} />
-        )}
-      </>
-    );
-  };
-
   const addToCartHandler = (product) => {
     dispatch(addToCart(product));
   };
+
+  // continueSellingIfOutOfStock
   return (
     <div>
       <div className="w-screen overflow-x-hidden">
@@ -308,7 +213,7 @@ const ProductDetailsMobile = ({ productDetails }) => {
               <h1 className="text-xl tracking-wide font-medium">Description</h1>
               <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
                 <div dangerouslySetInnerHTML={createMarkup(productDetails?.description)}></div>
-                <div className="pb-9">{getSpecification(productDetails.specification)}</div>
+                <div className="pb-9">{getSpecification(productDetails)}</div>
               </div>
             </>
           </ReadMoreToggle>
