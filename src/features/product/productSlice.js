@@ -1,19 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getProductsAPI, getProductByUrlAPI } from "./productAPI";
-import { variant as variants, options } from "../../components/quickView/data";
 const initialState = {
   productDetails: {},
   productList: [],
-  selectedProduct: {},
-  selectedProductURL: "",
-  selectedProductVariant: [],
   isLoading: false,
   error: null,
   quickViewProduct: {},
   isQuickViewModelOpen: false,
-  variantUniqueList: {},
-  variantTree: {},
-  variantAvailabiltyHash: {},
 };
 
 export const getProductByURL = createAsyncThunk("product", async (data, { rejectWithValue }) => {
@@ -34,26 +27,6 @@ export const getProduct = createAsyncThunk("productId", async (data, { rejectWit
   }
 });
 
-const variantAvailabiltyHandler = (availableHash, hash, depthLev) => {
-  const checkAndUpdateAvailability = (node, depth, path) => {
-    if (depth === depthLev) {
-      return availableHash[path] ? availableHash[path].available : false;
-    }
-    if (!node?.list) return false;
-
-    let overallAvailability = false;
-    for (const item of node.list) {
-      const currentPath = path ? `${path} / ${item.name}` : item.name;
-      const availability = checkAndUpdateAvailability(node[item.name], depth + 1, currentPath);
-      item.available = availability;
-
-      overallAvailability = overallAvailability || availability;
-    }
-    return overallAvailability;
-  };
-  checkAndUpdateAvailability(hash, 0, "");
-};
-
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -63,39 +36,6 @@ export const productSlice = createSlice({
     },
     quickViewModelHandler: (state, action) => {
       state.isQuickViewModelOpen = action.payload;
-    },
-    selectedProductForDetail: (state, action) => {
-      state.selectedProductURL = action.payload;
-    },
-    selectVariantHandler: (state, action) => {
-      if (action.payload) {
-        const { variantName, ind } = action.payload;
-        state.selectedProductVariant[ind].name = variantName;
-      } else {
-        state.selectedProductVariant = options.map((_, ind) => ({ name: "", ind }));
-      }
-    },
-    creaetVariantTree: (state, action) => {
-      const availableHash = {};
-      const hash = { list: [] };
-
-      for (const variant of variants) {
-        const options = variant.options;
-        let currentLevel = hash;
-
-        options.forEach((option, index) => {
-          if (!currentLevel[option]) {
-            currentLevel.list.push({ name: option, available: false });
-            currentLevel[option] = index === options.length - 1 ? variant.id : { list: [] };
-          }
-          currentLevel = currentLevel[option];
-        });
-
-        availableHash[variant.title] = { available: variant.available, id: variant.id };
-      }
-      variantAvailabiltyHandler(availableHash, hash, 3);
-      state.variantTree = hash;
-      state.variantAvailabiltyHash = availableHash;
     },
   },
   extraReducers: (builder) => {
@@ -127,12 +67,6 @@ export const productSlice = createSlice({
   },
 });
 
-export const {
-  selectedProductForDetail,
-  productQuickView,
-  quickViewModelHandler,
-  creaetVariantTree,
-  selectVariantHandler,
-} = productSlice.actions;
+export const { productQuickView, quickViewModelHandler } = productSlice.actions;
 
 export default productSlice.reducer;

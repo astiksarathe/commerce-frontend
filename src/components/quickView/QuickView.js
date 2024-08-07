@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import { Modal, Rate } from "antd";
 
 import QtyInput from "../qtyInput/QtyInput";
-import Variant from "../variant/Variant";
-import { options, variant } from "./data";
 
 import { addToCart } from "../../features/cart";
 import { quickViewModelHandler } from "../../features/product";
@@ -74,9 +72,6 @@ const QuickView = () => {
               </h3>
 
               <form>
-                {quickViewProduct.options?.length > 0 && (
-                  <Variant options={options} variants={variant} />
-                )}
                 <QtyInput value={quantity} quantityHandler={(value) => setQuantity(value)} />
                 <button
                   type="button"

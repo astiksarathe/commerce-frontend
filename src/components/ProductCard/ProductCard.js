@@ -6,13 +6,7 @@ import { Skeleton, Space } from "antd";
 import { EyeOutlined, HeartOutlined, ShoppingOutlined } from "@ant-design/icons";
 
 import { productQuickView, quickViewModelHandler } from "../../features/product";
-import {
-  creaetVariantTree,
-  getProduct,
-  getProductByURL,
-  selectVariantHandler,
-  selectedProductForDetail,
-} from "../../features/product/productSlice";
+import { getProduct } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
 import { addToWishlist } from "../../features/wishlist";
 
@@ -39,13 +33,9 @@ const ProductCard = () => {
 
   const quickView = (product) => {
     dispatch(productQuickView(product));
-    dispatch(creaetVariantTree());
-    dispatch(selectVariantHandler());
     dispatch(quickViewModelHandler(true));
   };
   const productDetail = (product) => {
-    dispatch(selectedProductForDetail(product.url)); //selectedProductURL
-    dispatch(getProductByURL(product.url));
     navigate(`/shop/${product.url}`);
   };
 
