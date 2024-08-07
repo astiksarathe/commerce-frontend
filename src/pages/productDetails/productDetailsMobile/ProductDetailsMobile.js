@@ -1,26 +1,29 @@
 import React from "react";
-import { Button, Form, Input, Rate, Upload } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import ShareButtons from "../../../components/shareButtons";
-import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
-import Review from "../../../components/review";
-import ProductImageCarousel from "../ProductImageCarousel";
-import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
-import { askQuestionOpenHandler, deliveryInfoOpenHandler } from "../../../features/drawer";
-import {
-  calculateEstimatedDeliveryDate,
-  capitalizeFirstLetters,
-  getMetaDataofReview,
-} from "../../../utils/common";
+
+import { Button, Form, Input, Rate, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
 import DOMPurify from "dompurify";
 
-import "./productDetailsMobile.scss";
-import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout";
-import { addToCart } from "../../../features/cart";
-import { UploadOutlined } from "@ant-design/icons";
-import { notifyError } from "../../../utils/Notification";
+import Review from "../../../components/review";
+import ProductImageCarousel from "../ProductImageCarousel";
+import ShareButtons from "../../../components/shareButtons";
 import VariantButton from "../../../components/variant-button";
+import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
+
+import { addToCart } from "../../../features/cart";
+import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
+import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout";
+import { askQuestionOpenHandler, deliveryInfoOpenHandler } from "../../../features/drawer";
+
+import {
+  calculateEstimatedDeliveryDate,
+  capitalizeFirstLetters,
+  formatCurrency,
+  getMetaDataofReview,
+} from "../../../utils/common";
+import { notifyError } from "../../../utils/Notification";
 
 const ProductDetailsMobile = ({ productDetails }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -127,12 +130,12 @@ const ProductDetailsMobile = ({ productDetails }) => {
     dispatch(addToCart(product));
   };
   return (
-    <div className="">
+    <div>
       <div className="w-screen overflow-x-hidden">
         <ProductImageCarousel />
       </div>
       <div className="p-2">
-        <div className="mv_product_main_info seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <h1 className="pr-16 text-pretty font-medium leading-6 tracking-wide text-xl">
             {capitalizeFirstLetters(productDetails.title)}
           </h1>
@@ -142,21 +145,14 @@ const ProductDetailsMobile = ({ productDetails }) => {
               ( {productDetails.totalReviews} customer reviews )
             </span>
           </div>
-          <p className="mv_product_pricing">
-            <del aria-hidden="true">
-              <bdi className="mv_product_pricing-mrp ">
-                <span className="mv_product_pricing-currencySymbol">₹</span>
-                {""}
-                {productDetails?.price?.MRP}
-              </bdi>
+          <p className=" text-base pt-2 leading-tight min-h-3 text-gray-700 flex items-baseline flex-wrap gap-1">
+            <del aria-hidden="true" className="m-0 text-zinc-400 font-normal text-sm mr-1">
+              <bdi>{formatCurrency(productDetails?.price?.MRP)}</bdi>
             </del>
-            <ins aria-hidden="true">
-              <bdi className="mv_product_pricing-sellingprice">
-                <span className="mv_product_pricing-currencySymbol">₹</span> {""}
-                {productDetails?.price?.sellingPrice}
-              </bdi>
+            <ins aria-hidden="true" className="font-medium text-2xl no-underline">
+              <bdi>{formatCurrency(productDetails?.price?.sellingPrice)}</bdi>
             </ins>
-            <small className="mv_product_pricing-suffix">incl. GST</small>
+            <small className="mx-1 my-0 font-medium text-xs">incl. GST</small>
           </p>
           <div className="mt-4">
             <h3 className="sr-only">availablility</h3>
@@ -169,40 +165,40 @@ const ProductDetailsMobile = ({ productDetails }) => {
             </div>
           </div>
         </div>
-        <div className="mv_incart_sold_wrapper seperation">
-          <div className="mv_incart_sold">
-            <div className="mv_incart_wrapper">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
+          <div className="relative h-6">
+            {/* <div className="">
               <span>
                 <img className="flash_effect" src="/assets/icons/fire.svg" alt="cart record" />
               </span>
               <span>Hurry! Over {productDetails.cartStatus} people have this in their carts</span>
             </div>
-            <div className="mv_sold_wrapper">
+            <div className="">
               <span>
                 <img className="flash_effect" src="/assets/icons/fire.svg" alt="total sold count" />
               </span>
               <span>
                 {productDetails.sellCount} sold in last {productDetails.sellTimeInHour} hours
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="mv_variant_wrapper seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
             <div dangerouslySetInnerHTML={createMarkup(productDetails?.shortDescription)}></div>
           </div>
         </div>
-        <div className="mv_variant_wrapper seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <h1 className="uppercase tracking-wide text-sm my-3">Customize Your Product</h1>
           {getCustomizedFields(productDetails)}
         </div>
-        <div className="mv_variant_wrapper seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <div>{getVariants(productDetails)}</div>
         </div>
-        <div className="mv_wishlist_wrapper seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           {wishlist ? (
             <button
-              className="mv_wishlist_btn"
+              className="flex bg-transparent gap-2 items-center"
               onClick={() => {
                 dispatch(addToWishlist(""));
               }}
@@ -210,11 +206,11 @@ const ProductDetailsMobile = ({ productDetails }) => {
               <span>
                 <img src="/assets/icons/heart.svg" alt="Add to wishlist" />
               </span>
-              <span className="text-sm">Add to Wishlist</span>
+              <strong className="font-medium tracking-wide text-sm">Add to Wishlist</strong>
             </button>
           ) : (
             <button
-              className="mv_wishlist_btn"
+              className="flex bg-transparent gap-2 items-center"
               onClick={() => {
                 dispatch(removeFromWishlist(""));
               }}
@@ -226,25 +222,31 @@ const ProductDetailsMobile = ({ productDetails }) => {
                   alt="Added to wishlist"
                 />
               </span>
-              <span className="text-sm">Added to Wishlist</span>
+              <strong className="font-medium tracking-wide text-sm">Added to Wishlist</strong>
             </button>
           )}
         </div>
-        <div className="seperation mv_delivery_question_wrapper">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <button
             type="button"
-            className="mv_delivery_wrapper"
+            className="w-full flex bg-transparent gap-2 items-center justify-between"
             onClick={() => dispatch(deliveryInfoOpenHandler(true))}
           >
-            <span className="mv_delivery_icon">
-              <img src="/assets/icons/share.svg" alt="Delivery and return details" />
-            </span>
-            <strong className="font-medium tracking-wide text-sm">Delivery & Return</strong>
-            <span className="mv_delivery_right-icon"></span>
+            <div className="flex gap-2">
+              <span className="mv_delivery_icon">
+                <img src="/assets/icons/share.svg" alt="Delivery and return details" />
+              </span>
+              <strong className="font-medium tracking-wide text-sm">Delivery & Return</strong>
+            </div>
+            <div>
+              <img src="/assets/icons/right-arrow.svg" alt="Open" />
+            </div>
           </button>
+        </div>
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <button
             type="button"
-            className="mv_question_wrapper"
+            className="w-full flex bg-transparent gap-2 items-center justify-between"
             onClick={() =>
               dispatch(
                 askQuestionOpenHandler({
@@ -254,51 +256,53 @@ const ProductDetailsMobile = ({ productDetails }) => {
               )
             }
           >
-            <span className="mv_question_icon">
-              <img src="/assets/icons/question.svg" alt="Ask a question" />
-            </span>
-            <strong className="font-medium tracking-wide text-sm">Ask a Question</strong>
-            <span className="mv_question_right-icon"></span>
+            <div className="flex gap-2">
+              <span>
+                <img src="/assets/icons/question.svg" alt="Ask a question" />
+              </span>
+              <strong className="font-medium tracking-wide text-sm">Ask a Question</strong>
+            </div>
+            <div>
+              <img src="/assets/icons/right-arrow.svg" alt="Open" />
+            </div>
           </button>
         </div>
-        <div className="mv_estimated_delivery_wrapper seperation space-y-1">
-          <div>
-            <span className="mv_estimated_delivery_icon">
+        <div className="flex items-center flex-wrap gap-x-2 relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100 space-y-1">
+          <div className="flex items-center gap-2">
+            <span>
               <img src="/assets/icons/truck.svg" alt="Estimated Delivery" />
             </span>
             <strong className="font-medium tracking-wide text-sm">Estimated Delivery:</strong>
           </div>
-          <span className="mv_estimated_delivery_date text-sm">
-            {calculateEstimatedDeliveryDate()}
-          </span>
+          <span className="text-sm">{calculateEstimatedDeliveryDate()}</span>
         </div>
-        <div className="mv_views_wrapper seperation">
-          <span className="mv_views_icon">
+        <div className="flex items-center gap-2 relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
+          <span>
             <img src="/assets/icons/smiley.svg" alt="smiley" />
           </span>
           <div className="text-sm">
             <strong className="font-medium tracking-wide">
               {productDetails.viewStatus} people{" "}
             </strong>
-            <span className="mv_views_desc">are viewing this right now</span>
+            <span>are viewing this right now</span>
           </div>
         </div>
-        <div className="mv_share_wrapper seperation">
-          <span className="mv_share_icon">
+        <div className="flex items-center gap-2 relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
+          <span>
             <img src="/assets/icons/share2.svg" alt="share" />
           </span>
-          <span className="mv_share_title font-medium text-sm">Share:</span>
-          <span className="mv_share_links">
+          <span className="font-medium text-sm">Share:</span>
+          <span>
             <ShareButtons />
           </span>
         </div>
-        <div className="mv_safe_payment_wrapper seperation safe-checkout">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <fieldset className="mt-6 mb-5 border border-gray-200 p-2.5 px-9 text-center rounded-md">
             <legend>Guaranteed Safe Checkout</legend>
             <img src="/assets/razorpay_secure.jpg" alt="Razorpay Secure Payment Option" />
           </fieldset>
         </div>
-        <div className="mv_description_wrapper seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <ReadMoreToggle>
             <>
               <h1 className="text-xl tracking-wide font-medium">Description</h1>
@@ -310,7 +314,7 @@ const ProductDetailsMobile = ({ productDetails }) => {
           </ReadMoreToggle>
         </div>
 
-        <div className="seperation mv_review_wrapper">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100 mv_review_wrapper">
           <ReadMoreToggle>
             <Review
               metaData={getMetaDataofReview(productDetails)}
@@ -319,13 +323,13 @@ const ProductDetailsMobile = ({ productDetails }) => {
             />
           </ReadMoreToggle>
         </div>
-        <div className="mv_product_meta_wrapper seperation">
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <p className="text-sm space-x-2">
-            <strong className="font-semibold tracking-wide">SKU :</strong>{" "}
+            <strong className="font-medium tracking-wide text-sm">SKU :</strong>{" "}
             <span>{productDetails.SKU}</span>
           </p>
           <p className="text-sm space-x-2">
-            <strong className="font-semibold tracking-wide">Categories:</strong>{" "}
+            <strong className="font-medium tracking-wide text-sm">Categories:</strong>{" "}
             {productDetails?.tags?.length > 0 ? productDetails.tags.join(",  ") : ""}
           </p>
         </div>

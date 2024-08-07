@@ -1,20 +1,7 @@
-import { Breadcrumb, Button, Form, Input, Rate, Upload } from "antd";
 import React, { useState } from "react";
-import ProductImageCarousel from "../ProductImageCarousel";
-import {
-  calculateEstimatedDeliveryDate,
-  capitalizeFirstLetters,
-  formatCurrency,
-  generateRandomNumber,
-  getMetaDataofReview,
-} from "../../../utils/common";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import DOMPurify from "dompurify";
-
-import { addToCart } from "../../../features/cart";
-import QtyInput from "../../../components/qtyInput";
 import {
   HeartOutlined,
   RightOutlined,
@@ -25,11 +12,28 @@ import {
   TruckOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout/checkout";
-import ShareButtons from "../../../components/shareButtons";
+import { Breadcrumb, Button, Form, Input, Rate, Upload } from "antd";
+
+import DOMPurify from "dompurify";
+
 import Review from "../../../components/review";
+import QtyInput from "../../../components/qtyInput";
+import ShareButtons from "../../../components/shareButtons";
 import VariantButton from "../../../components/variant-button";
+
+import { addToCart } from "../../../features/cart";
+import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout/checkout";
+
+import {
+  calculateEstimatedDeliveryDate,
+  capitalizeFirstLetters,
+  formatCurrency,
+  generateRandomNumber,
+  getMetaDataofReview,
+} from "../../../utils/common";
 import { notifyError } from "../../../utils/Notification";
+
+import ProductImageCarousel from "../ProductImageCarousel";
 
 const ProductDetailsDesktop = ({ productDetails }) => {
   const [quantity, setQuantity] = useState(1);
