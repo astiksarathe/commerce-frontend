@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -17,7 +17,6 @@ import Review from "../../../components/review";
 import QtyInput from "../../../components/qtyInput";
 import ShareButtons from "../../../components/shareButtons";
 
-import { addToCart } from "../../../features/cart";
 import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout/checkout";
 
 import {
@@ -36,20 +35,13 @@ const ProductDetailsDesktop = ({
   getSpecification,
   getCustomizedFields,
   createMarkup,
+  addToCartHandler,
+  quantityHandler,
+  quantity,
 }) => {
-  const [quantity, setQuantity] = useState(1);
-
   const dispatch = useDispatch();
 
-  const quantityHandler = (value) => {
-    setQuantity(value);
-  };
-
-  const addToCartHandler = (product) => {
-    dispatch(addToCart(product));
-  };
-  const currentUrl = window.location.href; // or any specific URL you want to share
-  const title = "Check out this amazing product!";
+  const currentUrl = window.location.href;
 
   return (
     <>
@@ -184,7 +176,7 @@ const ProductDetailsDesktop = ({
                     </span>
                     <span>Share</span>
                   </strong>
-                  <ShareButtons url={currentUrl} title={title} />
+                  <ShareButtons url={currentUrl} title={productDetails.title} />
                 </div>
               </div>
               <div className="razorpay-secured safe-checkout">

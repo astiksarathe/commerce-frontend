@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useMediaQuery } from "react-responsive";
@@ -20,17 +20,66 @@ import DeliveryAndReturns from "../../components/delivery-return/DeliveryAndRetu
 
 import { notifyError } from "../../utils/Notification.js";
 
+import useQueryParams from "../../hooks/useQueryParams.js";
+import { addToCart } from "../../features/cart/cartSlice.js";
+
 const ProductDetails = () => {
+  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const [form] = Form.useForm();
   const isMobile = useMediaQuery({ query: "(max-width: 48rem)" });
 
   const { url } = useParams();
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { productDetails } = useSelector((state) => state.product);
+  const { getQueryParam } = useQueryParams();
 
   useEffect(() => {
     dispatch(getProductByURL(url));
   }, [dispatch, url]);
+
+  useEffect(() => {
+    let variant = null;
+
+    if (productDetails.variants) {
+      const sku = getQueryParam("sku");
+
+      if (sku) {
+        variant = productDetails.variants.find((variant) => variant.sku === sku);
+      }
+
+      if (!variant) {
+        // Set default variant on page load
+        console.log("set default variant on page load");
+        if (productDetails.preOrderBookingAvailable) {
+          variant = productDetails.variants[0];
+        } else {
+          variant = productDetails.variants.find(({ available }) => available);
+        }
+      }
+
+      setSelectedVariant(variant);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productDetails]);
+
+  useEffect(() => {
+    if (selectedVariant) {
+      const params = { sku: selectedVariant.sku, color: selectedVariant.title };
+      const searchParams = new URLSearchParams(location.search);
+      Object.keys(params).forEach((key) => {
+        searchParams.set(key, params[key]);
+      });
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+      });
+    }
+  }, [selectedVariant, navigate, location.pathname, location.search]);
 
   const getCustomizedFields = useCallback(
     (productDetails) => {
@@ -61,7 +110,7 @@ const ProductDetails = () => {
 
       const text = <Input size="large" />;
       return (
-        <Form form={form} variant="filled" layout="vertical">
+        <Form form={form} name="customizedFields" variant="filled" layout="vertical">
           {fields.map((fieldDetails) => {
             const rules = [];
             if (fieldDetails.isRequired === 1)
@@ -94,10 +143,11 @@ const ProductDetails = () => {
     },
     [form]
   );
-  const selectVariant = useCallback((variant) => {
-    console.log(variant.target.value);
-    console.log(variant.target.name);
+
+  const handleVariantChange = useCallback((variant) => {
+    setSelectedVariant(variant);
   }, []);
+
   const getVariants = useCallback(
     ({ variants = [], options = [] }) => {
       const variantType = options[0] || "color";
@@ -105,7 +155,11 @@ const ProductDetails = () => {
         if (!variant.option1.trim()) return <React.Fragment key={variant._id}></React.Fragment>;
         return (
           <div key={variant._id}>
-            <VariantButton variant={variant} onChange={selectVariant} />
+            <VariantButton
+              variant={variant}
+              onChange={handleVariantChange}
+              selectedVariant={selectedVariant}
+            />
           </div>
         );
       });
@@ -116,12 +170,16 @@ const ProductDetails = () => {
           {variantOptions.length ? (
             <div className="flex flex-wrap gap-4 mb-3 gap-y-5">{variantOptions}</div>
           ) : (
-            <VariantButton variant={{ available: false, title: "Free" }} onChange={selectVariant} />
+            <VariantButton
+              variant={{ available: false, title: "Free" }}
+              onChange={handleVariantChange}
+              selectedVariant={selectedVariant}
+            />
           )}
         </>
       );
     },
-    [selectVariant]
+    [handleVariantChange, selectedVariant]
   );
 
   const getSpecification = useCallback(({ specification }) => {
@@ -140,12 +198,22 @@ const ProductDetails = () => {
     return { __html: DOMPurify.sanitize(content) };
   }, []);
 
+  const addToCartHandler = (product) => {
+    dispatch(addToCart(product));
+  };
+
+  const quantityHandler = (value) => {
+    setQuantity(value);
+  };
   const props = {
     productDetails,
     getVariants,
     getCustomizedFields,
     getSpecification,
     createMarkup,
+    addToCartHandler,
+    quantityHandler,
+    quantity,
   };
 
   return (

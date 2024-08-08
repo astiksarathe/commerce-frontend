@@ -8,7 +8,6 @@ import ProductImageCarousel from "../ProductImageCarousel";
 import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 
-import { addToCart } from "../../../features/cart";
 import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
 import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout";
 import { askQuestionOpenHandler, deliveryInfoOpenHandler } from "../../../features/drawer";
@@ -19,21 +18,21 @@ import {
   formatCurrency,
   getMetaDataofReview,
 } from "../../../utils/common";
+import QtyInput from "../../../components/qtyInput";
 
 const ProductDetailsMobile = ({
   productDetails,
-  getCustomizedFields,
   getVariants,
   getSpecification,
+  getCustomizedFields,
   createMarkup,
+  addToCartHandler,
+  quantityHandler,
+  quantity,
 }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
-  const addToCartHandler = (product) => {
-    dispatch(addToCart(product));
-  };
 
-  // continueSellingIfOutOfStock
   return (
     <div>
       <div className="w-screen overflow-x-hidden">
@@ -99,6 +98,10 @@ const ProductDetailsMobile = ({
         </div>
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <div>{getVariants(productDetails)}</div>
+        </div>
+        <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
+          <h1 className="uppercase tracking-wide text-sm my-3">Quantity</h1>
+          <QtyInput value={quantity} quantityHandler={quantityHandler} />
         </div>
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           {wishlist ? (
