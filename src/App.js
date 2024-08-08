@@ -15,8 +15,6 @@ import { CartDrawer } from "./components/cart";
 import BottomBar from "./components/bottom-bar/BottomBar";
 import ScrollToTop from "./components/scrollToTop/ScrollToTop";
 
-import UrlProvider from "./context/url/UrlProvider";
-
 import "./animation.scss";
 
 function App() {
@@ -27,7 +25,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <UrlProvider>
+    <>
       <ScrollToTop />
       <Header />
       <Outlet />
@@ -38,7 +36,7 @@ function App() {
       <Footer />
       <FloatButton.BackTop className="bottom-20 right-2 md:bottom md:right-2" />
       <BottomBar />
-    </UrlProvider>
+    </>
   );
 }
 
