@@ -41,7 +41,6 @@ const QtyInput = (props) => {
       <input
         className="bg-transparent text-inherit font-normal text-sm border-none h-10 leading-none w-12 text-center appearance-none inline-block m-0 
         focus:outline-transparent "
-        type="number"
         name="product-qty"
         min={qtyMin}
         max={qtyMax}
