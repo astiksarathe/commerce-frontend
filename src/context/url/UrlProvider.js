@@ -20,8 +20,18 @@ const UrlProvider = ({ children }) => {
     },
     [location, navigate]
   );
-
-  const value = useMemo(() => ({ addQueryParams }), [addQueryParams]);
+  const getQueryParams = useCallback(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const params = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+    return params;
+  }, [location]);
+  const value = useMemo(
+    () => ({ addQueryParams, navigate, getQueryParams }),
+    [addQueryParams, navigate, getQueryParams]
+  );
 
   return <UrlContext.Provider value={value}>{children}</UrlContext.Provider>;
 };
