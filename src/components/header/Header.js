@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { Badge, Menu } from "antd";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dropdown, Space } from "antd";
 import { openSideMenuBar } from "../../features/sideMenuBar/sideMenuBarSlice";
 import { openAuthDrawer } from "../../features/authDrawer/authDrawerSlice";
@@ -18,6 +18,8 @@ import "./header.scss";
 import { cartDrawerHandler } from "../../features/cart";
 const Header = () => {
   const [current, setCurrent] = useState("mail");
+  const { cartList } = useSelector((state) => state.cart);
+  const { accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const items = [
     {
@@ -66,7 +68,7 @@ const Header = () => {
     console.log("click ", e);
     setCurrent(e.key);
   };
-  const profileMenuItem = [
+  const profileMenu = [
     {
       label: <Link to={"/my-account/profile"}>Profile</Link>,
       key: "Profile",
@@ -75,6 +77,13 @@ const Header = () => {
       label: <Link to={"/my-account/orders"}>Orders</Link>,
       key: "Orders",
     },
+    {
+      label: <Link to={"/"}>Log out</Link>,
+      key: "Log_out",
+    },
+  ];
+
+  const loginMenu = [
     {
       label: (
         <div
@@ -87,22 +96,20 @@ const Header = () => {
       ),
       key: "Log_In",
     },
-    {
-      label: <Link to={"/"}>Log out</Link>,
-      key: "Log_out",
-    },
   ];
-
   return (
     <>
       <header className="header">
-        <div className="container">
+        <div className="container m-auto">
           <div className="header_wrapper">
             <div className="logo"></div>
             <div className="free_area"></div>
             <div className="right-column">
               <div className="header_icon_container desktop_view">
-                <Dropdown menu={{ items: profileMenuItem }} placement="bottomRight">
+                <Dropdown
+                  menu={{ items: accessToken ? profileMenu : loginMenu }}
+                  placement="bottomRight"
+                >
                   <Space>
                     <UserOutlined style={{ fontSize: "22px" }} />
                   </Space>
@@ -116,14 +123,17 @@ const Header = () => {
 
               <div className="header_icon_container">
                 <Link to="wishlist">
-                  <Badge count={5} color="black">
+                  <Badge count={0} color="black">
                     <HeartOutlined style={{ fontSize: "22px" }} />
                   </Badge>
                 </Link>
               </div>
               <div className="header_icon_container">
-                <Link to={"#"} onClick={() => dispatch(cartDrawerHandler(true))}>
-                  <Badge count={5} color="black">
+                <Link
+                  to={"#"}
+                  onClick={() => dispatch(cartDrawerHandler(true))}
+                >
+                  <Badge count={cartList.length} color="black">
                     <ShoppingOutlined style={{ fontSize: "22px" }} />
                   </Badge>
                 </Link>
