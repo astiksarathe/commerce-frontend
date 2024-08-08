@@ -1,6 +1,4 @@
 import React from "react";
-import "./QtyInput.scss";
-
 const QtyInput = (props) => {
   const qtyMin = 0;
   const qtyMax = 10;
@@ -26,9 +24,13 @@ const QtyInput = (props) => {
   };
 
   return (
-    <div className="qty-input">
+    <div className="qty-input w-fit border rounded overflow-hidden bg-slate-50 border-gray-50">
       <button
-        className="qty-count qty-count--minus"
+        className="after:content-['*'] after:h-[2px] after:w-[10px] after:bg-black after:absolute after:inset-0 after:m-auto 
+        before:content-['*'] before:h-[2px] before:w-[10px] before:bg-black before:absolute before:inset-0 before:m-auto 
+        w-10 p-0 -indent-24 overflow-hidden relative te cursor-pointer bg-transparent text-inherit font-normal text-sm border-none h-10 leading-none 
+        focus:outline-transparent 
+        disabled:text-gray-300 disabled:bg-gray-200 disabled:cursor-none disabled:border-transparent"
         data-action="minus"
         type="button"
         onClick={() => handleButtonClick("minus")}
@@ -37,7 +39,8 @@ const QtyInput = (props) => {
         -
       </button>
       <input
-        className="product-qty"
+        className="bg-transparent text-inherit font-normal text-sm border-none h-10 leading-none w-12 text-center appearance-none inline-block m-0 
+        focus:outline-transparent "
         type="number"
         name="product-qty"
         min={qtyMin}
@@ -46,7 +49,11 @@ const QtyInput = (props) => {
         onChange={handleInputChange}
       />
       <button
-        className="qty-count qty-count--add"
+        className="after:content-['*'] after:h-[2px] after:w-[10px] after:bg-black after:absolute after:inset-0 after:m-auto after:transform after:rotate-90
+        before:content-['*'] before:h-[2px] before:w-[10px] before:bg-black before:absolute before:inset-0 before:m-auto 
+        w-10 p-0 -indent-24 overflow-hidden relative te cursor-pointer bg-transparent text-inherit font-normal text-sm border-none h-10 leading-none 
+        focus:outline-transparent 
+        disabled:text-gray-300 disabled:bg-gray-200 disabled:cursor-none disabled:border-transparent"
         data-action="add"
         type="button"
         onClick={() => handleButtonClick("add")}
