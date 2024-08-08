@@ -14,28 +14,31 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // COMPONENT IMPORT
 
 import App from "./App";
-import Cart from "./pages/cart";
-import WishList from "./pages/wishlist";
 
-import PrivacyPolicy from "./pages/privacyPolicy";
 import ContactUs from "./pages/contactUs";
+import PrivacyPolicy from "./pages/privacyPolicy";
+import ReturnRequest from "./pages/returnRequest";
 import ExchangeRequest from "./pages/exchangeRequest";
 import ReturnRefundPolicy from "./pages/returnRefundPolicy";
-import ShippingDeliveryTerms from "./pages/shippingDeliveryTerms";
-import ReturnRequest from "./pages/returnRequest";
 import TermsAndConditions from "./pages/termsAndConditions";
-import Search from "./pages/search/Search";
+import ShippingDeliveryTerms from "./pages/shippingDeliveryTerms";
+
 import Home from "./pages/home";
+import Cart from "./pages/cart";
+import WishList from "./pages/wishlist";
+import Search from "./pages/search/Search";
 import ProductDetails from "./pages/productDetails/";
 import ProductList from "./pages/productList/ProductList";
 
-import NotificationProvider from "./context/NotificationProvider";
+import NotificationProvider from "./context/notification/NotificationProvider";
 
-import MyAccount from "./pages/profile/my-account";
+import Orders from "./pages/profile/orders";
 import Dashboard from "./pages/profile/dashboard";
 import Addresses from "./pages/profile/addresses";
-import Orders from "./pages/profile/orders";
+import MyAccount from "./pages/profile/my-account";
 import AccountDetails from "./pages/profile/account-details";
+
+import NotFound from "./pages/notFound";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -122,7 +125,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: () => <>Not FOUND</>,
+    element: <NotFound />,
   },
 ]);
 
