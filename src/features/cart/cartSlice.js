@@ -58,13 +58,14 @@ const cartSlice = createSlice({
       const updatedCartList = state.cartList.filter(
         (product) => product.productId !== productId
       );
+
       state.cartList = updatedCartList;
-      if (state.cartList?.length) {
-        state.cartValue = state.cartList.reduce(
-          (acc, cur) => acc + cur.sellingPrice * cur.quantity,
-          0
-        );
-      }
+
+      state.cartValue = state.cartList.reduce(
+        (acc, cur) => acc + cur.price.sellingPrice * cur.quantity,
+        0
+      );
+
       localStorage.setItem("cart", JSON.stringify(updatedCartList));
     },
     // Additional reducers can be defined here if needed
