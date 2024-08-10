@@ -4,16 +4,30 @@ import axiosInstance from "../../utils/axiosInstance";
 const initialState = {
   createOrder: {},
   orderDetails: null,
+  preOrder: null,
   isLoading: false,
   error: null,
 };
 const baseURL = "order";
 
+export const initiateOrder = createAsyncThunk(
+  "initiateOrder",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`pre-order/initiate-order`, {
+        products: data,
+      });
+      return response.data; // Assuming response contains data key for successful request
+    } catch (error) {
+      return rejectWithValue(error.response.data); // Return error message from API response
+    }
+  }
+);
+
 export const createOrder = createAsyncThunk(
   "order",
   async (data, { rejectWithValue }) => {
     try {
-      console.log({ data });
       const response = await axiosInstance.post(
         `${baseURL}/create-order`,
         data
@@ -61,6 +75,27 @@ const orderSlice = createSlice({
       state.isLoading = false;
       state.error = action.error;
     });
+    // Initiate Order
+    builder.addCase(initiateOrder.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(initiateOrder.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const { orderId } = action.payload.data;
+      if (orderId) {
+        state.preOrder = {
+          orderId: orderId,
+        };
+        localStorage.setItem("orderId", orderId);
+      }
+    });
+    builder.addCase(initiateOrder.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
+
+    // Get Order By ID
     builder.addCase(getOrderById.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -75,14 +110,5 @@ const orderSlice = createSlice({
     });
   },
 });
-
-export const {
-  checkoutModelHandler,
-  updateShippingMethod,
-  checkoutFormHandler,
-  buyNowButtonHandler,
-  addShippingDetails,
-  addPersonalDetails,
-} = orderSlice.actions;
 
 export default orderSlice.reducer;
