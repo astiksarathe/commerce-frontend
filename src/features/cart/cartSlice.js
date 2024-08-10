@@ -22,7 +22,7 @@ const cartSlice = createSlice({
       if (cartList?.length) {
         state.cartList = cartList;
         state.cartValue = state.cartList.reduce(
-          (acc, cur) => acc + cur.sellingPrice * cur.quantity,
+          (acc, cur) => acc + cur.price.sellingPrice * cur.quantity,
           0
         );
       }

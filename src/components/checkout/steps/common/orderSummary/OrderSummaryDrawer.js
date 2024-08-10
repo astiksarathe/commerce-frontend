@@ -68,7 +68,7 @@ const OrderSummaryDrawer = ({ close, isOpen }) => {
                   </div>
                   <div className="text-sm text-zinc-600">
                     <span className="mr-2">Price:</span>
-                    <span>{formatCurrency(product.sellingPrice)}</span>
+                    <span>{formatCurrency(product.price.sellingPrice)}</span>
                   </div>
                 </div>
               </div>

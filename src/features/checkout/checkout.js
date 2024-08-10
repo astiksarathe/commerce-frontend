@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { extractProductDetails } from "../../utils/common";
 
 const initialState = {
   checkoutForm: {
@@ -64,25 +65,14 @@ const checkoutSlice = createSlice({
     },
     // Buy now Button Method
     buyNowButtonHandler: (state, action) => {
-      const { quantity, productDetails, variant, variantSKU } = action.payload;
-      if (!quantity || !productDetails) return;
-      const product = {
-        productId: productDetails.productId,
-        title: productDetails.title,
-        productURL: productDetails.url,
-        SKU: productDetails.SKU,
-        MRP: productDetails.price.MRP,
-        quantity: quantity,
-        sellingPrice: productDetails.price.sellingPrice,
-        thumbnilImg: productDetails.thumbnilImg,
-        trackingLink: "",
-        location: "",
-        variant,
-        variantSKU,
-      };
-      state.checkoutForm.products = [product];
+      const newProduct = extractProductDetails(action.payload);
+      if (!newProduct.quantity) return;
+
+      // thumbnilImg: productDetails.thumbnilImg,
+      state.checkoutForm.products = [newProduct];
       state.checkoutForm.subtotal = state.checkoutForm.products.reduce(
-        (pre, cur) => pre + parseInt(cur.quantity) * parseInt(cur.sellingPrice),
+        (pre, cur) =>
+          pre + parseInt(cur.quantity) * parseInt(cur.price.sellingPrice),
         0
       );
       state.checkoutForm.totalPrice = state.checkoutForm.subtotal;
@@ -94,7 +84,8 @@ const checkoutSlice = createSlice({
     moveToCheckout: (state, action) => {
       state.checkoutForm.products = action.payload;
       state.checkoutForm.subtotal = state.checkoutForm.products.reduce(
-        (pre, cur) => pre + parseInt(cur.quantity) * parseInt(cur.sellingPrice),
+        (pre, cur) =>
+          pre + parseInt(cur.quantity) * parseInt(cur.price.sellingPrice),
         0
       );
       state.checkoutForm.totalPrice = state.checkoutForm.subtotal;
