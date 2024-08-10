@@ -5,6 +5,7 @@ import checkoutReducer, {
   updateShippingMethod,
   addShippingDetails,
   addPersonalDetails,
+  moveToCheckout,
 } from "./checkout";
 
 export {
@@ -14,5 +15,6 @@ export {
   updateShippingMethod,
   addShippingDetails,
   addPersonalDetails,
+  moveToCheckout,
 };
 export default checkoutReducer;
