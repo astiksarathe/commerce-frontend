@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { extractProductDetails } from "../../utils/common";
 
 const initialState = {
   cartList: [],
@@ -27,39 +28,36 @@ const cartSlice = createSlice({
       }
     },
     addToCart: (state, action) => {
-      const { productId, quantity, title, url, price, MRP, sellingPrice } = action.payload;
-      // Find the existing product index
-      const productIndex = state.cartList.findIndex((product) => product.productId === productId);
+      const newProduct = extractProductDetails(action.payload);
 
-      // Create the updated product object
-      const updatedProduct = {
-        productId,
-        quantity,
-        title,
-        url,
-        sellingPrice: price?.sellingPrice || sellingPrice,
-        MRP: price?.MRP || MRP,
-      };
+      // Find the index of the existing product in the cart
+      const productIndex = state.cartList.findIndex(
+        (item) => item.productId === newProduct.productId
+      );
 
       if (productIndex >= 0) {
-        // Update the existing product
-        state.cartList[productIndex] = updatedProduct;
+        // Update the existing product in the cart
+        state.cartList[productIndex] = newProduct;
       } else {
         // Add the new product to the cart
-        state.cartList.push(updatedProduct);
+        state.cartList.push(newProduct);
       }
-      if (state.cartList?.length) {
-        state.cartValue = state.cartList.reduce(
-          (acc, cur) => acc + cur.sellingPrice * cur.quantity,
-          0
-        );
-      }
+
+      // Recalculate the cart value
+      state.cartValue = state.cartList.reduce(
+        (total, product) =>
+          total + product.price.sellingPrice * product.quantity,
+        0
+      );
+
       // Update local storage
       localStorage.setItem("cart", JSON.stringify(state.cartList));
     },
     removeFromCart: (state, action) => {
       const { productId } = action.payload;
-      const updatedCartList = state.cartList.filter((product) => product.productId !== productId);
+      const updatedCartList = state.cartList.filter(
+        (product) => product.productId !== productId
+      );
       state.cartList = updatedCartList;
       if (state.cartList?.length) {
         state.cartValue = state.cartList.reduce(
@@ -73,6 +71,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { cartDrawerHandler, addToCart, removeFromCart, setCart } = cartSlice.actions;
+export const { cartDrawerHandler, addToCart, removeFromCart, setCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

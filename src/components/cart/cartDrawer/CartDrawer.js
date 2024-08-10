@@ -92,9 +92,11 @@ const CartDrawer = () => {
                 </h3>
               </div>
               <div className="text-sm text-zinc-600">
-                Variant : {product.variant}
+                Variant : {product.variantName}
               </div>
-              <div className="mt-2">{formatCurrency(product.sellingPrice)}</div>
+              <div className="mt-2">
+                {formatCurrency(product.price.sellingPrice)}
+              </div>
               <div className="flex flex-1 justify-between items-end text-sm leading-5 pt-2">
                 <div className="text-gray-500">
                   <QtyInput

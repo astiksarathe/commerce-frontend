@@ -1,19 +1,28 @@
 import React from "react";
-import "./cartProductList.scss";
 import { Link } from "react-router-dom";
-import QtyInput from "../../qtyInput";
-import { CloseOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+
+import { CloseOutlined } from "@ant-design/icons";
+
 import { addToCart, removeFromCart } from "../../../features/cart";
+
 import { formatCurrency } from "../../../utils/common";
+
+import QtyInput from "../../qtyInput";
+
+import "./cartProductList.scss";
+
 const CartProductList = (props) => {
   const dispatch = useDispatch();
+
   const cartQunatityHandler = (value, product) => {
     dispatch(addToCart({ ...product, quantity: value }));
   };
+
   const removeCart = (product) => {
     dispatch(removeFromCart({ ...product }));
   };
+
   return (
     <section className="cart__productlist-container">
       <ul>
@@ -27,19 +36,26 @@ const CartProductList = (props) => {
                 <div>
                   <div className="cart__product-title">
                     <h3>
-                      <Link to={`/product/${product.url}`}>{product.title}</Link>
+                      <Link to={`/product/${product.url}`}>
+                        {product.title}
+                      </Link>
                     </h3>
                   </div>
                   <div className="cart__product-variants">
-                    <p className="cart__product-variant">Moon</p>
-                    <p className="cart__product-variant">6mm</p>
+                    <p className="cart__product-variant">
+                      {product.variantName}
+                    </p>
                   </div>
-                  <p className="cart__product-price">{formatCurrency(product.sellingPrice)}</p>
+                  <p className="cart__product-price">
+                    {formatCurrency(product.price.sellingPrice)}
+                  </p>
                 </div>
                 <div className="cart__product-quantity">
                   <QtyInput
                     value={product.quantity}
-                    quantityHandler={(updatedValue) => cartQunatityHandler(updatedValue, product)}
+                    quantityHandler={(updatedValue) =>
+                      cartQunatityHandler(updatedValue, product)
+                    }
                   />
                   <div className="cart-close-icon">
                     <CloseOutlined onClick={() => removeCart(product)} />

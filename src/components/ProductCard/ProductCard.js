@@ -3,9 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Skeleton, Space } from "antd";
-import { EyeOutlined, HeartOutlined, ShoppingOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  HeartOutlined,
+  ShoppingOutlined,
+} from "@ant-design/icons";
 
-import { productQuickView, quickViewModelHandler } from "../../features/product";
+import {
+  productQuickView,
+  quickViewModelHandler,
+} from "../../features/product";
 import { getProduct } from "../../features/product/productSlice";
 import { addToCart } from "../../features/cart/";
 import { addToWishlist } from "../../features/wishlist";
@@ -24,7 +31,9 @@ const ProductCard = () => {
   }, [dispatch]);
 
   const addToCartHandler = (product) => {
-    dispatch(addToCart({ ...product, quantity: 1 }));
+    dispatch(
+      addToCart({ ...product, quantity: 1, variantName: "", variantSKU: "" })
+    );
   };
 
   const addToWishListHandler = (productId) => {
@@ -71,7 +80,11 @@ const ProductCard = () => {
             </div>
           </div>
         </div>
-        <button type="button" className="bg-transparent" onClick={() => productDetail(product)}>
+        <button
+          type="button"
+          className="bg-transparent"
+          onClick={() => productDetail(product)}
+        >
           <h3 className="mt-4 text-sm text-gray-700 product-card-title line-clamp-1">
             {product.title}
           </h3>

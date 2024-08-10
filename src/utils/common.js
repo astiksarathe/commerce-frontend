@@ -149,3 +149,32 @@ export function formatCurrency(val = "0") {
   });
   return `₹ ${formattedNumber}`;
 }
+
+/**
+ * Extracts specific product details from the payload.
+ * @param {Object} payload - The action payload containing product details.
+ * @returns {Object} - An object with the extracted product details.
+ */
+export const extractProductDetails = (payload) => {
+  const {
+    productId,
+    SKU,
+    quantity,
+    title,
+    url,
+    price,
+    variantSKU,
+    variantName,
+  } = payload;
+
+  return {
+    productId,
+    SKU,
+    quantity,
+    title,
+    url,
+    price,
+    variantSKU,
+    variantName,
+  };
+};

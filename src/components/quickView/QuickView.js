@@ -10,7 +10,9 @@ import QtyInput from "../qtyInput/QtyInput";
 import { addToCart } from "../../features/cart";
 import { quickViewModelHandler } from "../../features/product";
 const QuickView = () => {
-  const { isQuickViewModelOpen, quickViewProduct } = useSelector((state) => state.product);
+  const { isQuickViewModelOpen, quickViewProduct } = useSelector(
+    (state) => state.product
+  );
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const handleCancel = () => {
@@ -18,11 +20,23 @@ const QuickView = () => {
   };
 
   const addToCartHandler = () => {
-    dispatch(addToCart({ ...quickViewProduct, quantity: quantity }));
+    dispatch(
+      addToCart({
+        ...quickViewProduct,
+        quantity: quantity,
+        variantName: "",
+        variantSKU: "",
+      })
+    );
   };
 
   return (
-    <Modal width={1000} open={isQuickViewModelOpen} onCancel={handleCancel} footer={[]}>
+    <Modal
+      width={1000}
+      open={isQuickViewModelOpen}
+      onCancel={handleCancel}
+      footer={[]}
+    >
       <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 sm:px-6 sm:pt-8 md:p-6 lg:p-8">
         <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
           <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
@@ -72,7 +86,10 @@ const QuickView = () => {
               </h3>
 
               <form>
-                <QtyInput value={quantity} quantityHandler={(value) => setQuantity(value)} />
+                <QtyInput
+                  value={quantity}
+                  quantityHandler={(value) => setQuantity(value)}
+                />
                 <button
                   type="button"
                   className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
