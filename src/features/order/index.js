@@ -1,4 +1,4 @@
-import orderReducer, { createOrder } from "./orderSlice";
+import orderReducer, { createOrder, getOrderById } from "./orderSlice";
 
-export { createOrder };
+export { createOrder, getOrderById };
 export default orderReducer;
