@@ -21,6 +21,7 @@ const CartDrawer = () => {
   const { isCartDrawerOpen, cartList, cartValue } = useSelector(
     (state) => state.cart
   );
+
   const removeCart = (product) => {
     dispatch(removeFromCart({ ...product }));
   };
@@ -79,7 +80,7 @@ const CartDrawer = () => {
                 className="object-cover object-center"
               />
             </div>
-            <div className="mt-4 flex flex-1 flex-col space-y-1">
+            <div className="mt-4 flex flex-1 flex-col">
               <div className="flex justify-between text-base font-medium leading-6 text-black">
                 <h3>
                   <Link
@@ -90,13 +91,20 @@ const CartDrawer = () => {
                   </Link>
                 </h3>
               </div>
-              <div>{formatCurrency(product.sellingPrice)}</div>
+              <div className="text-sm text-zinc-600">
+                Variant : {product.variant}
+              </div>
+              <div className="mt-2">{formatCurrency(product.sellingPrice)}</div>
               <div className="flex flex-1 justify-between items-end text-sm leading-5 pt-2">
                 <div className="text-gray-500">
                   <QtyInput
                     value={product.quantity}
                     quantityHandler={(quantity) => {
-                      productQuantityHandler(product, quantity);
+                      if (quantity === 0) {
+                        removeCart(product);
+                      } else {
+                        productQuantityHandler(product, quantity);
+                      }
                     }}
                   />
                 </div>
