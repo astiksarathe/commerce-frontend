@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./footer.scss";
-
 const Footer = () => {
   return (
-    <footer className="checkout_main_footer" key={1}>
-      <div className="checkout_main_footer_direct_link">
-        <Link>T&C</Link> <span>|</span>
-        <Link>Privacy Policy</Link> <span>|</span>
-        <Link>Refund Policy</Link> <span>|</span>
-        <Link>Shipping Policy</Link>
+    <footer className="text-center w-full px-0 pt-8 pb-4" key={1}>
+      <div className="text-gray-600">
+        <Link className="text-xs text-gray-600">T&C</Link>{" "}
+        <span className="mx-1">|</span>
+        <Link className="text-xs text-gray-600">Privacy Policy</Link>{" "}
+        <span className="mx-1">|</span>
+        <Link className="text-xs text-gray-600">Refund Policy</Link>{" "}
+        <span className="mx-1">|</span>
+        <Link className="text-xs text-gray-600">Shipping Policy</Link>
       </div>
-      <div className="checkout_main_footer_rights">Powered By EverydayGadget</div>
+      <div className="text-xs text-gray-600">Powered By EverydayGadget</div>
     </footer>
   );
 };

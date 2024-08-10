@@ -10,11 +10,15 @@ const Coupon = () => {
       layout="vertical"
       autoComplete="off"
     >
-      <div className="coupen_code">
-        <Form.Item name="discountCode" validateTrigger="onBlur">
+      <div className="grid grid-cols-4 gap-2">
+        <Form.Item
+          className="col-span-3 mb-0"
+          name="discountCode"
+          validateTrigger="onBlur"
+        >
           <Input size="large" placeholder="Enter Discount Code" />
         </Form.Item>
-        <Button size="large" type="primary">
+        <Button className="col-span-1" size="large" type="primary">
           Apply
         </Button>
       </div>

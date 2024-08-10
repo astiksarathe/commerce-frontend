@@ -4,14 +4,13 @@ import { useSelector } from "react-redux";
 import { RightOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 
 import OrderSummaryDrawer from "./OrderSummaryDrawer";
-import { formatCurrency } from "../../../../../utils/common";
 
-import "./order-summary.scss";
+import { formatCurrency } from "../../../../../utils/common";
 
 const OrderSummary = () => {
   const [summaryDrawer, setSummaryDrawer] = useState(false);
   const {
-    checkoutForm: { totalAmount },
+    checkoutForm: { totalAmount, products },
   } = useSelector((state) => state.checkout);
 
   const openSummaryDrawer = () => setSummaryDrawer(true);
@@ -20,20 +19,31 @@ const OrderSummary = () => {
 
   return (
     <>
-      <button className="bg-transparent order_summary_min_wrapper" onClick={openSummaryDrawer}>
-        <p className="order_summary_heading">
-          <ShoppingCartOutlined style={{ fontSize: "20px", marginRight: "5px", fontWeight: 700 }} />{" "}
-          <span>Order Summary</span>
-          <span className="order_summary_item_count">(1 item)</span>
-        </p>
-        <div>
-          <p className="order_totals_amount"> {formatCurrency(totalAmount)}</p>
-          <button className="bg-transparent" onClick={openSummaryDrawer}>
-            <RightOutlined />
-          </button>
+      <div
+        className="bg-transparent flex justify-between items-center"
+        onClick={openSummaryDrawer}
+        role="button"
+        tabIndex={0}
+        aria-label="Open Order Summary"
+      >
+        <div className="flex items-center">
+          <ShoppingCartOutlined
+            style={{ fontSize: "20px", marginRight: "5px", fontWeight: 700 }}
+          />
+          <p className="text-base font-medium text-zinc-700">
+            <span>Order Summary</span>
+            <span className="text-sm font-normal mx-2">
+              ({products.length} {products.length > 1 ? "Items" : "Item"})
+            </span>
+          </p>
         </div>
-      </button>
-
+        <div className="flex items-center">
+          <p className="text-base font-medium text-zinc-700">
+            {formatCurrency(totalAmount)}
+          </p>
+          <RightOutlined className="ml-2" />
+        </div>
+      </div>
       <OrderSummaryDrawer
         isOpen={summaryDrawer}
         open={openSummaryDrawer}

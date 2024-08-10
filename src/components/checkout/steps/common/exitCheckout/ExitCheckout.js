@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button, Checkbox, Drawer } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import { CloseOutlined } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
 
 import { exitDrawerHandler } from "../../../../../features/checkoutExit";
 import { checkoutModelHandler } from "../../../../../features/checkout";
 
-import "./exit-checkout.scss";
 const ExitCheckout = () => {
-  const [exitForm, setExitForm] = useState({ givenReason: [], otherReason: "" });
+  const [exitForm, setExitForm] = useState({
+    givenReason: [],
+    otherReason: "",
+  });
+
   const { isExitDrawerOpen } = useSelector((state) => state.checkoutExit);
+
   const dispatch = useDispatch();
 
   const options = [
@@ -37,9 +41,9 @@ const ExitCheckout = () => {
   return (
     <Drawer
       title={
-        <div className="exit_form_title">
+        <div className="text-base font-semibold flex items-center justify-between mb-2 text-zinc-800">
           <span>Sorry to see you go</span>
-          <button type="button" onClick={onClose}>
+          <button className="bg-transparent" type="button" onClick={onClose}>
             <CloseOutlined />
           </button>
         </div>
@@ -52,13 +56,13 @@ const ExitCheckout = () => {
       open={isExitDrawerOpen}
       getContainer={false}
     >
-      <div className="exit_form_container">
+      <div className="flex flex-col gap-2">
         <div>
           <label className="exit_form_label" htmlFor="givenReason">
             What stopped you from completing your purchase?
           </label>
           <Checkbox.Group
-            className="exist_reason_options"
+            className="flex flex-col gap-1 py-2 px-0"
             value={exitForm.givenReason}
             name="givenReason"
             options={options}

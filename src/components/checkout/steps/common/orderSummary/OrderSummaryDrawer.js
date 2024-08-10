@@ -5,8 +5,8 @@ import { Drawer } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { formatCurrency } from "../../../../../utils/common";
-import "./order-summary.scss";
-const OrderSummaryDrawer = ({ open, close, isOpen }) => {
+
+const OrderSummaryDrawer = ({ close, isOpen }) => {
   const {
     checkoutForm: { products, subtotal, shipping },
   } = useSelector((state) => state.checkout);
@@ -27,11 +27,12 @@ const OrderSummaryDrawer = ({ open, close, isOpen }) => {
   return (
     <Drawer
       title={
-        <div className="order_summary_title">
+        <div className="text-base font-semibold flex items-center justify-between mb-2 text-zinc-800">
           <span>
-            Order Summary ({products.length} {products.length > 1 ? "Items" : "Item"})
+            Order Summary ({products.length}{" "}
+            {products.length > 1 ? "Items" : "Item"})
           </span>
-          <button type="button" onClick={close}>
+          <button type="button" className="bg-transparent" onClick={close}>
             <CloseOutlined />
           </button>
         </div>
@@ -46,38 +47,56 @@ const OrderSummaryDrawer = ({ open, close, isOpen }) => {
       {products.length > 0 &&
         products.map((product) => {
           return (
-            <div className="order_products_wrapper checkout_card" key={product.SKU}>
-              <div className="order_product_wrapper">
-                <div className="order_product_img">
-                  <img src={product.thumbnilImg} alt={"product"} />
+            <div
+              className="my-2 p-4 bg-white min-h-4 rounded-lg shadow-card box-border"
+              key={product.SKU}
+            >
+              <div className="flex py-2">
+                <div className="relative w-16 h-16 mr-4">
+                  <img
+                    src={product.thumbnilImg}
+                    alt={product.title}
+                    className="w-full h-full object-cover rounded-md text-sm"
+                  />
                 </div>
-                <div className="order_product_details">
-                  <p className="order_product_title">{product.productTitle}</p>
-                  <div className="order_product_quantity">
-                    <span>Quantity:</span>
-                    <span>{product.quantity}</span>
+                <div className="flex flex-col justify-between">
+                  <p className="text-sm font-medium text-zinc-900 truncate">
+                    {product.title}
+                  </p>
+                  <div className="flex text-sm text-zinc-600">
+                    <span className="mr-2">Quantity: {product.quantity}</span>
                   </div>
-                  <div className="order_product_price">
-                    <span>Price:</span>
-                    <span> {formatCurrency(product.price)} </span>
+                  <div className="text-sm text-zinc-600">
+                    <span className="mr-2">Price:</span>
+                    <span>{formatCurrency(product.sellingPrice)}</span>
                   </div>
                 </div>
               </div>
             </div>
           );
         })}
-      <div className="order_totals_wrapper">
-        <div className="order_subtotal">
-          <p className="order_totals_heading">Subtotal</p>
-          <p className="order_totals_value">{formatCurrency(subtotal)}</p>
+      <div className="font-medium text-base px-1">
+        <div className="flex items-center justify-between">
+          <p className="leading-none my-1 text-sm text-zinc-800 font-normal">
+            Subtotal
+          </p>
+          <p className="eading-none my-1 text-sm text-zinc-800 font-normal">
+            {formatCurrency(subtotal)}
+          </p>
         </div>
-        <div className="order_discount">
-          <p className="order_totals_heading">Coupon Discount</p>
-          <p className="order_totals_value">{formatCurrency(0)}</p>
+        <div className="flex items-center justify-between">
+          <p className="leading-none my-1 text-sm text-zinc-800 font-normal">
+            Coupon Discount
+          </p>
+          <p className="eading-none my-1 text-sm font-normal text-green-700">
+            {formatCurrency(0)}
+          </p>
         </div>
-        <div className="order_shipping">
-          <p className="order_totals_heading">Shipping</p>
-          <p className="order_totals_value">
+        <div className="flex items-center justify-between">
+          <p className="leading-none my-1 text-sm text-zinc-800 font-normal">
+            Shipping
+          </p>
+          <p className="eading-none my-1 text-sm text-zinc-800 font-normal">
             {shipping.shippingCharges === 0 ? (
               <span>FREE</span>
             ) : (
@@ -85,9 +104,13 @@ const OrderSummaryDrawer = ({ open, close, isOpen }) => {
             )}
           </p>
         </div>
-        <div className="order_topay">
-          <p className="order_topay_heading">Total amount</p>
-          <p className="order_topay_value">{formatCurrency(getTotalShipping())}</p>
+        <div className="flex items-center justify-between mt-2 pt-2 border-t">
+          <p className="eading-none my-1 text-sm text-zinc-800 font-normal">
+            Total amount
+          </p>
+          <p className="eading-none my-1 text-base text-zinc-800 font-semibold">
+            {formatCurrency(getTotalShipping())}
+          </p>
         </div>
       </div>
     </Drawer>
