@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Input, Form, Select } from "antd";
 import PropTypes from "prop-types";
 import SubmitButton from "../../submitButton/SubmitButton";
+import { useSelector } from "react-redux";
 
 const Address = ({
   pincodeHandler,
@@ -13,6 +14,7 @@ const Address = ({
   stepHandler,
   onSubmit,
 }) => {
+  const { pincodeDetails } = useSelector((state) => state.pincode);
   const [form] = Form.useForm();
   const onFinsihHandler = (value) => {
     console.log(value);
@@ -20,6 +22,15 @@ const Address = ({
     if (onBtnClick) onBtnClick();
     if (onSubmit) onSubmit(value);
   };
+
+  useEffect(() => {
+    if (pincodeDetails) {
+      form.setFieldValue("city", pincodeDetails.city);
+      form.setFieldValue("state", pincodeDetails.state);
+      form.setFieldValue("country", pincodeDetails.country);
+    }
+  }, [pincodeDetails, form]);
+
   return (
     <Form
       form={form}
@@ -53,11 +64,20 @@ const Address = ({
         label="Complete Address"
         name="address1"
         validateTrigger="onBlur"
-        rules={[{ required: true, message: "Your comlete address is required!" }]}
+        rules={[
+          { required: true, message: "Your comlete address is required!" },
+        ]}
       >
-        <Input size="large" placeholder="House/Floor No. Building Name or Street, Locality" />
+        <Input
+          size="large"
+          placeholder="House/Floor No. Building Name or Street, Locality"
+        />
       </Form.Item>
-      <Form.Item label="Landmark (Optional)" name="landmark" validateTrigger="onBlur">
+      <Form.Item
+        label="Landmark (Optional)"
+        name="landmark"
+        validateTrigger="onBlur"
+      >
         <Input
           size="large"
           placeholder="Any nearby post office, market, Hospital as the landmark"
@@ -86,13 +106,19 @@ const Address = ({
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           }
           options={[
-            { value: "Andaman and Nicobar Islands", label: "Andaman and Nicobar Islands" },
+            {
+              value: "Andaman and Nicobar Islands",
+              label: "Andaman and Nicobar Islands",
+            },
             { value: "Andhra Pradesh", label: "Andhra Pradesh" },
             { value: "Arunachal Pradesh", label: "Arunachal Pradesh" },
             { value: "Assam", label: "Assam" },
             { value: "Bihar", label: "Bihar" },
             { value: "Chandigarh", label: "Chandigarh" },
-            { value: "Dadra and Nagar Haveli", label: "Dadra and Nagar Haveli" },
+            {
+              value: "Dadra and Nagar Haveli",
+              label: "Dadra and Nagar Haveli",
+            },
             { value: "Daman and Diu", label: "Daman and Diu" },
             { value: "Delhi", label: "Delhi" },
             { value: "Goa", label: "Goa" },
@@ -133,7 +159,20 @@ const Address = ({
         name="country"
         validateTrigger="onBlur"
       >
-        <Input size="large" placeholder="Enter Your Country" />
+        <Select
+          size="large"
+          showSearch
+          placeholder="Select Your Country"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          options={[
+            {
+              value: "India",
+              label: "India",
+            },
+          ]}
+        />
       </Form.Item>
       <SubmitButton form={form} size="large" block>
         {btnName}

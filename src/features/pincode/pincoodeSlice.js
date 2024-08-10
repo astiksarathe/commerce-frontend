@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
 
 const initialState = {
-  pincodeDetails: {},
+  pincodeDetails: null,
   isLoading: false,
   error: {},
 };
@@ -25,11 +25,11 @@ export const pincodeSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getPinCodeDetails.pending, (state) => {
       state.isLoading = false;
-      state.pincodeDetails = [];
+      state.pincodeDetails = null;
     });
     builder.addCase(getPinCodeDetails.rejected, (state, action) => {
       state.isLoading = false;
-      state.pincodeDetails = [];
+      state.pincodeDetails = null;
       state.error = action.payload;
     });
     builder.addCase(getPinCodeDetails.fulfilled, (state, action) => {
