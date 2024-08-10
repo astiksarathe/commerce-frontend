@@ -37,6 +37,7 @@ import Dashboard from "./pages/profile/dashboard";
 import Addresses from "./pages/profile/addresses";
 import MyAccount from "./pages/profile/my-account";
 import AccountDetails from "./pages/profile/account-details";
+import OrderConfirmation from "./pages/order-confirmation";
 
 import NotFound from "./pages/notFound";
 
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
       {
         path: "wishlist",
         element: <WishList />,
+      },
+      {
+        path: "order/:orderId",
+        element: <OrderConfirmation />,
       },
       {
         path: "my-account",
