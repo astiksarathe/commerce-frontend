@@ -50,6 +50,12 @@ const Checkout = () => {
     };
   }, [isCheckoutModelOpen]);
 
+  useEffect(() => {
+    if (!isCheckoutModelOpen) {
+      setStep(1);
+    }
+  }, [isCheckoutModelOpen]);
+
   const stepHandler = (currentStage) => {
     if (currentStage < 1 || currentStage > 3) return;
     setStep(currentStage);

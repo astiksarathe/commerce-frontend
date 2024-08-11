@@ -1,18 +1,32 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Form, Input } from "antd";
 
 import { addPersonalDetails } from "../../../../../features/checkout";
+import { updateInitiatedOrder } from "../../../../../features/order";
+
 import SubmitButton from "../../../../submitButton/SubmitButton";
 
 const PersonalDetails = ({ stepHandler }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.order);
+
   const onClickHandler = (formFields) => {
+    console.log(formFields);
+
+    dispatch(
+      updateInitiatedOrder({
+        step: 1,
+        orderId: localStorage.getItem("orderId"),
+        ...formFields,
+      })
+    );
     dispatch(addPersonalDetails(formFields));
     stepHandler(2);
   };
+
   return (
     <div className="personal_details">
       <h1 className="checkout_heading first_heading">Get Started</h1>
@@ -66,7 +80,13 @@ const PersonalDetails = ({ stepHandler }) => {
         >
           <Input size="large" placeholder="Enter Your Name" />
         </Form.Item>
-        <SubmitButton form={form} size="large" htmlType="submit" block>
+        <SubmitButton
+          loading={isLoading}
+          form={form}
+          size="large"
+          htmlType="submit"
+          block
+        >
           Continue
         </SubmitButton>
       </Form>

@@ -38,7 +38,23 @@ export const createOrder = createAsyncThunk(
     }
   }
 );
-//localhost:8000/api/v1/order/orderId/6693e648bdfa477ce75f5c21
+export const updateInitiatedOrder = createAsyncThunk(
+  "updateInitiatedOrder",
+  async (data, { rejectWithValue }) => {
+    const orderId = data.orderId;
+    
+    try {
+      const response = await axiosInstance.put(
+        `pre-order/update/orderId/${orderId}`,
+        data
+      );
+      return response.data; // Assuming response contains data key for successful request
+    } catch (error) {
+      return rejectWithValue(error.response.data); // Return error message from API response
+    }
+  }
+);
+
 export const getOrderById = createAsyncThunk(
   "orderById",
   async (data, { rejectWithValue }) => {
@@ -91,6 +107,18 @@ const orderSlice = createSlice({
       }
     });
     builder.addCase(initiateOrder.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
+    // Initiate Order
+    builder.addCase(updateInitiatedOrder.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(updateInitiatedOrder.fulfilled, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(updateInitiatedOrder.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error;
     });

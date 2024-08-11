@@ -3,6 +3,7 @@ import Address from "./Address";
 import { useDispatch } from "react-redux";
 import { getPinCodeDetails } from "../../../features/pincode/pincoodeSlice";
 import { addShippingDetails } from "../../../features/checkout";
+import { updateInitiatedOrder } from "../../../features/order";
 
 const ShippingAddress = ({ stepHandler }) => {
   const dispatch = useDispatch();
@@ -13,6 +14,13 @@ const ShippingAddress = ({ stepHandler }) => {
     if (value.length === 6) dispatch(getPinCodeDetails(value));
   };
   const onSubmit = (form) => {
+    dispatch(
+      updateInitiatedOrder({
+        step: 2,
+        orderId: localStorage.getItem("orderId"),
+        ...form,
+      })
+    );
     dispatch(addShippingDetails(form));
   };
   return (

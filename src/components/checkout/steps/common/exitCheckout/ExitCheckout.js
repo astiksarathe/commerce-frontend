@@ -7,6 +7,7 @@ import TextArea from "antd/es/input/TextArea";
 
 import { exitDrawerHandler } from "../../../../../features/checkoutExit";
 import { checkoutModelHandler } from "../../../../../features/checkout";
+import { updateInitiatedOrder } from "../../../../../features/order";
 
 const ExitCheckout = () => {
   const [exitForm, setExitForm] = useState({
@@ -31,6 +32,16 @@ const ExitCheckout = () => {
   };
   const onExitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateInitiatedOrder({
+        orderId: localStorage.getItem("orderId"),
+        step: 5,
+        abondenedCheckoutReason:
+          exitForm.givenReason.join(" ") + " " + exitForm.otherReason,
+      })
+    );
+    localStorage.removeItem("orderId");
+    onClose();
     dispatch(checkoutModelHandler(false));
   };
 

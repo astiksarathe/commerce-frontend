@@ -27,3 +27,4 @@ package-lock.json
 /src/output.css
 # task file
 task
+productData.json
