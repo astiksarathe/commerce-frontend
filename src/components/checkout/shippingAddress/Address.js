@@ -13,11 +13,11 @@ const Address = ({
   onBtnClick,
   stepHandler,
   onSubmit,
+  isLoading,
 }) => {
   const { pincodeDetails } = useSelector((state) => state.pincode);
   const [form] = Form.useForm();
   const onFinsihHandler = (value) => {
-    console.log(value);
     if (stepHandler) stepHandler(3);
     if (onBtnClick) onBtnClick();
     if (onSubmit) onSubmit(value);
@@ -174,7 +174,7 @@ const Address = ({
           ]}
         />
       </Form.Item>
-      <SubmitButton form={form} size="large" block>
+      <SubmitButton isLoading={isLoading} form={form} size="large" block>
         {btnName}
       </SubmitButton>
     </Form>

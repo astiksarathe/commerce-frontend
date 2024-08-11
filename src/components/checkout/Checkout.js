@@ -28,7 +28,7 @@ const Checkout = () => {
     checkoutForm: { products },
   } = useSelector((state) => state.checkout);
 
-  const { isLoading } = useSelector((state) => state.order);
+  const { isLoading, preOrder } = useSelector((state) => state.order);
 
   const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ const Checkout = () => {
       footer={[]}
       className="checkout_modal"
     >
-      {isLoading ? (
+      {isLoading && preOrder === null ? (
         <main className="bg-white h-screen flex justify-center items-center">
           <div>
             <div className="text-center">

@@ -1,12 +1,13 @@
 import React from "react";
 import Address from "./Address";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getPinCodeDetails } from "../../../features/pincode/pincoodeSlice";
 import { addShippingDetails } from "../../../features/checkout";
 import { updateInitiatedOrder } from "../../../features/order";
 
 const ShippingAddress = ({ stepHandler }) => {
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.order);
 
   const pincodeHandler = (e) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ const ShippingAddress = ({ stepHandler }) => {
         btnName={"Add address"}
         stepHandler={stepHandler}
         onSubmit={onSubmit}
+        isLoading={isLoading}
       />
     </div>
   );

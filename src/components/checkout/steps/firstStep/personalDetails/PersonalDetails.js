@@ -14,8 +14,6 @@ const PersonalDetails = ({ stepHandler }) => {
   const { isLoading } = useSelector((state) => state.order);
 
   const onClickHandler = (formFields) => {
-    console.log(formFields);
-
     dispatch(
       updateInitiatedOrder({
         step: 1,
