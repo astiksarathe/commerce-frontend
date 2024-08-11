@@ -9,8 +9,10 @@ import ShareButtons from "../../../components/shareButtons";
 import ReadMoreToggle from "../../../components/readMoreToggle/ReadMoreToggle";
 
 import { addToWishlist, removeFromWishlist } from "../../../features/wishlist";
-import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout";
-import { askQuestionOpenHandler, deliveryInfoOpenHandler } from "../../../features/drawer";
+import {
+  askQuestionOpenHandler,
+  deliveryInfoOpenHandler,
+} from "../../../features/drawer";
 
 import {
   calculateEstimatedDeliveryDate,
@@ -29,6 +31,7 @@ const ProductDetailsMobile = ({
   addToCartHandler,
   quantityHandler,
   quantity,
+  buyNowHandler,
 }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
@@ -44,16 +47,27 @@ const ProductDetailsMobile = ({
             {capitalizeFirstLetters(productDetails.title)}
           </h1>
           <div className="mt-2 space-x-1">
-            <Rate className="text-sm" disabled allowHalf value={productDetails.aggregateRating} />
+            <Rate
+              className="text-sm"
+              disabled
+              allowHalf
+              value={productDetails.aggregateRating}
+            />
             <span className="text-sm text-gray-500">
               ( {productDetails.totalReviews} customer reviews )
             </span>
           </div>
           <p className=" text-base pt-2 leading-tight min-h-3 text-gray-700 flex items-baseline flex-wrap gap-1">
-            <del aria-hidden="true" className="m-0 text-zinc-400 font-normal text-sm mr-1">
+            <del
+              aria-hidden="true"
+              className="m-0 text-zinc-400 font-normal text-sm mr-1"
+            >
               <bdi>{formatCurrency(productDetails?.price?.MRP)}</bdi>
             </del>
-            <ins aria-hidden="true" className="font-medium text-2xl no-underline">
+            <ins
+              aria-hidden="true"
+              className="font-medium text-2xl no-underline"
+            >
               <bdi>{formatCurrency(productDetails?.price?.sellingPrice)}</bdi>
             </ins>
             <small className="mx-1 my-0 font-medium text-xs">incl. GST</small>
@@ -89,11 +103,17 @@ const ProductDetailsMobile = ({
         </div>
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
-            <div dangerouslySetInnerHTML={createMarkup(productDetails?.shortDescription)}></div>
+            <div
+              dangerouslySetInnerHTML={createMarkup(
+                productDetails?.shortDescription
+              )}
+            ></div>
           </div>
         </div>
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
-          <h1 className="uppercase tracking-wide text-sm my-3">Customize Your Product</h1>
+          <h1 className="uppercase tracking-wide text-sm my-3">
+            Customize Your Product
+          </h1>
           {getCustomizedFields(productDetails)}
         </div>
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
@@ -114,7 +134,9 @@ const ProductDetailsMobile = ({
               <span>
                 <img src="/assets/icons/heart.svg" alt="Add to wishlist" />
               </span>
-              <strong className="font-medium tracking-wide text-sm">Add to Wishlist</strong>
+              <strong className="font-medium tracking-wide text-sm">
+                Add to Wishlist
+              </strong>
             </button>
           ) : (
             <button
@@ -130,7 +152,9 @@ const ProductDetailsMobile = ({
                   alt="Added to wishlist"
                 />
               </span>
-              <strong className="font-medium tracking-wide text-sm">Added to Wishlist</strong>
+              <strong className="font-medium tracking-wide text-sm">
+                Added to Wishlist
+              </strong>
             </button>
           )}
         </div>
@@ -142,9 +166,14 @@ const ProductDetailsMobile = ({
           >
             <div className="flex gap-2">
               <span className="mv_delivery_icon">
-                <img src="/assets/icons/share.svg" alt="Delivery and return details" />
+                <img
+                  src="/assets/icons/share.svg"
+                  alt="Delivery and return details"
+                />
               </span>
-              <strong className="font-medium tracking-wide text-sm">Delivery & Return</strong>
+              <strong className="font-medium tracking-wide text-sm">
+                Delivery & Return
+              </strong>
             </div>
             <div>
               <img src="/assets/icons/right-arrow.svg" alt="Open" />
@@ -168,7 +197,9 @@ const ProductDetailsMobile = ({
               <span>
                 <img src="/assets/icons/question.svg" alt="Ask a question" />
               </span>
-              <strong className="font-medium tracking-wide text-sm">Ask a Question</strong>
+              <strong className="font-medium tracking-wide text-sm">
+                Ask a Question
+              </strong>
             </div>
             <div>
               <img src="/assets/icons/right-arrow.svg" alt="Open" />
@@ -180,7 +211,9 @@ const ProductDetailsMobile = ({
             <span>
               <img src="/assets/icons/truck.svg" alt="Estimated Delivery" />
             </span>
-            <strong className="font-medium tracking-wide text-sm">Estimated Delivery:</strong>
+            <strong className="font-medium tracking-wide text-sm">
+              Estimated Delivery:
+            </strong>
           </div>
           <span className="text-sm">{calculateEstimatedDeliveryDate()}</span>
         </div>
@@ -207,7 +240,10 @@ const ProductDetailsMobile = ({
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
           <fieldset className="mt-6 mb-5 border border-gray-200 p-2.5 px-9 text-center rounded-md">
             <legend>Guaranteed Safe Checkout</legend>
-            <img src="/assets/razorpay_secure.jpg" alt="Razorpay Secure Payment Option" />
+            <img
+              src="/assets/razorpay_secure.jpg"
+              alt="Razorpay Secure Payment Option"
+            />
           </fieldset>
         </div>
         <div className="relative pt-2 pb-4 after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:z-10 after:border-b-8 after:border-gray-100">
@@ -215,7 +251,11 @@ const ProductDetailsMobile = ({
             <>
               <h1 className="text-xl tracking-wide font-medium">Description</h1>
               <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
-                <div dangerouslySetInnerHTML={createMarkup(productDetails?.description)}></div>
+                <div
+                  dangerouslySetInnerHTML={createMarkup(
+                    productDetails?.description
+                  )}
+                ></div>
                 <div className="pb-9">{getSpecification(productDetails)}</div>
               </div>
             </>
@@ -237,8 +277,12 @@ const ProductDetailsMobile = ({
             <span>{productDetails.SKU}</span>
           </p>
           <p className="text-sm space-x-2">
-            <strong className="font-medium tracking-wide text-sm">Categories:</strong>{" "}
-            {productDetails?.tags?.length > 0 ? productDetails.tags.join(",  ") : ""}
+            <strong className="font-medium tracking-wide text-sm">
+              Categories:
+            </strong>{" "}
+            {productDetails?.tags?.length > 0
+              ? productDetails.tags.join(",  ")
+              : ""}
           </p>
         </div>
       </div>
@@ -247,19 +291,14 @@ const ProductDetailsMobile = ({
         <Button
           size="large"
           className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-orange-400 border-none text-white shadow-md"
-          onClick={() => {
-            addToCartHandler({ ...productDetails, quantity: 1 });
-          }}
+          onClick={addToCartHandler}
         >
           Add to Cart
         </Button>
         <Button
           size="large"
           className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-blue-500 border-none text-white shadow-md"
-          onClick={() => {
-            dispatch(buyNowButtonHandler({ quantity: 1, productDetails }));
-            dispatch(checkoutModelHandler(true));
-          }}
+          onClick={buyNowHandler}
         >
           Buy now
         </Button>

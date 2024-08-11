@@ -21,7 +21,14 @@ import DeliveryAndReturns from "../../components/delivery-return/DeliveryAndRetu
 import { notifyError } from "../../utils/Notification.js";
 
 import useQueryParams from "../../hooks/useQueryParams.js";
+
 import { addToCart } from "../../features/cart/cartSlice.js";
+import {
+  buyNowButtonHandler,
+  checkoutModelHandler,
+} from "../../features/checkout/checkout.js";
+
+import { isCustomFormValid } from "../../utils/common.js";
 
 const ProductDetails = () => {
   const [selectedVariant, setSelectedVariant] = useState(null);
@@ -49,7 +56,9 @@ const ProductDetails = () => {
       const sku = getQueryParam("sku");
 
       if (sku) {
-        variant = productDetails.variants.find((variant) => variant.sku === sku);
+        variant = productDetails.variants.find(
+          (variant) => variant.sku === sku
+        );
       }
 
       if (!variant) {
@@ -97,7 +106,8 @@ const ProductDetails = () => {
           maxCount={1}
           name="picture"
           beforeUpload={(file) => {
-            const isPngOrJpeg = file.type === "image/png" || file.type === "image/jpeg";
+            const isPngOrJpeg =
+              file.type === "image/png" || file.type === "image/jpeg";
             if (!isPngOrJpeg) {
               notifyError(`${file.name} is not a PNG or JPEG file.`);
             }
@@ -110,11 +120,19 @@ const ProductDetails = () => {
 
       const text = <Input size="large" />;
       return (
-        <Form form={form} name="customizedFields" variant="filled" layout="vertical">
+        <Form
+          form={form}
+          name="customizedFields"
+          variant="filled"
+          layout="vertical"
+        >
           {fields.map((fieldDetails) => {
             const rules = [];
             if (fieldDetails.isRequired === 1)
-              rules.push({ required: true, message: "This field is required." });
+              rules.push({
+                required: true,
+                message: "This field is required.",
+              });
             if (fieldDetails.maxLength > 0)
               rules.push({
                 max: fieldDetails.maxLength,
@@ -152,13 +170,15 @@ const ProductDetails = () => {
     ({ variants = [], options = [] }) => {
       const variantType = options[0] || "color";
       const variantOptions = variants.map((variant) => {
-        if (!variant.option1.trim()) return <React.Fragment key={variant._id}></React.Fragment>;
+        if (!variant.option1.trim())
+          return <React.Fragment key={variant._id}></React.Fragment>;
         return (
           <div key={variant._id}>
             <VariantButton
               variant={variant}
               onChange={handleVariantChange}
               selectedVariant={selectedVariant}
+              disabled={false}
             />
           </div>
         );
@@ -166,14 +186,19 @@ const ProductDetails = () => {
 
       return (
         <>
-          <h1 className="uppercase tracking-wide text-sm my-3">{variantType}</h1>
+          <h1 className="uppercase tracking-wide text-sm my-3">
+            {variantType}
+          </h1>
           {variantOptions.length ? (
-            <div className="flex flex-wrap gap-4 mb-3 gap-y-5">{variantOptions}</div>
+            <div className="flex flex-wrap gap-4 mb-3 gap-y-5">
+              {variantOptions}
+            </div>
           ) : (
             <VariantButton
               variant={{ available: false, title: "Free" }}
               onChange={handleVariantChange}
               selectedVariant={selectedVariant}
+              disabled={true}
             />
           )}
         </>
@@ -198,12 +223,42 @@ const ProductDetails = () => {
     return { __html: DOMPurify.sanitize(content) };
   }, []);
 
-  const addToCartHandler = (product) => {
-    dispatch(addToCart(product));
+  const addToCartHandler = (e) => {
+    e.preventDefault();
+
+    if (!isCustomFormValid(form, productDetails)) return;
+    const payload = {
+      ...productDetails,
+      quantity,
+      variantName: "Free",
+      variantSKU: null,
+    };
+    if (selectedVariant) {
+      payload.variantName = selectedVariant.option1;
+      payload.variantSKU = selectedVariant.sku;
+    }
+
+    dispatch(addToCart(payload));
   };
 
   const quantityHandler = (value) => {
     setQuantity(value);
+  };
+
+  const buyNowHandler = () => {
+    if (!isCustomFormValid(form, productDetails)) return;
+    const payload = {
+      ...productDetails,
+      quantity,
+      variantName: "Free",
+      variantSKU: null,
+    };
+    if (selectedVariant) {
+      payload.variantName = selectedVariant.option1;
+      payload.variantSKU = selectedVariant.sku;
+    }
+    dispatch(buyNowButtonHandler(payload));
+    dispatch(checkoutModelHandler(true));
   };
   const props = {
     productDetails,
@@ -214,6 +269,7 @@ const ProductDetails = () => {
     addToCartHandler,
     quantityHandler,
     quantity,
+    buyNowHandler,
   };
 
   return (

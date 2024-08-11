@@ -1,3 +1,5 @@
+import { notifyError } from "./Notification";
+
 /**
  * Formats a date as a string with the format "Month Day, Year".
  *
@@ -178,3 +180,53 @@ export const extractProductDetails = (payload) => {
     variantName,
   };
 };
+
+export const isCustomFormValid = (form, productDetails) => {
+  const { fields } = productDetails;
+  const fieldsLength = fields?.length || 0;
+
+  // If we don't have custom fields
+  if (fieldsLength === 0) {
+    return true;
+  }
+  // When we have custom fields
+  for (let field of fields) {
+    const value = form.getFieldValue(field.fieldName);
+    const errorMessage = isCustomFieldValid(field, value);
+
+    if (errorMessage !== null) {
+      notifyError(errorMessage);
+      return false;
+    }
+  }
+  return true;
+};
+
+export function isCustomFieldValid(field, value) {
+  const { fieldLabel, fieldType, isRequired, maxLength, minLength } = field;
+
+  // Check if the field is required and the value is not provided
+  if (isRequired && !value) {
+    return `Please upload ${fieldLabel} properly.`;
+  }
+
+  // Check if the field is of type IMAGE and validate the content
+  if (fieldType === "IMAGE") {
+    if (value?.file?.error) {
+      return `Please upload '${fieldLabel}' properly.`;
+    }
+    return null;
+  }
+
+  // Validate the length if minLength and maxLength are specified
+  if (minLength > 0 && value.length < minLength) {
+    return `${fieldLabel} must be at least ${minLength} characters long.`;
+  }
+
+  if (maxLength > 0 && value.length > maxLength) {
+    return `${fieldLabel} must be no longer than ${maxLength} characters.`;
+  }
+
+  // If all checks pass, the field is valid
+  return null; // null indicates no errors, so the field is valid
+}

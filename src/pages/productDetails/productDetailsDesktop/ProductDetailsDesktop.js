@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import {
   HeartOutlined,
@@ -16,8 +15,6 @@ import { Breadcrumb, Button, Rate } from "antd";
 import Review from "../../../components/review";
 import QtyInput from "../../../components/qtyInput";
 import ShareButtons from "../../../components/shareButtons";
-
-import { buyNowButtonHandler, checkoutModelHandler } from "../../../features/checkout/checkout";
 
 import {
   calculateEstimatedDeliveryDate,
@@ -38,9 +35,8 @@ const ProductDetailsDesktop = ({
   addToCartHandler,
   quantityHandler,
   quantity,
+  buyNowHandler,
 }) => {
-  const dispatch = useDispatch();
-
   const currentUrl = window.location.href;
 
   return (
@@ -56,7 +52,9 @@ const ProductDetailsDesktop = ({
               <h1 className="text-3xl tracking-wide">
                 {capitalizeFirstLetters(productDetails.title)}
               </h1>
-              <p className="text-sm text-gray-500 leading-8">SKU: {productDetails.SKU}</p>
+              <p className="text-sm text-gray-500 leading-8">
+                SKU: {productDetails.SKU}
+              </p>
               <div>
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex gap-3">
@@ -64,7 +62,12 @@ const ProductDetailsDesktop = ({
                     3.9<span> out of 5 stars</span>
                   </p>
                   <div>
-                    <Rate className="text-lg" disabled allowHalf defaultValue={2.5} />
+                    <Rate
+                      className="text-lg"
+                      disabled
+                      allowHalf
+                      defaultValue={2.5}
+                    />
                   </div>
                   <div className="text-base">
                     <Link to="#" className="text-gray-500">
@@ -78,7 +81,9 @@ const ProductDetailsDesktop = ({
                 <div className="flex gap-4 leading-13 flex-wrap">
                   <p className="text-2xl text-gray-500 font-semibold line-through">
                     <span className="sr-only">It's MRP</span>
-                    <span aria-hidden="true">{formatCurrency(productDetails?.price?.MRP)}</span>
+                    <span aria-hidden="true">
+                      {formatCurrency(productDetails?.price?.MRP)}
+                    </span>
                   </p>
                   <p className="text-3xl font-semibold">
                     <span className="sr-only">Selling price</span>
@@ -91,12 +96,20 @@ const ProductDetailsDesktop = ({
               </div>
               <div className=" p-1 sr-only">
                 <p>
-                  <img className="animate-ping" src="/assets/flames-icon.svg" alt="flames" /> Hurry!
-                  Over 14 people have this in their carts
+                  <img
+                    className="animate-ping"
+                    src="/assets/flames-icon.svg"
+                    alt="flames"
+                  />{" "}
+                  Hurry! Over 14 people have this in their carts
                 </p>
                 <p>
-                  <img className="animate-ping" src="/assets/flames-icon.svg" alt="flames" />2 sold
-                  in last 12 hours
+                  <img
+                    className="animate-ping"
+                    src="/assets/flames-icon.svg"
+                    alt="flames"
+                  />
+                  2 sold in last 12 hours
                 </p>
               </div>
               <div className="my-3">
@@ -110,10 +123,16 @@ const ProductDetailsDesktop = ({
                 </div>
               </div>
               <div className="text-gray-500 my-4 leading-6 tracking-wide text-sm">
-                <div dangerouslySetInnerHTML={createMarkup(productDetails?.shortDescription)}></div>
+                <div
+                  dangerouslySetInnerHTML={createMarkup(
+                    productDetails?.shortDescription
+                  )}
+                ></div>
               </div>
               <div className="my-3">
-                <h1 className="uppercase tracking-wide text-sm my-3">Customize Your Product</h1>
+                <h1 className="uppercase tracking-wide text-sm my-3">
+                  Customize Your Product
+                </h1>
                 <div>{getCustomizedFields(productDetails)}</div>
               </div>
               <div className="my-3">{getVariants(productDetails)}</div>
@@ -125,21 +144,17 @@ const ProductDetailsDesktop = ({
                 <Button
                   size="large"
                   className="h-11  font-medium tracking-wide"
-                  onClick={() => {
-                    addToCartHandler({ ...productDetails, quantity });
-                  }}
+                  onClick={addToCartHandler}
                 >
-                  <ShoppingCartOutlined className="text-lg leading-3" /> <span>Add to Cart</span>
+                  <ShoppingCartOutlined className="text-lg leading-3" />{" "}
+                  <span>Add to Cart</span>
                 </Button>
 
                 <Button
                   className="flex h-11 font-medium tracking-wide"
                   type="primary"
                   size="large"
-                  onClick={() => {
-                    dispatch(buyNowButtonHandler({ quantity, productDetails }));
-                    dispatch(checkoutModelHandler(true));
-                  }}
+                  onClick={buyNowHandler}
                 >
                   BUY NOW{""}
                   <img src="/assets/upi_options.svg" alt="payment options" />
@@ -182,7 +197,10 @@ const ProductDetailsDesktop = ({
               <div className="razorpay-secured safe-checkout">
                 <fieldset className="mt-6 mb-5 border border-gray-200 p-2.5 px-9 text-center rounded-md">
                   <legend>Guaranteed Safe Checkout</legend>
-                  <img src="/assets/razorpay_secure.jpg" alt="Razorpay Secure Payment Option" />
+                  <img
+                    src="/assets/razorpay_secure.jpg"
+                    alt="Razorpay Secure Payment Option"
+                  />
                 </fieldset>
               </div>
             </div>
@@ -190,7 +208,11 @@ const ProductDetailsDesktop = ({
           <div title="descriptopn" className="p-4">
             <h1 className="text-2xl tracking-wide">Description : </h1>
             <div className="text-gray-500 my-4 leading-6 tracking-wide text-base lg:pl-36">
-              <div dangerouslySetInnerHTML={createMarkup(productDetails?.description)}></div>
+              <div
+                dangerouslySetInnerHTML={createMarkup(
+                  productDetails?.description
+                )}
+              ></div>
               <div>{getSpecification(productDetails)}</div>
             </div>
           </div>
@@ -201,13 +223,19 @@ const ProductDetailsDesktop = ({
                 <div>
                   <h4 className="text-lg font-semibold">
                     <TruckOutlined className="animate-bounce text-xl" />
-                    <span className="ml-2"> Free Shipping on Orders Over INR 1000</span>
+                    <span className="ml-2">
+                      {" "}
+                      Free Shipping on Orders Over INR 1000
+                    </span>
                   </h4>
                   <ul className="mt-4 pl-8 list-disc">
                     <li className="leading-6 mb-2">
-                      For orders below INR 1000, shipping charges will be calculated at checkout.
+                      For orders below INR 1000, shipping charges will be
+                      calculated at checkout.
                     </li>
-                    <li className="leading-6 mb-2">Delivery within 5-7 business days.</li>
+                    <li className="leading-6 mb-2">
+                      Delivery within 5-7 business days.
+                    </li>
                     <li className="leading-6 mb-2">
                       Express delivery services are also available.
                     </li>
@@ -220,12 +248,15 @@ const ProductDetailsDesktop = ({
                   </h4>
                   <ul className="mt-4 pl-8 list-disc">
                     <li className="leading-6 mb-2">
-                      We offer a return or exchange in case of damage or if an incorrect product is
-                      delivered.
+                      We offer a return or exchange in case of damage or if an
+                      incorrect product is delivered.
                     </li>
-                    <li className="leading-6 mb-2">Easy and complimentary, within 3 days.</li>
                     <li className="leading-6 mb-2">
-                      See our return and exchange policy for conditions and procedures.
+                      Easy and complimentary, within 3 days.
+                    </li>
+                    <li className="leading-6 mb-2">
+                      See our return and exchange policy for conditions and
+                      procedures.
                     </li>
                   </ul>
                 </div>
