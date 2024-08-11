@@ -2,8 +2,6 @@ import React from "react";
 
 import { Button, Modal } from "antd";
 
-import "./delete-model.scss";
-
 const DeleteModel = ({ open, onCancel, onConfirm, laoding }) => {
   return (
     <Modal
@@ -11,11 +9,16 @@ const DeleteModel = ({ open, onCancel, onConfirm, laoding }) => {
       open={open}
       onCancel={onCancel}
       footer={[
-        <div className="delete_model_btn_wrapper" key={1}>
-          <Button className="delete_modal_btn" type="primary" loading={laoding} onClick={onConfirm}>
+        <div className="w-fit m-auto mt-6" key={1}>
+          <Button
+            className="py-3 px-5"
+            type="primary"
+            loading={laoding}
+            onClick={onConfirm}
+          >
             Yes
           </Button>
-          <Button className="delete_modal_btn" onClick={onCancel}>
+          <Button className="py-3 px-5" onClick={onCancel}>
             No
           </Button>
         </div>,
@@ -26,9 +29,11 @@ const DeleteModel = ({ open, onCancel, onConfirm, laoding }) => {
         top: 200,
       }}
     >
-      <div className="delete_address_model">
-        <h3>Delete address</h3>
-        <p>Are you sure, you want to delete your saved address?</p>
+      <div className="p-4 pb-0">
+        <h3 className="text-base font-bold text-center">Delete address</h3>
+        <p className="text-sm font-normal text-right mt-1">
+          Are you sure, you want to delete your saved address?
+        </p>
       </div>
     </Modal>
   );

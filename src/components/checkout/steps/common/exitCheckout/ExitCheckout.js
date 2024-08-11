@@ -48,7 +48,7 @@ const ExitCheckout = () => {
           </button>
         </div>
       }
-      className="checkout_exit_drawer"
+      className="drawer"
       placement="bottom"
       height={480}
       closable={false}

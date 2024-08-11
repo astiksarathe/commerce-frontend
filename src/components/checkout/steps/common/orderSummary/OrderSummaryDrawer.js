@@ -42,7 +42,7 @@ const OrderSummaryDrawer = ({ close, isOpen }) => {
       onClose={close}
       open={isOpen}
       getContainer={false}
-      className="order_summary_drawer"
+      className="drawers"
     >
       {products.length > 0 &&
         products.map((product) => {
