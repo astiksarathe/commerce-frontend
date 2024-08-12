@@ -157,28 +157,62 @@ export function formatCurrency(val = "0") {
  * @param {Object} payload - The action payload containing product details.
  * @returns {Object} - An object with the extracted product details.
  */
-export const extractProductDetails = (payload) => {
-  const {
-    productId,
-    SKU,
-    quantity,
-    title,
-    url,
-    price,
-    variantSKU,
-    variantName,
-  } = payload;
-
-  return {
-    productId,
-    SKU,
-    quantity,
-    title,
-    url,
-    price,
-    variantSKU,
-    variantName,
+export const extractProductDetails = (product) => {
+  const productSchema = {
+    description: 1,
+    shortDescription: 1,
+    specification: 1,
+    category: 1,
+    productType: 1,
+    vendor: 1,
+    variantAvailable: 1,
+    available: 1,
+    inventory: 1,
+    images: 1,
+    price: {
+      cost: 1,
+      minPrice: 1,
+      maxPrice: 1,
+    },
+    tags: 1,
+    dimensions: 1,
+    weight: 1,
+    weightUnit: 1,
+    taxIncluded: 1,
+    isReturnAvailable: 1,
+    isReplaceable: 1,
+    CODAvailable: 1,
+    preOrderBookingAvailable: 1,
+    aggregateRating: 1,
+    totalReviews: 1,
+    total_5_star_reviews: 1,
+    total_4_star_reviews: 1,
+    total_3_star_reviews: 1,
+    total_2_star_reviews: 1,
+    total_1_star_reviews: 1,
+    options: 1,
+    variants: 1,
+    referral: 1,
+    FAQ: 1,
+    fields: 1,
+    status: 1,
+    continueSellingIfOutOfStock: 1,
+    warrantyInMonths: 1,
   };
+  const filteredProduct = {};
+
+  for (const key of Object.keys(product)) {
+    if (key === "price") {
+      filteredProduct.price = {
+        MRP: product.price.MRP,
+        sellingPrice: product.price.sellingPrice,
+      };
+    } else if (productSchema[key] === undefined) {
+      filteredProduct[key] = product[key];
+    }
+  }
+
+  return filteredProduct;
 };
 
 export const isCustomFormValid = (form, productDetails) => {
