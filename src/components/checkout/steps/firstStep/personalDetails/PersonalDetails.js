@@ -79,7 +79,7 @@ const PersonalDetails = ({ stepHandler }) => {
           <Input size="large" placeholder="Enter Your Name" />
         </Form.Item>
         <SubmitButton
-          loading={isLoading}
+          isLoading={isLoading}
           form={form}
           size="large"
           htmlType="submit"

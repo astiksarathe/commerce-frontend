@@ -63,7 +63,6 @@ const ProductDetails = () => {
 
       if (!variant) {
         // Set default variant on page load
-        console.log("set default variant on page load");
         if (productDetails.preOrderBookingAvailable) {
           variant = productDetails.variants[0];
         } else {
@@ -233,6 +232,12 @@ const ProductDetails = () => {
       variantName: "Free",
       variantSKU: null,
     };
+    const fields = productDetails.fields || [];
+
+    fields.forEach((field) => {
+      payload[field.fieldName] = form.getFieldValue(field.fieldName);
+    });
+
     if (selectedVariant) {
       payload.variantName = selectedVariant.option1;
       payload.variantSKU = selectedVariant.sku;
@@ -253,6 +258,13 @@ const ProductDetails = () => {
       variantName: "Free",
       variantSKU: null,
     };
+
+    const fields = productDetails.fields || [];
+
+    fields.forEach((field) => {
+      payload[field.fieldName] = form.getFieldValue(field.fieldName);
+    });
+
     if (selectedVariant) {
       payload.variantName = selectedVariant.option1;
       payload.variantSKU = selectedVariant.sku;

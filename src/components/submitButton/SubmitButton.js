@@ -16,7 +16,7 @@ const SubmitButton = ({ form, children, type, isLoading, ...props }) => {
   }, [form, values]);
   return (
     <Button
-      isLoading={isLoading}
+      loading={isLoading}
       type={type}
       htmlType="submit"
       {...props}
