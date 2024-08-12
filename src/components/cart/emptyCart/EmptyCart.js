@@ -1,5 +1,6 @@
-import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
+
+import Button from "../../ui/button";
 
 const { ShoppingCartOutlined } = require("@ant-design/icons");
 
@@ -22,13 +23,9 @@ const EmptyCart = () => {
         <br />
         You will find many interesting products on our "Shop" page.
       </div>
-      <Button
-        className="bg-black text-white"
-        onClick={() => navigate("/")}
-        style={{ padding: "12px 28px", height: "auto" }}
-      >
-        Return to Shop
-      </Button>
+      <div className="w-40">
+        <Button onClick={() => navigate("/shop")}>Return to Shop</Button>
+      </div>
     </div>
   );
 };

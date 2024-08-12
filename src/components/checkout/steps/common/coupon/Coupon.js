@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
-
+import { Form, Input } from "antd";
+import Button from "../../../../../components/ui/button";
 const Coupon = () => {
   return (
     <Form
@@ -18,9 +18,9 @@ const Coupon = () => {
         >
           <Input size="large" placeholder="Enter Discount Code" />
         </Form.Item>
-        <Button className="col-span-1" size="large" type="primary">
-          Apply
-        </Button>
+        <div className="col-span-1">
+          <Button className="mt-0 rounded">Apply</Button>
+        </div>
       </div>
     </Form>
   );

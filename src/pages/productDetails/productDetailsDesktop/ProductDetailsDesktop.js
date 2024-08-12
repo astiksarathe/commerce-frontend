@@ -10,7 +10,7 @@ import {
   SmileOutlined,
   TruckOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Button, Rate } from "antd";
+import { Breadcrumb, Rate } from "antd";
 
 import Review from "../../../components/review";
 import QtyInput from "../../../components/qtyInput";
@@ -25,6 +25,8 @@ import {
 } from "../../../utils/common";
 
 import ProductImageCarousel from "../ProductImageCarousel";
+
+import Button from "../../../components/ui/button";
 
 const ProductDetailsDesktop = ({
   productDetails,
@@ -141,19 +143,13 @@ const ProductDetailsDesktop = ({
                 <QtyInput value={quantity} quantityHandler={quantityHandler} />
               </div>
               <div className="grid grid-cols-2 gap-4 my-3">
-                <Button
-                  size="large"
-                  className="h-11  font-medium tracking-wide"
-                  onClick={addToCartHandler}
-                >
+                <Button type="link" onClick={addToCartHandler}>
                   <ShoppingCartOutlined className="text-lg leading-3" />{" "}
                   <span>Add to Cart</span>
                 </Button>
 
                 <Button
-                  className="flex h-11 font-medium tracking-wide"
-                  type="primary"
-                  size="large"
+                  className="flex h-11  tracking-wide"
                   onClick={buyNowHandler}
                 >
                   BUY NOW{""}

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Rate } from "antd";
+import { Rate } from "antd";
 
 import Review from "../../../components/review";
 import ProductImageCarousel from "../ProductImageCarousel";
@@ -21,6 +21,7 @@ import {
   getMetaDataofReview,
 } from "../../../utils/common";
 import QtyInput from "../../../components/qtyInput";
+import Button from "../../../components/ui/button";
 
 const ProductDetailsMobile = ({
   productDetails,
@@ -289,14 +290,14 @@ const ProductDetailsMobile = ({
 
       <div className="w-screen grid h-14 bg-white grid-cols-2 fixed bottom-0 z-40 items-end">
         <Button
-          size="large"
+          type="custom"
           className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-orange-400 border-none text-white shadow-md"
           onClick={addToCartHandler}
         >
           Add to Cart
         </Button>
         <Button
-          size="large"
+          type="custom"
           className="uppercase tracking-wide font-medium text-sm rounded-none h-12 bg-blue-500 border-none text-white shadow-md"
           onClick={buyNowHandler}
         >

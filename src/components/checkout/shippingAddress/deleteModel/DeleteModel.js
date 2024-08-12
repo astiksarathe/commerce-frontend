@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Button, Modal } from "antd";
-
+import { Modal } from "antd";
+import Button from "../../../ui/button";
 const DeleteModel = ({ open, onCancel, onConfirm, laoding }) => {
   return (
     <Modal
@@ -9,16 +9,11 @@ const DeleteModel = ({ open, onCancel, onConfirm, laoding }) => {
       open={open}
       onCancel={onCancel}
       footer={[
-        <div className="w-fit m-auto mt-6" key={1}>
-          <Button
-            className="py-3 px-5"
-            type="primary"
-            loading={laoding}
-            onClick={onConfirm}
-          >
+        <div className="flex gap-4" key={1}>
+          <Button loading={laoding} onClick={onConfirm}>
             Yes
           </Button>
-          <Button className="py-3 px-5" onClick={onCancel}>
+          <Button type="link" onClick={onCancel}>
             No
           </Button>
         </div>,
@@ -31,7 +26,7 @@ const DeleteModel = ({ open, onCancel, onConfirm, laoding }) => {
     >
       <div className="p-4 pb-0">
         <h3 className="text-base font-bold text-center">Delete address</h3>
-        <p className="text-sm font-normal text-right mt-1">
+        <p className="text-sm font-normal text-center mt-1">
           Are you sure, you want to delete your saved address?
         </p>
       </div>

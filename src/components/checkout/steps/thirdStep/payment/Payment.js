@@ -2,13 +2,15 @@ import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Checkbox } from "antd";
+import { Checkbox } from "antd";
 
 import axios from "axios";
 
 import { checkoutFormHandler } from "../../../../../features/checkout";
 import { orderConfirmModalHandler } from "../../../../../features/orderConfirmModal/OrderConfirmModalSlice";
 import { updateInitiatedOrder } from "../../../../../features/order";
+
+import Button from "../../../../ui/button";
 const Payment = () => {
   const dispatch = useDispatch();
   const {
@@ -235,7 +237,7 @@ const Payment = () => {
         >
           Notify me for order updates & offers
         </Checkbox>
-        <Button type="primary" size="large" onClick={onClickHandler}>
+        <Button onClick={onClickHandler}>
           {paymentStatus.paymentMode === 3 ? (
             <span>Complete Order</span>
           ) : (

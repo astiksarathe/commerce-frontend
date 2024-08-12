@@ -1,12 +1,20 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Flex, Pagination, Progress, Rate } from "antd";
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import "./review.scss";
-import PostReview from "./PostReview";
 import { useDispatch, useSelector } from "react-redux";
-import { getReviewsByProductId, postReviewModelHandler } from "../../features/review";
+import PropTypes from "prop-types";
+
+import { Avatar, Pagination, Progress, Rate } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+
+import {
+  getReviewsByProductId,
+  postReviewModelHandler,
+} from "../../features/review";
 import { calculatePercentage, formatDate } from "../../utils/common";
+
+import Button from "../ui/button";
+import PostReview from "./PostReview";
+
+import "./review.scss";
 const ReviewTitle = ({ metaData, title }) => {
   return (
     <h3 className="recent-reviews-title text-center">
@@ -33,16 +41,24 @@ const ReviewItems = ({ review }) => {
           </div>
           <div className="author-details">
             <div className="author-stars">
-              <Rate disabled value={review.rating} style={{ fontSize: "16px" }} />
+              <Rate
+                disabled
+                value={review.rating}
+                style={{ fontSize: "16px" }}
+              />
             </div>
-            <p className="author-rating sr-only">{review.rating} out of 5 stars</p>
+            <p className="author-rating sr-only">
+              {review.rating} out of 5 stars
+            </p>
             <div className="author-meta">
               <strong>{review.fullName}</strong>
               <em className="author-verified">
                 {review.isVerified ? <span> ( verified owner ) </span> : ""}
               </em>
               <span>-</span>
-              <time dateTime={review.createdAt}>{formatDate(review.createdAt)}</time>
+              <time dateTime={review.createdAt}>
+                {formatDate(review.createdAt)}
+              </time>
             </div>
           </div>
         </div>
@@ -60,7 +76,12 @@ const ReviewDataItem = ({ rating, percentage }) => {
     <div className="">
       <dt className="flex gap-3 leading-7">
         <div className="w-48">
-          <Rate className="me-0" disabled value={rating} style={{ fontSize: "16px" }} />
+          <Rate
+            className="me-0"
+            disabled
+            value={rating}
+            style={{ fontSize: "16px" }}
+          />
         </div>
         <div aria-hidden="true" className="w-full">
           <Progress
@@ -104,25 +125,38 @@ const Review = ({ metaData, productId, title }) => {
 
   const onPageChange = (page, pageSize) => {
     if (productId)
-      dispatch(getReviewsByProductId({ productId, query: { page: page, limit: pageSize } }));
+      dispatch(
+        getReviewsByProductId({
+          productId,
+          query: { page: page, limit: pageSize },
+        })
+      );
   };
   return (
     <>
       <div className="md:p-4">
-        <h1 className="hidden sm:block text-2xl tracking-wide my-3">Reviews :</h1>
+        <h1 className="hidden sm:block text-2xl tracking-wide my-3">
+          Reviews :
+        </h1>
         <div className="lg:pl-36">
           <div className="md:grid grid-cols-2 gap-5">
             <div>
               <div className="review-header">
-                <h2 className="review-title">Reviews ({metaData.total_reviews})</h2>
+                <h2 className="review-title">
+                  Reviews ({metaData.total_reviews})
+                </h2>
                 <div className="review-summary">
-                  <p className="review-count">Based on {metaData.total_reviews} reviews</p>
+                  <p className="review-count">
+                    Based on {metaData.total_reviews} reviews
+                  </p>
                   <div>
                     <div className="review-stars">
                       <strong>{aggregateRating}</strong>
                       <span>Overall</span>
                     </div>
-                    <p className="review-rating sr-only">{aggregateRating} out of 5 stars</p>
+                    <p className="review-rating sr-only">
+                      {aggregateRating} out of 5 stars
+                    </p>
                   </div>
                 </div>
               </div>
@@ -131,9 +165,6 @@ const Review = ({ metaData, productId, title }) => {
               </div>
               <div className="review-share md:hidden">
                 <Button
-                  size="large"
-                  block
-                  className="share-link"
                   onClick={() => {
                     dispatch(postReviewModelHandler(true));
                   }}

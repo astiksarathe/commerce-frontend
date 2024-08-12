@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button } from "antd";
 import { QuestionCircleFilled } from "@ant-design/icons";
 
 import {
@@ -10,6 +9,8 @@ import {
 } from "../../../features/checkout";
 
 import { formatCurrency } from "../../../utils/common";
+
+import Button from "../../../components/ui/button";
 
 const CartSummary = () => {
   const dispatch = useDispatch();
@@ -60,13 +61,7 @@ const CartSummary = () => {
         </div>
       </dl>
       <div className="mt-6">
-        <Button
-          className="h-12 bg-zinc-900 text-white w-full"
-          type="primary"
-          onClick={checkoutHandler}
-        >
-          Checkout
-        </Button>
+        <Button onClick={checkoutHandler}>Checkout</Button>
       </div>
     </section>
   );

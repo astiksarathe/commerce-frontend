@@ -1,9 +1,10 @@
 import React from "react";
-
-import { Button } from "antd";
+import Button from "../../components/ui/button";
 import { HeartOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const EmptyWishlist = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-[32rem] flex flex-col gap-y-4 items-center justify-center">
       <HeartOutlined
@@ -18,12 +19,9 @@ const EmptyWishlist = () => {
         You don't have any products in the wishlist yet. <br />
         You will find a lot of interesting products on our "Shop" page.
       </div>
-      <Button
-        className="bg-black text-white"
-        style={{ padding: "12px 28px", height: "auto" }}
-      >
-        RETURN TO SHOP
-      </Button>
+      <div className="w-44">
+        <Button onClick={() => navigate("/shop")}>RETURN TO SHOP</Button>
+      </div>
     </div>
   );
 };

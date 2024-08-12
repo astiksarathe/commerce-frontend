@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
-
+import { Form, Input } from "antd";
+import Button from "../../../components/ui/button";
 const AccountDetails = () => {
   return (
     <div className="max-w-4xl">
@@ -23,7 +23,10 @@ const AccountDetails = () => {
             >
               <Input size="large" />
             </Form.Item>
-            <Form.Item name={"newPassword"} label="New Password (leave blank to keep unchanged) :">
+            <Form.Item
+              name={"newPassword"}
+              label="New Password (leave blank to keep unchanged) :"
+            >
               <Input size="large" />
             </Form.Item>
             <Form.Item name={"confirmPassword"} label="Confirm new Password :">
@@ -31,10 +34,9 @@ const AccountDetails = () => {
             </Form.Item>
           </fieldset>
         </div>
-
-        <Button size="large" className="uppercase text-sm tracking-wider px-5" type="primary">
-          SAVE CHANGES
-        </Button>
+        <div className="w-44">
+          <Button>SAVE CHANGES</Button>
+        </div>
       </Form>
     </div>
   );

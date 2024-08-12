@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { orderConfirmModalHandler } from "../../../../../features/orderConfirmModal";
 import { formatCurrency } from "../../../../../utils/common";
 import { createOrder } from "../../../../../features/order";
+
+import Button from "../../../../ui/button";
 
 const ConfirmOrder = () => {
   const { isOrderConfirmModalOpen } = useSelector(
@@ -69,23 +71,10 @@ const ConfirmOrder = () => {
           </div>
         </div>
         <div className="mt-2">
-          <Button
-            className="text-sm font-semibold mt-2"
-            block
-            size="large"
-            loading={isLoading}
-            onClick={createOrderHandler}
-          >
+          <Button type="link" loading={isLoading} onClick={createOrderHandler}>
             Confirm & place order
           </Button>
-          <Button
-            className="text-sm font-semibold mt-2"
-            type="primary"
-            block
-            size="large"
-          >
-            Pay now ( save upto 10% )
-          </Button>
+          <Button>Pay now ( save upto 10% )</Button>
         </div>
       </div>
     </Drawer>

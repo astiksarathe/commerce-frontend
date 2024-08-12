@@ -18,7 +18,7 @@ const SubmitButton = ({ form, children, type, isLoading, ...props }) => {
     <Button
       loading={isLoading}
       type={type}
-      htmlType="submit"
+      htmltype="submit"
       {...props}
       disabled={!submittable}
     >

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Drawer, Space, Segmented } from "antd";
+import { Checkbox, Form, Input, Drawer, Space, Segmented } from "antd";
 import "./authDrawer.scss";
 import {
   DribbbleOutlined,
@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { closedAuthDrawer } from "../../features/authDrawer";
 import { login } from "../../features/auth/authSlice";
+
+import Button from "../ui/button";
 
 const EmailForm = () => {
   const dispatch = useDispatch();
@@ -63,7 +65,7 @@ const EmailForm = () => {
           loading={isLoading}
           iconPosition={"end"}
           style={{ width: "100%", margin: "auto" }}
-          htmlType="submit"
+          htmltype="submit"
         >
           Submit
         </Button>
@@ -115,13 +117,9 @@ const AuthDrawer = () => {
       open={isAuthDrawerOpen}
       extra={
         <Space>
-          <Button
-            type="text"
-            style={{ color: "white", fontSize: 14 }}
-            onClick={() => dispatch(closedAuthDrawer())}
-          >
+          <Button type="text" onClick={() => dispatch(closedAuthDrawer())}>
             CLOSE
-            <MinusOutlined style={{ color: "white", fontSize: 14 }} />
+            <MinusOutlined style={{ marginLeft: "4px" }} />
           </Button>
         </Space>
       }

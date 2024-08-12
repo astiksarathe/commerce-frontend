@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Checkbox, Drawer } from "antd";
+import { Checkbox, Drawer } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 
@@ -9,6 +9,7 @@ import { exitDrawerHandler } from "../../../../../features/checkoutExit";
 import { checkoutModelHandler } from "../../../../../features/checkout";
 import { updateInitiatedOrder } from "../../../../../features/order";
 
+import Button from "../../../../ui/button";
 const ExitCheckout = () => {
   const [exitForm, setExitForm] = useState({
     givenReason: [],
@@ -91,9 +92,7 @@ const ExitCheckout = () => {
             setExitForm(e.target.value);
           }}
         ></TextArea>
-        <Button type="primary" size="large" block onClick={onExitHandler}>
-          Skip and exit
-        </Button>
+        <Button onClick={onExitHandler}>Skip and exit</Button>
       </div>
     </Drawer>
   );

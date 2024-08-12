@@ -82,7 +82,7 @@ const PersonalDetails = ({ stepHandler }) => {
           isLoading={isLoading}
           form={form}
           size="large"
-          htmlType="submit"
+          htmltype="submit"
           block
         >
           Continue

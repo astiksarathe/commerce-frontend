@@ -1,17 +1,25 @@
-import { MinusOutlined } from "@ant-design/icons";
-import { Button, Drawer, Form, Input, message, Rate, Space } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import React, { useEffect, useState } from "react";
-import "./review.scss";
 import { useDispatch, useSelector } from "react-redux";
+
+import { Drawer, Form, Input, message, Rate, Space } from "antd";
+import { MinusOutlined } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
+
+import Button from "../../components/ui/button";
+
 import { postReviewModelHandler, postReview } from "../../features/review";
+
 import PropTypes from "prop-types";
+
+import "./review.scss";
 const PostReview = ({ productId }) => {
   const [form] = Form.useForm();
   const [rating, setRating] = useState(5);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { isPostReviewModelOpen, isLoading } = useSelector((state) => state.review);
+  const { isPostReviewModelOpen, isLoading } = useSelector(
+    (state) => state.review
+  );
   const dispatch = useDispatch();
 
   const onFinish = (e) => {
@@ -48,16 +56,23 @@ const PostReview = ({ productId }) => {
   const ReviewForm = () => (
     <div className="post-review-container">
       <div className="post-review-header">
-        <h1 className="mt-4 text-lg font-semibold text-center lg:hidden">Add a Review</h1>
+        <h1 className="mt-4 text-lg font-semibold text-center lg:hidden">
+          Add a Review
+        </h1>
         <p className="text-center">
           <span>Your email address will not be published. </span>
           <span>
-            Required fields are marked <span className="leading-6 text-red-600">*</span>
+            Required fields are marked{" "}
+            <span className="leading-6 text-red-600">*</span>
           </span>
         </p>
       </div>
       <div className="w-fit my-4 mx-auto">
-        <Rate value={rating} style={{ fontSize: "30px" }} onChange={ratingChangeHandler} />
+        <Rate
+          value={rating}
+          style={{ fontSize: "30px" }}
+          onChange={ratingChangeHandler}
+        />
       </div>
       <Form
         form={form}
@@ -116,16 +131,8 @@ const PostReview = ({ productId }) => {
         >
           <Input size="large" className="email-input" />
         </Form.Item>
-        <Button
-          size="large"
-          type="primary"
-          block
-          className="submit-button"
-          htmlType="submit"
-          onClick={onFinish}
-          loading={isLoading}
-        >
-          {isLoading ? "Loading" : "Submit"}
+        <Button htmltype="submit" onClick={onFinish} loading={isLoading}>
+          Submit
         </Button>
       </Form>
     </div>
@@ -147,14 +154,13 @@ const PostReview = ({ productId }) => {
             <Space>
               <Button
                 type="text"
-                style={{ color: "white", fontSize: 14 }}
                 onClick={() => {
                   form.resetFields();
                   dispatch(postReviewModelHandler(false));
                 }}
               >
                 CLOSE
-                <MinusOutlined style={{ color: "white", fontSize: 14 }} />
+                <MinusOutlined style={{ marginLeft: "5px" }} />
               </Button>
             </Space>
           }

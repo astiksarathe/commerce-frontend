@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Drawer, Form, Input } from "antd";
+import { Drawer, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { askQuestionOpenHandler } from "../../features/drawer";
 import { clearState, postQuery } from "../../features/query";
 import { notifySuccess } from "../../utils/Notification";
+
+import Button from "../../components/ui/button";
 const AskQuestion = () => {
   const [form] = Form.useForm();
   const {
@@ -25,12 +27,15 @@ const AskQuestion = () => {
   useEffect(() => {
     if (query) {
       form.resetFields();
-      notifySuccess("Your query has been successfully posted. We will reach out to you shortly");
+      notifySuccess(
+        "Your query has been successfully posted. We will reach out to you shortly"
+      );
       dispatch(clearState());
     }
   }, [query, form, dispatch]);
   const onFinishFailed = (value) => {};
-  const onClose = () => dispatch(askQuestionOpenHandler({ open: false, title: "" }));
+  const onClose = () =>
+    dispatch(askQuestionOpenHandler({ open: false, title: "" }));
 
   return (
     <div>
@@ -38,9 +43,9 @@ const AskQuestion = () => {
         title={
           <div className="flex justify-between gap-3 items-baseline">
             <h1 className="text-lg tracking-wide font-medium">{title}</h1>
-            <button onClick={onClose}>
-              <CloseOutlined />
-            </button>
+            <Button type="text" onClick={onClose}>
+              <CloseOutlined style={{ color: "black" }} />
+            </Button>
           </div>
         }
         placement="right"
@@ -82,7 +87,11 @@ const AskQuestion = () => {
           >
             <Input size="large" />
           </Form.Item>
-          <Form.Item validateTrigger="onBlur" name={"phoneNumber"} label={"Phone Number"}>
+          <Form.Item
+            validateTrigger="onBlur"
+            name={"phoneNumber"}
+            label={"Phone Number"}
+          >
             <Input size="large" />
           </Form.Item>
           <Form.Item
@@ -97,13 +106,7 @@ const AskQuestion = () => {
               autoSize={{ minRows: 5, maxRows: 5 }}
             />
           </Form.Item>
-          <Button
-            iconPosition={"end"}
-            style={{ width: "100%", margin: "auto" }}
-            htmlType="submit"
-            size="large"
-            loading={isLoading}
-          >
+          <Button htmltype="submit" loading={isLoading}>
             Send
           </Button>
         </Form>

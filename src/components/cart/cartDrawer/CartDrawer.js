@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Drawer, Space } from "antd";
+import { Drawer, Space } from "antd";
 import { MinusOutlined } from "@ant-design/icons";
 
 import {
@@ -14,6 +14,8 @@ import {
 import QtyInput from "../../qtyInput";
 
 import { formatCurrency } from "../../../utils/common";
+
+import Button from "../../ui/button";
 
 const CartDrawer = () => {
   const dispatch = useDispatch();
@@ -38,14 +40,14 @@ const CartDrawer = () => {
       open={isCartDrawerOpen}
       extra={
         <Space>
-          <Button
+          <button
             type="text"
             style={{ color: "white", fontSize: 14 }}
             onClick={() => dispatch(cartDrawerHandler(false))}
           >
             CLOSE
             <MinusOutlined style={{ color: "white", fontSize: 14 }} />
-          </Button>
+          </button>
         </Space>
       }
       footer={
@@ -57,14 +59,8 @@ const CartDrawer = () => {
           <div className="text-zinc-600 text-sm leading-5 mt-1 mb-4">
             Shipping and taxes calculated at checkout.
           </div>
-          <Button
-            className="bg-zinc-950 text-white hover:bg-zinc-900"
-            size="large"
-            block
-          >
-            Check out
-          </Button>
-          <Button type="link" block onClick={() => navigate("/cart")}>
+          <Button>Check out</Button>
+          <Button type="link" onClick={() => navigate("/cart")}>
             View Cart
           </Button>
         </div>
