@@ -70,7 +70,7 @@ const Header = () => {
                   <p className="tracking-wider text-zinc-50">India INR</p>
                 </div>
               </div>
-              <div className="flex items-center md:pl-28 lg:px-9 cursor-pointer lg:border-l lg:border-r lg:border-zinc-700">
+              <div className="flex items-center md:pl-24 lg:px-9 cursor-pointer lg:border-l lg:border-r lg:border-zinc-700">
                 <div className="hidden lg:block" onClick={authHandler}>
                   <p className="tracking-wider text-sm text-zinc-400">
                     {accessToken ? "Hello" : "Login / Signup"}
@@ -78,13 +78,13 @@ const Header = () => {
                   <p className="tracking-wider text-zinc-50">My account</p>
                 </div>
                 <div className="block lg:hidden" onClick={authHandler}>
-                  <UserOutlined className="text-3xl text-zinc-50" />
+                  <UserOutlined className="text-2xl lg:text-3xl text-zinc-50" />
                 </div>
               </div>
               <div className="flex items-center  md:pl-2  pl-9 cursor-pointer">
                 <div className="flex gap-3 items-center" onClick={cartHandler}>
                   <Badge count={cartList.length} color="black">
-                    <ShoppingCartOutlined className="text-3xl text-zinc-50" />
+                    <ShoppingCartOutlined className="text-2xl lg:text-3xl text-zinc-50" />
                   </Badge>
                   <p className="tracking-wider text-zinc-50 hidden lg:block">
                     Cart
@@ -102,7 +102,7 @@ const Header = () => {
                   onClick={() => {
                     dispatch(openSideMenuBar());
                   }}
-                  className="text-3xl text-zinc-50"
+                  className="text-2xl text-zinc-50"
                 />
               </div>
               <div className="h-8">
@@ -114,12 +114,12 @@ const Header = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div>
-                <UserOutlined className="text-3xl text-zinc-50" />
+              <div onClick={authHandler}>
+                <UserOutlined className="text-2xl text-zinc-50" />
               </div>
-              <div>
+              <div onClick={cartHandler}>
                 <Badge count={cartList.length} color="black">
-                  <ShoppingCartOutlined className="text-3xl text-zinc-50" />
+                  <ShoppingCartOutlined className="text-2xl text-zinc-50" />
                 </Badge>
               </div>
             </div>
