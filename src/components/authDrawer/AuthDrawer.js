@@ -63,7 +63,6 @@ const EmailForm = () => {
 
         <Button
           loading={isLoading}
-          iconPosition={"end"}
           style={{ width: "100%", margin: "auto" }}
           htmltype="submit"
         >

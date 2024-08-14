@@ -1,11 +1,21 @@
 import { useNavigate } from "react-router-dom";
 
 import Button from "../../ui/button";
+import { useDispatch } from "react-redux";
+
+import { cartDrawerHandler } from "../../../features/cart";
 
 const { ShoppingCartOutlined } = require("@ant-design/icons");
 
 const EmptyCart = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const returnToShop = (e) => {
+    e.preventDefault();
+    dispatch(cartDrawerHandler(false));
+    navigate("/shop");
+  };
 
   return (
     <div className="min-h-[32rem] flex flex-col gap-y-4 items-center justify-center">
@@ -24,7 +34,7 @@ const EmptyCart = () => {
         You will find many interesting products on our "Shop" page.
       </div>
       <div className="w-40">
-        <Button onClick={() => navigate("/shop")}>Return to Shop</Button>
+        <Button onClick={returnToShop}>Return to Shop</Button>
       </div>
     </div>
   );
