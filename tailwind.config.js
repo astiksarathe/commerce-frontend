@@ -35,6 +35,12 @@ module.exports = {
         },
       };
       addComponents(drawers);
+      const collapse = {
+        ".collapse-custom .ant-collapse-item .ant-collapse-header": {
+          paddingLeft: theme("spacing.0"), // using theme value for padding
+        },
+      };
+      addComponents(collapse);
     },
   ],
 };
