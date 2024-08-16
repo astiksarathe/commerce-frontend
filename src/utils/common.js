@@ -264,3 +264,17 @@ export function isCustomFieldValid(field, value) {
   // If all checks pass, the field is valid
   return null; // null indicates no errors, so the field is valid
 }
+
+export const getValueByKey = (list, key) => {
+  const selectedOption = list.find((option) => option.key === key);
+
+  if (!selectedOption) {
+    // Handle the case where the option is not found
+
+    console.error(`Option with key "${key}" not found.`);
+
+    return [null, null];
+  }
+
+  return [selectedOption.key, selectedOption.label];
+};
