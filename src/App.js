@@ -29,7 +29,6 @@ function App() {
       <ScrollToTop />
       <Header />
       <Outlet />
-      <Checkout />
       <CartDrawer />
       <QuickView />
       <Checkout />
