@@ -65,13 +65,17 @@ export const sortingOptions = [
   { key: "SORT_BY_DATE_NEW_TO_OLD", label: "Date, new to old" },
 ];
 
-export const productViewOptions = [
-  { key: "VIEW_GRID", label: "Grid" },
-  { key: "VIEW_LIST", label: "List" },
-];
+export const prodViewOpt = {
+  VIEW_GRID: "Grid",
+  VIEW_LIST: "List",
+};
 
 export const prodPerPagOpt = [
   { key: 24, label: "24 per page" },
   { key: 36, label: "36 per page" },
   { key: 48, label: "48 per page" },
+];
+
+export const emptyArr20 = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ];

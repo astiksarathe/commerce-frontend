@@ -278,3 +278,37 @@ export const getValueByKey = (list, key) => {
 
   return [selectedOption.key, selectedOption.label];
 };
+
+export function renderReviewText(reviewCount) {
+  if (reviewCount === 1) {
+    return "1 review";
+  } else if (reviewCount > 1) {
+    return `${reviewCount} reviews`;
+  }
+  return "No reviews";
+}
+
+export function isCreatedInLast7Days(createdAt) {
+  // Convert createdAt to a Date object
+  const productDate = new Date(createdAt);
+  const currentDate = new Date();
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(currentDate.getDate() - 7);
+
+  // Check if the product's creation date is within the last 7 days
+  return productDate >= sevenDaysAgo && productDate <= currentDate;
+}
+
+/**
+ * Determines the availability of a product based on pre-order and available status.
+ *
+ * @param {boolean} preOrderBookingAvailable - Indicates if pre-order booking is available.
+ * @param {boolean} available - Indicates if the product is available in stock.
+ * @returns {boolean} - Returns true if pre-order is available or the product is available in stock.
+ */
+export const checkAvailability = (preOrderBookingAvailable, available) => {
+  if (preOrderBookingAvailable) {
+    return true;
+  }
+  return available;
+};

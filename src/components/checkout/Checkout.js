@@ -56,6 +56,10 @@ const Checkout = () => {
     }
   }, [isCheckoutModelOpen]);
 
+  if (!isCheckoutModelOpen) {
+    return null;
+  }
+
   const stepHandler = (currentStage) => {
     if (currentStage < 1 || currentStage > 3) return;
     setStep(currentStage);
